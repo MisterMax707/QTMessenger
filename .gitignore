@@ -4,7 +4,7 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # ignore .tlog
-*.tlog
+QTMessenger.tlog/
 
 # User-specific files
 *.rsuser
