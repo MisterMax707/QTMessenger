@@ -92,19 +92,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Message.cpp" />
+    <ClCompile Include="User.cpp" />
     <QtRcc Include="InterfaceWindow.qrc" />
     <QtUic Include="InterfaceWindow.ui" />
     <QtMoc Include="InterfaceWindow.h" />
-    <ClCompile Include="..\..\..\..\Desktop\ContactChat.cpp" />
-    <ClCompile Include="..\..\..\..\Desktop\Message.cpp" />
-    <ClCompile Include="..\..\..\..\Desktop\User.cpp" />
+    <ClCompile Include="ContactChat.cpp" />
     <ClCompile Include="InterfaceWindow.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\Desktop\ContactChat.h" />
-    <ClInclude Include="..\..\..\..\Desktop\Message.h" />
-    <ClInclude Include="..\..\..\..\Desktop\User.h" />
+    <ClInclude Include="ContactChat.h" />
+    <ClInclude Include="Message.h" />
+    <ClInclude Include="User.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
