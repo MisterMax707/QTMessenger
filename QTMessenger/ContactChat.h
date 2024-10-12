@@ -5,7 +5,7 @@
 class ContactChat
 {
 private:
-	int id_contactChat;
+	int id_Chat;
 
 protected:
 	CustomQueue<Message> messages;

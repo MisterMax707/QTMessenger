@@ -103,7 +103,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContactChat.h" />
+    <ClInclude Include="GroupChat.h" />
     <ClInclude Include="Message.h" />
+    <ClInclude Include="myqueue.h" />
     <ClInclude Include="User.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
