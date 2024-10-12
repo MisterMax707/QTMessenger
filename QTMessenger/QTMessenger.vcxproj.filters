@@ -49,6 +49,9 @@
     <ClCompile Include="ContactChat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Participator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContactChat.h">
@@ -64,6 +67,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GroupChat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Participator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
