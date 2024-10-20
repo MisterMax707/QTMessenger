@@ -11,10 +11,12 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QListView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -23,6 +25,8 @@ class Ui_InterfaceWindowClass
 {
 public:
     QWidget *centralWidget;
+    QVBoxLayout *verticalLayout_2;
+    QListView *listView;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -31,15 +35,24 @@ public:
     {
         if (InterfaceWindowClass->objectName().isEmpty())
             InterfaceWindowClass->setObjectName("InterfaceWindowClass");
-        InterfaceWindowClass->resize(563, 563);
-        InterfaceWindowClass->setMinimumSize(QSize(563, 563));
-        InterfaceWindowClass->setMaximumSize(QSize(563, 563));
+        InterfaceWindowClass->resize(430, 600);
+        InterfaceWindowClass->setMinimumSize(QSize(0, 0));
+        InterfaceWindowClass->setMaximumSize(QSize(700, 700));
         centralWidget = new QWidget(InterfaceWindowClass);
         centralWidget->setObjectName("centralWidget");
+        verticalLayout_2 = new QVBoxLayout(centralWidget);
+        verticalLayout_2->setSpacing(6);
+        verticalLayout_2->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_2->setObjectName("verticalLayout_2");
+        listView = new QListView(centralWidget);
+        listView->setObjectName("listView");
+
+        verticalLayout_2->addWidget(listView);
+
         InterfaceWindowClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(InterfaceWindowClass);
         menuBar->setObjectName("menuBar");
-        menuBar->setGeometry(QRect(0, 0, 563, 21));
+        menuBar->setGeometry(QRect(0, 0, 430, 25));
         InterfaceWindowClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(InterfaceWindowClass);
         mainToolBar->setObjectName("mainToolBar");

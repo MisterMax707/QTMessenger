@@ -6,33 +6,39 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>563</width>
-    <height>563</height>
+    <width>430</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>563</width>
-    <height>563</height>
+    <width>0</width>
+    <height>0</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>563</width>
-    <height>563</height>
+    <width>700</width>
+    <height>700</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>InterfaceWindow</string>
   </property>
-  <widget class="QWidget" name="centralWidget"/>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="QListView" name="listView"/>
+    </item>
+   </layout>
+  </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>563</width>
-     <height>21</height>
+     <width>430</width>
+     <height>25</height>
     </rect>
    </property>
   </widget>
