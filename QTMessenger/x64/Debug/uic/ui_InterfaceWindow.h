@@ -22,25 +22,28 @@ QT_BEGIN_NAMESPACE
 class Ui_InterfaceWindowClass
 {
 public:
+    QWidget *centralWidget;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
-    QWidget *centralWidget;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *InterfaceWindowClass)
     {
         if (InterfaceWindowClass->objectName().isEmpty())
             InterfaceWindowClass->setObjectName("InterfaceWindowClass");
-        InterfaceWindowClass->resize(600, 400);
-        menuBar = new QMenuBar(InterfaceWindowClass);
-        menuBar->setObjectName("menuBar");
-        InterfaceWindowClass->setMenuBar(menuBar);
-        mainToolBar = new QToolBar(InterfaceWindowClass);
-        mainToolBar->setObjectName("mainToolBar");
-        InterfaceWindowClass->addToolBar(mainToolBar);
+        InterfaceWindowClass->resize(563, 563);
+        InterfaceWindowClass->setMinimumSize(QSize(563, 563));
+        InterfaceWindowClass->setMaximumSize(QSize(563, 563));
         centralWidget = new QWidget(InterfaceWindowClass);
         centralWidget->setObjectName("centralWidget");
         InterfaceWindowClass->setCentralWidget(centralWidget);
+        menuBar = new QMenuBar(InterfaceWindowClass);
+        menuBar->setObjectName("menuBar");
+        menuBar->setGeometry(QRect(0, 0, 563, 21));
+        InterfaceWindowClass->setMenuBar(menuBar);
+        mainToolBar = new QToolBar(InterfaceWindowClass);
+        mainToolBar->setObjectName("mainToolBar");
+        InterfaceWindowClass->addToolBar(Qt::ToolBarArea::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(InterfaceWindowClass);
         statusBar->setObjectName("statusBar");
         InterfaceWindowClass->setStatusBar(statusBar);
