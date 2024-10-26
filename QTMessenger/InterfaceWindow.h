@@ -8,7 +8,7 @@ class InterfaceWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    InterfaceWindow(QWidget *parent = nullptr);
+    InterfaceWindow(QWidget* parent = nullptr);
     ~InterfaceWindow();
 
 private:

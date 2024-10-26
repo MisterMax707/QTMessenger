@@ -40,6 +40,28 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="InterfaceLogin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InterfaceChat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="InterfaceLogin.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="InterfaceChat.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="InterfaceLogin.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="InterfaceChat.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
     <ClCompile Include="Message.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

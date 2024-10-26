@@ -96,9 +96,13 @@
     <ClCompile Include="Participator.cpp" />
     <ClCompile Include="User.cpp" />
     <QtRcc Include="InterfaceWindow.qrc" />
+    <QtUic Include="InterfaceChat.ui" />
+    <QtUic Include="InterfaceLogin.ui" />
     <QtUic Include="InterfaceWindow.ui" />
     <QtMoc Include="InterfaceWindow.h" />
     <ClCompile Include="ContactChat.cpp" />
+    <ClCompile Include="InterfaceChat.cpp" />
+    <ClCompile Include="InterfaceLogin.cpp" />
     <ClCompile Include="InterfaceWindow.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -109,6 +113,12 @@
     <ClInclude Include="myqueue.h" />
     <ClInclude Include="Participator.h" />
     <ClInclude Include="User.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="InterfaceLogin.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="InterfaceChat.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
