@@ -1,7 +1,9 @@
 #pragma once
 #include <string>
 #include <list>
-
+#include"GroupChat.h"
+#include"Contact.h"
+#include"ContactChat.h"
 struct FullName
 {
 	FullName(std::string name, std::string surname, std::string patronymic) :
@@ -15,6 +17,7 @@ struct FullName
 class User
 {
 public:
+	
 	User(FullName fio, std::string nick) : FIO(fio), nickName(nick) {}; // ƒобавить присовение айди, воспользовать€ static
 
 	void changeNameUser(FullName newFIO);
@@ -37,8 +40,8 @@ private:
 	std::string telephoneNumber;
 	std::string password;
 
-	std::list<GroupChat> ListGroupChats;
-	std::list<ContactChat> ListContactChats;
-	std::list<Contact> ListContacts;
+	//std::list<GroupChat> ListGroupChats;
+//	std::list<ContactChat> ListContactChats;
+//	std::list <Contact> ListContacts;
 };
 

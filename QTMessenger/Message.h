@@ -7,7 +7,7 @@ class Message
 {
 private:
 	int id_message;
-	User sender;
+	//User Mysender;
 	std::string content;
 	std::chrono::system_clock::time_point timeSend;
 

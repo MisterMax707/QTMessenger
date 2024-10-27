@@ -1,5 +1,5 @@
 #pragma once
-#include "CustomQueue.h"
+#include <list>
 #include "Message.h"
 
 class ContactChat
@@ -8,7 +8,7 @@ private:
 	int id_Chat;
 
 protected:
-	CustomQueue<Message> messages;
+	//std::list<Message> messages;
 
 public:
 	void sendMessage();

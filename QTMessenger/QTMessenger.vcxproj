@@ -92,6 +92,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Contact.cpp" />
     <ClCompile Include="Message.cpp" />
     <ClCompile Include="Participator.cpp" />
     <ClCompile Include="User.cpp" />
@@ -107,10 +108,10 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Contact.h" />
     <ClInclude Include="ContactChat.h" />
     <ClInclude Include="GroupChat.h" />
     <ClInclude Include="Message.h" />
-    <ClInclude Include="myqueue.h" />
     <ClInclude Include="Participator.h" />
     <ClInclude Include="User.h" />
   </ItemGroup>

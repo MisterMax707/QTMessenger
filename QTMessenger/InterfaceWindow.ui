@@ -28,6 +28,13 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
+     <widget class="QPushButton" name="pushButton">
+      <property name="text">
+       <string>PushButton</string>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QListView" name="listView"/>
     </item>
    </layout>
@@ -38,7 +45,7 @@
      <x>0</x>
      <y>0</y>
      <width>430</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
