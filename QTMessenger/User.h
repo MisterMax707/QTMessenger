@@ -1,9 +1,16 @@
 #pragma once
 #include <string>
 #include <list>
-#include"GroupChat.h"
-#include"Contact.h"
-#include"ContactChat.h"
+#include "GroupChat.h"
+#include "Contact.h"
+#include "ContactChat.h"
+
+// предварительный вызов, чтобы избежать цикличности 
+// Pragma once + предварительный вызов + * = все хорошо
+class ContactChat;
+class GroupChat;
+class Contact;
+
 struct FullName
 {
 	FullName(std::string name, std::string surname, std::string patronymic) :
@@ -39,9 +46,8 @@ private:
 	std::string status;
 	std::string telephoneNumber;
 	std::string password;
-
-	//std::list<GroupChat> ListGroupChats;
-//	std::list<ContactChat> ListContactChats;
-//	std::list <Contact> ListContacts;
+	std::list<GroupChat*> ListGroupChats;
+	std::list<ContactChat*> ListContactChats;
+	std::list<Contact*> ListContacts;
 };
 

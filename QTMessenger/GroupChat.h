@@ -1,14 +1,18 @@
 #pragma once
+#include <string>
+#include <list>
 #include "ContactChat.h"
-#include "list"
-#include "string"
 #include "Participator.h"
-#include<string>
-class GroupChat /*:ContactChat*/ {
+
+class Participator;
+
+class GroupChat //: public ContactChat
+{
+public:
+	GroupChat() {};
+
 private:
 	std::string GroupName;
-	//std::list<Participator> ListParticipators;
-	//std::list <Participator> ListAdmins;
-
-
+	std::list <Participator*> ListParticipators;
+	std::list <Participator*> ListAdmins;
 };

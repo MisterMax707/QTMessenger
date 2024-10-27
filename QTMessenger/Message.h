@@ -3,11 +3,13 @@
 #include <ctime>
 #include "User.h"
 
+class User;
+
 class Message
 {
 private:
 	int id_message;
-	//User Mysender;
+	User* Mysender;
 	std::string content;
 	std::chrono::system_clock::time_point timeSend;
 

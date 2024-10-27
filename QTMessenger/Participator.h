@@ -1,16 +1,16 @@
 #pragma once
 #include "User.h"
+
+class User;
+
 class Participator
 {
 public:
-	//User member;
+	Participator(User* member) : member(member) {};
+	User* member;
 	bool adminrights = false;
 	void leaveChat();
-	Participator();
-	/*Participator(User member) 
-	{
-		this->member = member;
-	}*/
+
 private:
 
 };
