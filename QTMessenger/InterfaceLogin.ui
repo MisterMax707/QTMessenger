@@ -74,36 +74,36 @@
           <item row="0" column="0">
            <widget class="QLabel" name="label_login">
             <property name="text">
-             <string>     Login:</string>
+             <string>     Логин:</string>
             </property>
            </widget>
           </item>
           <item row="0" column="1">
            <widget class="QLineEdit" name="lineEdit_login"/>
           </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="lineEdit_password"/>
+          </item>
           <item row="1" column="0">
            <widget class="QLabel" name="label_password">
             <property name="text">
-             <string>Password:</string>
+             <string>    Пароль:</string>
             </property>
            </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="lineEdit_password"/>
           </item>
          </layout>
         </item>
         <item>
          <widget class="QPushButton" name="pushButton_confirm">
           <property name="text">
-           <string>Confirm</string>
+           <string>Войти</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QPushButton" name="pushButton_remove">
           <property name="text">
-           <string>Remove</string>
+           <string>Очистить</string>
           </property>
          </widget>
         </item>
