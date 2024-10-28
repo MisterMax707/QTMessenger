@@ -2,6 +2,7 @@
 #include "InterfaceWindow.h"
 #include "User.h"
 #include <iostream>
+
 InterfaceLogin::InterfaceLogin(QWidget* parent)
 	: QMainWindow(parent)
 {

@@ -28,10 +28,10 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
-     <widget class="QLineEdit" name="userName"/>
+     <widget class="QLineEdit" name="lineEdit_userName"/>
     </item>
     <item>
-     <widget class="QListView" name="listView"/>
+     <widget class="QListView" name="listView_listChats"/>
     </item>
    </layout>
   </widget>
@@ -41,7 +41,7 @@
      <x>0</x>
      <y>0</y>
      <width>430</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>
