@@ -13,12 +13,12 @@ class Contact;
 
 //struct FullName
 //{
-//	FullName(std::string name, std::string surname, std::string patronymic) :
+//	FullName(QString name, QString surname, QString patronymic) :
 //		name(name), surname(surname), patronymic(patronymic) {}; // чтобы не было отчества надо передать пустоту "" или ничего не ставить
 //
-//	std::string name;
-//	std::string surname;
-//	std::string patronymic;
+//	QString name;
+//	QString surname;
+//	QString patronymic;
 //};
 
 class User
