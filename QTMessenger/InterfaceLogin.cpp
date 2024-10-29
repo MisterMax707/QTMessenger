@@ -18,5 +18,5 @@ void InterfaceLogin::pushConfirm() {
 	emit signalPushConfirm(ui.lineEdit_login->text(),ui.lineEdit_password->text());
 	IW->show();
 	emit close();
-	//emit();//создать сигнал что нажата кнопка
+	
 }

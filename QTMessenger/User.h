@@ -35,7 +35,7 @@ public:
 	void changeStatus(std::string newStatus);
 
 	void createContact();
-	void createGroupChat();
+	void createGroupChat(QString name);
 
 	void chooseAndOpenContactChat();
 	void chooseAndOpenGroupChat();

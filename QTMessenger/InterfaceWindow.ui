@@ -28,10 +28,128 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
-     <widget class="QLineEdit" name="lineEdit_userName"/>
-    </item>
-    <item>
-     <widget class="QListView" name="listView_listChats"/>
+     <widget class="QStackedWidget" name="stackedWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="page">
+       <widget class="QLineEdit" name="lineEdit_userName">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>20</y>
+          <width>412</width>
+          <height>24</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_add">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>50</y>
+          <width>412</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Создать</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>80</y>
+          <width>412</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Написать</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="page_2">
+       <widget class="QPushButton" name="pushButton_createGroup">
+        <property name="geometry">
+         <rect>
+          <x>19</x>
+          <y>40</y>
+          <width>131</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Создать группу</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_createContact">
+        <property name="geometry">
+         <rect>
+          <x>29</x>
+          <y>80</y>
+          <width>111</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Создать контакт</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_backToMainWindow">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>0</y>
+          <width>80</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>&lt;-</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="page_3">
+       <widget class="QLineEdit" name="lineEdit">
+        <property name="geometry">
+         <rect>
+          <x>250</x>
+          <y>30</y>
+          <width>113</width>
+          <height>24</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label">
+        <property name="geometry">
+         <rect>
+          <x>90</x>
+          <y>20</y>
+          <width>151</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Введите название группы:</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_okCreateGroup">
+        <property name="geometry">
+         <rect>
+          <x>280</x>
+          <y>60</y>
+          <width>80</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>ок</string>
+        </property>
+       </widget>
+      </widget>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -41,7 +159,7 @@
      <x>0</x>
      <y>0</y>
      <width>430</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
