@@ -16,5 +16,5 @@ private:
     User* user;
 
 public slots:
-    void inicialisationUser(QString name, QString password);
+    void initializationUser(User* newUser, QString name);
 };

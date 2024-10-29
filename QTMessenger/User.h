@@ -1,38 +1,39 @@
 #pragma once
-#include <string>
 #include <list>
 #include "GroupChat.h"
 #include "Contact.h"
 #include "ContactChat.h"
-#include "qstring.h"
+#include "QString"
+#include "QStringList"
+#include "QMessageBox"
+
 // предварительный вызов, чтобы избежать цикличности 
 // Pragma once + предварительный вызов + * = все хорошо
 class ContactChat;
 class GroupChat;
 class Contact;
 
-//struct FullName
-//{
-//	FullName(QString name, QString surname, QString patronymic) :
-//		name(name), surname(surname), patronymic(patronymic) {}; // чтобы не было отчества надо передать пустоту "" или ничего не ставить
-//
-//	QString name;
-//	QString surname;
-//	QString patronymic;
-//};
+QStringList splitFIOintoComponents(QString& fio);
+void determineEnteredFIO(QStringList& words);
+
+struct FullName
+{
+	FullName(QString name, QString surname, QString patronymic) :
+		name(name), surname(surname), patronymic(patronymic) {}; // чтобы не было отчества надо передать пустоту "" или ничего не ставить
+
+	QString name;
+	QString surname;
+	QString patronymic;
+};
 
 class User
 {
 public:
-	User(QString nick, QString Password) {
-		nickName = nick;
-		password = Password;
-	} ;
-	//User(FullName fio, std::string nick) : FIO(fio), nickName(nick) {}; // Добавить присовение айди, воспользоватья static
-	//User(std::string nick, std::string password) : nickName(nick), password(password) {};
-	//void changeNameUser(FullName newFIO);
-	void changeNickName(std::string newNickName);
-	void changeStatus(std::string newStatus);
+	User(FullName fio, QString nick, QString pass) : FIO(fio), nickName(nick), password(pass) {}; // Добавить присовение айди, воспользоватья static
+	
+	void changeNameUser(FullName newFIO);
+	void changeNickName(QString newNickName);
+	void changeStatus(QString newStatus);
 
 	void createContact();
 	void createGroupChat();
@@ -44,10 +45,10 @@ public:
 
 private:
 	int id_user;
-	//FullName FIO;
+	FullName FIO;
 	QString nickName;
-	//std::string status;
-	//std::string telephoneNumber;
+	QString status;
+	QString telephoneNumber;
 	QString password;
 	std::list<GroupChat*> ListGroupChats;
 	std::list<ContactChat*> ListContactChats;

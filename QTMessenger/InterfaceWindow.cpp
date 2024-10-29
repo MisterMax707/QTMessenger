@@ -9,7 +9,7 @@ InterfaceWindow::InterfaceWindow(QWidget *parent)
 
 InterfaceWindow::~InterfaceWindow()
 {}
-void InterfaceWindow::inicialisationUser(QString name, QString password) {
-    ui.lineEdit_userName->setText("User: "+name);
-    user = new User(name, password);
+void InterfaceWindow::initializationUser(User* newUser, QString name) {
+    ui.lineEdit_userName->setText("User: " + name);
+    user = newUser;
 }

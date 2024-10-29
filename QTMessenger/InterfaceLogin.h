@@ -1,8 +1,8 @@
 #pragma once
-
 #include <QMainWindow>
 #include "ui_InterfaceLogin.h"
 #include "InterfaceWindow.h"
+
 class InterfaceLogin : public QMainWindow
 {
 	Q_OBJECT
@@ -14,9 +14,16 @@ public:
 private:
 	Ui::InterfaceLoginClass ui;
 	InterfaceWindow* IW = new InterfaceWindow();
+	QString saveNick, savePass;
+	User* createUserEnteredDataForReg();
+	bool ChekingCorrectnessOfData(QString, QString);
+
 signals:
-	void signalPushConfirm(QString,QString);
+	void signalPushRegConfirm(User*, QString);
+
 private slots:
 	void pushConfirm();
+	void pushRegistration();
+	void pushRegConfirm();
 	//void createInterfaceWindow();
 };

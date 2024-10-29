@@ -88,7 +88,7 @@
     <item row="1" column="1">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page">
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -262,7 +262,72 @@ border: none; /* Убираем границу */</string>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton_remove</sender>
+   <signal>clicked()</signal>
+   <receiver>lineEdit_login</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>285</x>
+     <y>302</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>364</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_remove</sender>
+   <signal>clicked()</signal>
+   <receiver>lineEdit_password</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>327</x>
+     <y>296</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>291</x>
+     <y>239</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_registration</sender>
+   <signal>clicked()</signal>
+   <receiver>lineEdit_login</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>326</x>
+     <y>334</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>344</x>
+     <y>198</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_registration</sender>
+   <signal>clicked()</signal>
+   <receiver>lineEdit_password</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>234</x>
+     <y>328</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>267</x>
+     <y>231</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
  <slots>
   <signal>signal1()</signal>
   <slot>slot1()</slot>
