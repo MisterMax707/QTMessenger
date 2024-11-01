@@ -5,6 +5,7 @@
 #include "ContactChat.h"
 #include "QString"
 #include "QStringList"
+#include "QRegularExpression"
 #include "QMessageBox"
 
 // предварительный вызов, чтобы избежать цикличности 
@@ -14,7 +15,7 @@ class GroupChat;
 class Contact;
 
 QStringList splitFIOintoComponents(QString& fio);
-void determineEnteredFIO(QStringList& words);
+void refillingFullName(QStringList& words);
 
 struct FullName
 {

@@ -16,7 +16,11 @@ private:
 	InterfaceWindow* IW = new InterfaceWindow();
 	QString saveNick, savePass;
 	User* createUserEnteredDataForReg();
-	bool ChekingCorrectnessOfData(QString, QString);
+	bool ChekingCorrectnessLoginOfData(QString, QString);
+	bool ChekingCorrectnessRegistartionOfData();
+	bool ChekingCorrectnessRegFIO(QString);
+	bool ChekingCorrectnessRegNick(QString);
+	bool ChekingCorrectnessRegPass(QString);
 
 signals:
 	void signalPushRegConfirm(User*, QString);

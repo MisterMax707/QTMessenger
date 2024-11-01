@@ -2,16 +2,18 @@
 
 QStringList splitFIOintoComponents(QString& fio)
 {
-	QStringList words = fio.split(' '); // Разбиваем строку по пробелам
+	QRegularExpression re("\\s+"); // Регулярное выражение для пробелов
+	QStringList words = fio.split(re);
 	words.removeAll(""); // Удаляем пустые строки
-	determineEnteredFIO(words);
+	refillingFullName(words);
 	return words;
 }
 
-void determineEnteredFIO(QStringList& words)
+void refillingFullName(QStringList& words)
 {
 	int size = words.size();
-	for (int i = size - 1; i < 3; i++)
+	int lenghtFullName = 2;
+	for (int i = size - 1; i < lenghtFullName; i++)
 		words.push_back("");
 }
 
