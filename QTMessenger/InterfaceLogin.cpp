@@ -99,6 +99,11 @@ bool InterfaceLogin::ChekingCorrectnessRegNick(QString nick)
 		QMessageBox::warning(this, "Erorr", "Fill in the nick column", QMessageBox::Ok);
 		return false;
 	}
+	else if (nick.contains(" "))
+	{
+		QMessageBox::warning(this, "Erorr", "The nick must have one word", QMessageBox::Ok);
+		return false;
+	}
 	else return true;
 }
 
@@ -107,6 +112,11 @@ bool InterfaceLogin::ChekingCorrectnessRegPass(QString pass)
 	if (pass == "") 
 	{
 		QMessageBox::warning(this, "Erorr", "Fill in the password column", QMessageBox::Ok);
+		return false;
+	}
+	else if (pass.contains(" "))
+	{
+		QMessageBox::warning(this, "Erorr", "The password must have one word", QMessageBox::Ok);
 		return false;
 	}
 	else return true;
