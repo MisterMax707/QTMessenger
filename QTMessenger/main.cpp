@@ -9,8 +9,8 @@ int main(int argc, char *argv[])
     InterfaceLogin IF;
     IF.show();
     /*InterfaceChat IC;
-    IC.show();*/
-   
+    IC.show();
+   */
    
     return a.exec();
 }

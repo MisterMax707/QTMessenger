@@ -37,12 +37,13 @@ public:
 	void changeStatus(QString newStatus);
 
 	void createContact();
-	void createGroupChat();
+	void createGroupChat(QString name);
 
 	void chooseAndOpenContactChat();
 	void chooseAndOpenGroupChat();
 	void deleteContactChat();
 	void deleteGroupChat();
+	GroupChat* getLastGroupChat();
 
 private:
 	int id_user;

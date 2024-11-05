@@ -3,16 +3,20 @@
 #include <list>
 #include "ContactChat.h"
 #include "Participator.h"
-
+#include "qstring.h"
 class Participator;
 
 class GroupChat //: public ContactChat
 {
 public:
-	GroupChat() {};
-
+	GroupChat(QString name) {
+		GroupName = name;
+		
+	};
+	
 private:
-	std::string GroupName;
+	int id;
+	QString GroupName;
 	std::list <Participator*> ListParticipators;
 	std::list <Participator*> ListAdmins;
 };

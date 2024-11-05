@@ -40,7 +40,7 @@ void InterfaceLogin::pushRegistration()
 	ui.stackedWidget->setCurrentIndex(1);
 }
 
-void InterfaceLogin::pushRegConfirm() // тут бы бд
+void InterfaceLogin::pushRegConfirm() // пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ
 {
 	if (ChekingCorrectnessRegistartionOfData())
 	{
@@ -120,4 +120,9 @@ bool InterfaceLogin::ChekingCorrectnessRegPass(QString pass)
 		return false;
 	}
 	else return true;
+=======
+void InterfaceLogin::pushConfirm() {
+	emit signalPushConfirm(ui.lineEdit_login->text(),ui.lineEdit_password->text());
+	IW->show();
+	emit close();
 }

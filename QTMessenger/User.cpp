@@ -40,9 +40,9 @@ void User::createContact()
 
 }
 
-void User::createGroupChat()
+void User::createGroupChat(QString name)
 {
-
+	ListGroupChats.push_back(new GroupChat(name));
 }
 
 void User::chooseAndOpenContactChat()
@@ -62,4 +62,7 @@ void User::deleteContactChat()
 void User::deleteGroupChat()
 {
 
+}
+GroupChat* User::getLastGroupChat() {
+	return ListGroupChats.back();
 }
