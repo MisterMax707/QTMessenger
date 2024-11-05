@@ -41,6 +41,7 @@ public:
 	void chooseAndOpenGroupChat();
 	void deleteContactChat();
 	void deleteGroupChat();
+	GroupChat* getLastGroupChat();
 
 private:
 	int id_user;

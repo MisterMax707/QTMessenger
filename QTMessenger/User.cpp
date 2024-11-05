@@ -45,3 +45,6 @@ void User::deleteGroupChat()
 {
 
 }
+GroupChat* User::getLastGroupChat() {
+	return ListGroupChats.back();
+}
