@@ -29,6 +29,11 @@ InterfaceWindow::InterfaceWindow(QWidget* parent)
 
 InterfaceWindow::~InterfaceWindow()
 {}
+
+void InterfaceWindow::initializationUser(User* newUser, QString name) {
+    ui.lineEdit_userName->setText("User: " + name);
+    user = newUser;
+
 void InterfaceWindow::inicialisationUser(QString name, QString password) {
 	ui.lineEdit_userName->setText("User: " + name);
 	user = new User(name, password);
@@ -38,7 +43,7 @@ void InterfaceWindow::inicialisationUser(QString name, QString password) {
 void InterfaceWindow::createGroupChat(QString name) {
 
 	user->createGroupChat(name);
-	//äîáàâèòü ñîçäàíèå âèäæåòà ïðè êëèêå íà êîòîðûé îòêðûâàåòñÿ îêíî ÷àòà
+	//Ã¤Ã®Ã¡Ã Ã¢Ã¨Ã²Ã¼ Ã±Ã®Ã§Ã¤Ã Ã­Ã¨Ã¥ Ã¢Ã¨Ã¤Ã¦Ã¥Ã²Ã  Ã¯Ã°Ã¨ ÃªÃ«Ã¨ÃªÃ¥ Ã­Ã  ÃªÃ®Ã²Ã®Ã°Ã»Ã© Ã®Ã²ÃªÃ°Ã»Ã¢Ã Ã¥Ã²Ã±Ã¿ Ã®ÃªÃ­Ã® Ã·Ã Ã²Ã 
 
 	emit signalAddChatToForm(name, user->getLastGroupChat());
     openMainWindow();
@@ -69,7 +74,7 @@ void InterfaceWindow::pushOkCreateGroupChat() {
 
 void InterfaceWindow::addChatToForm(QString name, GroupChat* chat) {
 	QPushButton* newChat = new QPushButton(name);
-	connect(newChat, &QPushButton::clicked, this, &InterfaceWindow::openGroupChat);//ccûëêà íà ÷àò â ìîäåëè ñîåäèíèòü
+	connect(newChat, &QPushButton::clicked, this, &InterfaceWindow::openGroupChat);//ccÃ»Ã«ÃªÃ  Ã­Ã  Ã·Ã Ã² Ã¢ Ã¬Ã®Ã¤Ã¥Ã«Ã¨ Ã±Ã®Ã¥Ã¤Ã¨Ã­Ã¨Ã²Ã¼
 	newChat->setProperty("link", QVariant::fromValue(chat));
 	connect(this, &InterfaceWindow::signalInicializateChat, IC, &InterfaceChat::inicializeChat);
 	newChat->setSizePolicy(QSizePolicy(QSizePolicy::Minimum,QSizePolicy::Preferred));
