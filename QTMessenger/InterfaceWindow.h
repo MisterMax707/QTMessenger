@@ -32,7 +32,6 @@ signals:
      
 public slots:
     void initializationUser(User* newUser, QString name);
-    void inicialisationUser(QString name, QString password);
     void createGroupChat(QString name);
     void pushAdd();
     void openAddWidget();

@@ -40,7 +40,7 @@ void InterfaceLogin::pushRegistration()
 	ui.stackedWidget->setCurrentIndex(1);
 }
 
-void InterfaceLogin::pushRegConfirm() // ��� �� ��
+void InterfaceLogin::pushRegConfirm()
 {
 	if (ChekingCorrectnessRegistartionOfData())
 	{
@@ -109,7 +109,7 @@ bool InterfaceLogin::ChekingCorrectnessRegNick(QString nick)
 
 bool InterfaceLogin::ChekingCorrectnessRegPass(QString pass)
 {
-	if (pass == "") 
+	if (pass == "")
 	{
 		QMessageBox::warning(this, "Erorr", "Fill in the password column", QMessageBox::Ok);
 		return false;
@@ -120,9 +120,4 @@ bool InterfaceLogin::ChekingCorrectnessRegPass(QString pass)
 		return false;
 	}
 	else return true;
-=======
-void InterfaceLogin::pushConfirm() {
-	emit signalPushConfirm(ui.lineEdit_login->text(),ui.lineEdit_password->text());
-	IW->show();
-	emit close();
 }

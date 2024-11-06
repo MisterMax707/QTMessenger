@@ -31,13 +31,8 @@ InterfaceWindow::~InterfaceWindow()
 {}
 
 void InterfaceWindow::initializationUser(User* newUser, QString name) {
-    ui.lineEdit_userName->setText("User: " + name);
-    user = newUser;
-
-void InterfaceWindow::inicialisationUser(QString name, QString password) {
 	ui.lineEdit_userName->setText("User: " + name);
-	user = new User(name, password);
-	
+	user = newUser;
 }
 
 void InterfaceWindow::createGroupChat(QString name) {

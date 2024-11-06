@@ -29,5 +29,4 @@ private slots:
 	void pushConfirm();
 	void pushRegistration();
 	void pushRegConfirm();
-	//void createInterfaceWindow();
 };
