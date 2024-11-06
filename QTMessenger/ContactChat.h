@@ -1,6 +1,6 @@
 #pragma once
 #include <list>
-#include "Message.h"
+//#include "Message.h"
 
 class Message;
 

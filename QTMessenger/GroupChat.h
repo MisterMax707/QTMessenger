@@ -4,16 +4,16 @@
 #include "ContactChat.h"
 #include "Participator.h"
 #include "qstring.h"
-class Participator;
 
-class GroupChat //: public ContactChat
+class ContactChat;
+class Participator;
+class Message;
+
+class GroupChat : public ContactChat
 {
 public:
-	GroupChat(QString name) {
-		GroupName = name;
-		
-	};
-	
+	GroupChat(QString name) : GroupName(name) {};
+
 private:
 	int id;
 	QString GroupName;

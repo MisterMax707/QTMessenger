@@ -1,5 +1,7 @@
 #pragma once
-#include"User.h"
+#include "User.h"
+
+class User;
 
 class Contact
 {

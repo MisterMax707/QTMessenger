@@ -1,8 +1,8 @@
 #pragma once
 #include <list>
+#include "ContactChat.h"
 #include "GroupChat.h"
 #include "Contact.h"
-#include "ContactChat.h"
 #include "QString"
 #include "QStringList"
 #include "QRegularExpression"
