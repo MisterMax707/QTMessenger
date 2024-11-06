@@ -1,11 +1,11 @@
 #pragma once
 #include <QtWidgets/QMainWindow>
-#include "ui_InterfaceWindow.h"
-#include "User.h"
 #include <qscrollarea.h>
-#include "GroupChat.h"
-#include "ContactChat.h"
+#include "ui_InterfaceWindow.h"
 #include "InterfaceChat.h"
+#include "User.h"
+
+
 class InterfaceWindow : public QMainWindow
 {
     Q_OBJECT
@@ -41,6 +41,5 @@ public slots:
     void addChatToForm(QString name, GroupChat* chat);
     void openGroupChat(/*GroupChat* chat*/);
     void openChat(ContactChat& chat);
-
 };
  

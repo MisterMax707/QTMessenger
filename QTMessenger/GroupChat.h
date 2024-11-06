@@ -1,13 +1,10 @@
 #pragma once
-#include <string>
 #include <list>
 #include "ContactChat.h"
 #include "Participator.h"
-#include "qstring.h"
 
-class ContactChat;
-class Participator;
 class Message;
+class Participator;
 
 class GroupChat : public ContactChat
 {

@@ -1,6 +1,11 @@
 #include "Message.h"
 
-void Message::changeContent(std::string newContent)
+QString Message::getContent()
+{
+	return content;
+}
+
+void Message::changeContent(QString newContent)
 {
 	content = newContent;
 }

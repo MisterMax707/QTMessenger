@@ -21,7 +21,7 @@
        <widget class="QLineEdit" name="lineEdit_nameChatOrContact"/>
       </item>
       <item>
-       <widget class="QListView" name="listView_chat"/>
+       <widget class="QListWidget" name="listWidget_chat"/>
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
@@ -47,7 +47,7 @@
      <x>0</x>
      <y>0</y>
      <width>430</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

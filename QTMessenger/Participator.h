@@ -6,8 +6,8 @@ class User;
 class Participator
 {
 public:
-	Participator(User* member) : member(member) {};
-	User* member;
+	//Participator(User* member) : member(member) {};
+	//User* member;
 	bool adminrights = false;
 	void leaveChat();
 

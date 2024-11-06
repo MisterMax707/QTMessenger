@@ -1,8 +1,8 @@
 #pragma once
-#include <list>
-//#include "Message.h"
+#include <QQueue>
+#include "Message.h"
 
-class Message;
+//class Message;
 
 class ContactChat
 {
@@ -10,12 +10,14 @@ private:
 	int id;
 
 protected:
-	std::list<Message*> messages;
+	QQueue<Message*> messages;
 
 public:
 	ContactChat() {};
-	void sendMessage();
+	QQueue<Message*> showAllMessage();
+	void addMessage(Message* msg);
 	void deleteMessage();
+
 	int getId() {
 		return this->id;
 	}

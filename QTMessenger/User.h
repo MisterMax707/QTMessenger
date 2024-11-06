@@ -1,12 +1,12 @@
 #pragma once
 #include <list>
-#include "ContactChat.h"
-#include "GroupChat.h"
-#include "Contact.h"
 #include "QString"
 #include "QStringList"
 #include "QRegularExpression"
 #include "QMessageBox"
+#include "GroupChat.h"
+#include "ContactChat.h"
+#include "Contact.h"
 
 // предварительный вызов, чтобы избежать цикличности 
 // Pragma once + предварительный вызов + * = все хорошо

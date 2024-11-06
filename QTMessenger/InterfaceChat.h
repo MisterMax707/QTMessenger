@@ -1,8 +1,9 @@
 #pragma once
-
 #include <QMainWindow>
 #include "ui_InterfaceChat.h"
-#include "GroupChat.h"
+#include "QQueue.h"
+#include "User.h"
+
 class InterfaceChat : public QMainWindow
 {
 	Q_OBJECT
@@ -13,7 +14,21 @@ public:
 
 private:
 	Ui::InterfaceChatClass ui;
-	//ContactChat* ñhat;
+	GroupChat* chat;
+	void clearChatContent();
+	void showChatContent();
+	bool checkCorrectnessOfMessage(QString contentMessage);
+	void setMessageParametersAndStyle(QListWidgetItem* message);
+	void setFontSize(QListWidgetItem* message, int size);
+	void setFontBackground(QListWidgetItem* message, QColor color);
+
+signals:
+	void signalPushSendMessage(QString contentMessage);
+	void signalAddMessageToChatForm(QString contentMessage);
+
 public slots:
-	void inicializeChat(GroupChat* chat,QString name);
+	void inicializeChat(GroupChat* newChat, QString name);
+	void pushSendMessage();
+	void sendMessage(QString contentMessage);
+	void addMessageToChatForm(QString msg);
 };
