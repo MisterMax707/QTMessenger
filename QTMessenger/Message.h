@@ -10,13 +10,14 @@ class Message
 {
 private:
 	int id_message;
-	//User* Mysender;
+	QString mySender;
 	QString content;
 	std::chrono::system_clock::time_point timeSend;
 
 public:
-	Message(QString content) : content(content) {};
+	Message(QString content, QString sender) : content(content), mySender(sender) {};
 	QString getContent();
+	QString getSender();
 	void changeContent(QString newContent);
 
 };

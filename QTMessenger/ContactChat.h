@@ -18,9 +18,6 @@ public:
 	void addMessage(Message* msg);
 	void deleteMessage();
 
-	int getId() {
-		return this->id;
-	}
-	// change Message
+	int getId() {return this->id;}
 };
 

@@ -14,6 +14,7 @@ public:
 
 private:
 	Ui::InterfaceChatClass ui;
+	User* user;
 	GroupChat* chat;
 	void clearChatContent();
 	void showChatContent();
@@ -23,12 +24,12 @@ private:
 	void setFontBackground(QListWidgetItem* message, QColor color);
 
 signals:
-	void signalPushSendMessage(QString contentMessage);
-	void signalAddMessageToChatForm(QString contentMessage);
+	void signalPushSendMessage(QString contentMessage, QString nickName);
+	void signalAddMessageToChatForm(QString contentMessage, QString nickName);
 
 public slots:
-	void inicializeChat(GroupChat* newChat, QString name);
+	void inicializeChat(GroupChat* newChat, User* userChat, QString name);
 	void pushSendMessage();
-	void sendMessage(QString contentMessage);
-	void addMessageToChatForm(QString msg);
+	void sendMessage(QString contentMessage, QString nickName);
+	void addMessageToChatForm(QString msg, QString nick);
 };

@@ -43,6 +43,8 @@ public:
 	void chooseAndOpenGroupChat();
 	void deleteContactChat();
 	void deleteGroupChat();
+
+	QString getNickName();
 	GroupChat* getLastGroupChat();
 
 private:

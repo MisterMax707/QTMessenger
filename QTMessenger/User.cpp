@@ -63,6 +63,12 @@ void User::deleteGroupChat()
 {
 
 }
+
+QString User::getNickName()
+{
+	return nickName;
+}
+
 GroupChat* User::getLastGroupChat() {
 	return ListGroupChats.back();
 }

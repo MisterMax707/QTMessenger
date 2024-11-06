@@ -85,7 +85,7 @@ void InterfaceWindow::openGroupChat(/*GroupChat* chat*/) {
 		IC->show();
 	}
 	QPushButton* button = (QPushButton*)sender();
-	emit signalInicializateChat(button->property("link").value<GroupChat*>(), button->text());
+	emit signalInicializateChat(button->property("link").value<GroupChat*>(), user, button->text());
 	
 }
 
