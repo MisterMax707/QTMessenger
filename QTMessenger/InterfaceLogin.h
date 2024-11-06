@@ -16,17 +16,22 @@ private:
 	InterfaceWindow* IW = new InterfaceWindow();
 	QString saveNick, savePass;
 	User* createUserEnteredDataForReg();
-	bool ChekingCorrectnessLoginOfData(QString, QString);
+	bool ChekingCorrectnessLoginOfData(QString login, QString pass);
 	bool ChekingCorrectnessRegistartionOfData();
-	bool ChekingCorrectnessRegFIO(QString);
-	bool ChekingCorrectnessRegNick(QString);
-	bool ChekingCorrectnessRegPass(QString);
+	bool ChekingCorrectnessRegFIO(QString fio);
+	bool ChekingCorrectnessRegNick(QString nick);
+	bool ChekingCorrectnessRegPass(QString pass);
 
 signals:
-	void signalPushRegConfirm(User*, QString);
+	void signalPushLogConfirm(QString loginNick, QString loginPass);
+	void signalPushRegistartion(int pageRegistration);
+	void signalPushRegConfirmWithPage(int pageLogin);
+	void signalPushRegConfirmWithUser(User*, QString);
 
 private slots:
-	void pushConfirm();
 	void pushRegistration();
+	void pushLogConfirm();
 	void pushRegConfirm();
+	void carryOutAuthorization(QString loginNick, QString loginPass);
+	void switchPageStackWidget(int page);
 };

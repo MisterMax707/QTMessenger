@@ -1,6 +1,6 @@
 #include "InterfaceChat.h"
 
-InterfaceChat::InterfaceChat(QWidget *parent)
+InterfaceChat::InterfaceChat(QWidget* parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
@@ -15,8 +15,8 @@ InterfaceChat::~InterfaceChat()
 
 void InterfaceChat::inicializeChat(GroupChat* newChat, QString name) 
 {
-	ui.lineEdit_nameChatOrContact->setText(name);
 	chat = newChat;
+	ui.lineEdit_nameChatOrContact->setText(name);
 	clearChatContent();
 	showChatContent();
 }

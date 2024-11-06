@@ -6,19 +6,25 @@ InterfaceLogin::InterfaceLogin(QWidget* parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
-	connect(ui.pushButton_confirm, &QPushButton::clicked, this, &InterfaceLogin::pushConfirm);
+	connect(ui.pushButton_confirm, &QPushButton::clicked, this, &InterfaceLogin::pushLogConfirm);
 	connect(ui.pushButton_registration, &QPushButton::clicked, this, &InterfaceLogin::pushRegistration);
 	connect(ui.pushButton_regConfirm, &QPushButton::clicked, this, &InterfaceLogin::pushRegConfirm);
-	connect(this, &InterfaceLogin::signalPushRegConfirm, IW, &InterfaceWindow::initializationUser);
+	connect(this, &InterfaceLogin::signalPushLogConfirm, this, &InterfaceLogin::carryOutAuthorization);
+	connect(this, &InterfaceLogin::signalPushRegistartion, this, &InterfaceLogin::switchPageStackWidget);
+	connect(this, &InterfaceLogin::signalPushRegConfirmWithPage, this, &InterfaceLogin::switchPageStackWidget);
+	connect(this, &InterfaceLogin::signalPushRegConfirmWithUser, IW, &InterfaceWindow::initializationUser);
 }
 
 InterfaceLogin::~InterfaceLogin()
 {}
 
-void InterfaceLogin::pushConfirm() 
+void InterfaceLogin::pushLogConfirm()
 {
-	QString loginNick = ui.lineEdit_login->text();
-	QString loginPass = ui.lineEdit_password->text();
+	emit signalPushLogConfirm(ui.lineEdit_login->text(), ui.lineEdit_password->text());
+}
+
+void InterfaceLogin::carryOutAuthorization(QString loginNick, QString loginPass)
+{
 	if (ChekingCorrectnessLoginOfData(loginNick, loginPass))
 	{
 		IW->show();
@@ -35,20 +41,27 @@ bool InterfaceLogin::ChekingCorrectnessLoginOfData(QString nick, QString pass)
 	else return false;
 }
 
+void InterfaceLogin::switchPageStackWidget(int page)
+{
+	ui.stackedWidget->setCurrentIndex(page);
+}
+
 void InterfaceLogin::pushRegistration()
 {
-	ui.stackedWidget->setCurrentIndex(1);
+	int pageRegisrtation = 1;
+	emit signalPushRegistartion(pageRegisrtation);
 }
 
 void InterfaceLogin::pushRegConfirm()
 {
 	if (ChekingCorrectnessRegistartionOfData())
 	{
+		int pageLogin = 0;
 		User* user = createUserEnteredDataForReg();
-		emit signalPushRegConfirm(user, ui.lineEdit_regNick->text());
 		saveNick = ui.lineEdit_regNick->text();
 		savePass = ui.lineEdit_regPass->text();
-		ui.stackedWidget->setCurrentIndex(0);
+		emit signalPushRegConfirmWithUser(user, ui.lineEdit_regNick->text());
+		emit signalPushRegConfirmWithPage(pageLogin);
 	}
 	else return void();
 }

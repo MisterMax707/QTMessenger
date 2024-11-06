@@ -9,7 +9,7 @@ class InterfaceChat : public QMainWindow
 	Q_OBJECT
 
 public:
-	InterfaceChat(QWidget *parent = nullptr);
+	explicit InterfaceChat(QWidget *parent = nullptr);
 	~InterfaceChat();
 
 private:
