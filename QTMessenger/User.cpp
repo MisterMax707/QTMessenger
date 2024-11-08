@@ -35,9 +35,9 @@ void User::changeStatus(QString newStatus)
 	status = newStatus;
 }
 
-void User::createContact()
+void User::addContact()
 {
-
+	ListContacts.push_back(new Contact());
 }
 
 void User::createGroupChat(QString name)
