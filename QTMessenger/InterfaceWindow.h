@@ -28,7 +28,7 @@ signals:
     void signalOpenAddWidget();
     void signalBackToMainWindow();
     void signalAddChatToForm(QString name, GroupChat* chat);
-    void signalInicializateChat(GroupChat* chat, User* user, QString name);
+    void signalInicializateChat(GroupChat* chat, QString user, QString name);
      
 public slots:
     void initializationUser(User* newUser, QString name);

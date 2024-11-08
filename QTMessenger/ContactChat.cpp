@@ -1,16 +1,16 @@
 #include "ContactChat.h"
 
-void ContactChat::addMessage(Message* msg)
+void ContactChat::addMessageToChatList(Message* msg)
 {
 	messages.push_back(msg);
 }
 
-void ContactChat::deleteMessage()
+void ContactChat::deleteMessageFromChatList()
 {
 
 }
 
-QQueue<Message*> ContactChat::showAllMessage()
+QQueue<Message*> ContactChat::getListOfChatMessage()
 {
 	return messages;
 }

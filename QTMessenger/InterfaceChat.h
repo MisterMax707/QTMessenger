@@ -2,7 +2,8 @@
 #include <QMainWindow>
 #include "ui_InterfaceChat.h"
 #include "QQueue.h"
-#include "User.h"
+#include "ContactChat.h"
+#include "GroupChat.h"
 
 class InterfaceChat : public QMainWindow
 {
@@ -14,22 +15,26 @@ public:
 
 private:
 	Ui::InterfaceChatClass ui;
-	User* user;
 	GroupChat* chat;
+	QString userSender;
+
 	void clearChatContent();
 	void showChatContent();
+
 	bool checkCorrectnessOfMessage(QString contentMessage);
-	void setMessageParametersAndStyle(QListWidgetItem* message);
+	void setMessageParametersAndStyle(QListWidgetItem* message, Message* msg);
 	void setFontSize(QListWidgetItem* message, int size);
 	void setFontBackground(QListWidgetItem* message, QColor color);
+	void checkSender(QListWidgetItem* message, Message* msg);
 
 signals:
-	void signalPushSendMessage(QString contentMessage, QString nickName);
-	void signalAddMessageToChatForm(QString contentMessage, QString nickName);
+	void signalSendMessage(QString contentMessage, QString nickName);
+	void signalAddMessageToChatForm(Message* msg);
 
 public slots:
-	void inicializeChat(GroupChat* newChat, User* userChat, QString name);
+	void inicializeChat(GroupChat* theChatUsed, QString chatUserIsYou, QString nameChat);
+
 	void pushSendMessage();
 	void sendMessage(QString contentMessage, QString nickName);
-	void addMessageToChatForm(QString msg, QString nick);
+	void addMessageToChatForm(Message* msg);
 };

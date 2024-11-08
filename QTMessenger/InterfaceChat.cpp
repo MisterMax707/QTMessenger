@@ -6,18 +6,18 @@ InterfaceChat::InterfaceChat(QWidget* parent)
 	ui.setupUi(this);
 	ui.lineEdit_nameChatOrContact->setEnabled(false);
 	connect(ui.pushButton_sendMessage, &QPushButton::clicked, this, &InterfaceChat::pushSendMessage);
-	connect(this, &InterfaceChat::signalPushSendMessage, this, &InterfaceChat::sendMessage);
+	connect(this, &InterfaceChat::signalSendMessage, this, &InterfaceChat::sendMessage);
 	connect(this, &InterfaceChat::signalAddMessageToChatForm, this, &InterfaceChat::addMessageToChatForm);
 }
 
 InterfaceChat::~InterfaceChat()
 {}
 
-void InterfaceChat::inicializeChat(GroupChat* newChat, User* userChat, QString name) 
+void InterfaceChat::inicializeChat(GroupChat* theChatUsed, QString chatUserIsYou, QString nameChat)
 {
-	user = userChat;
-	chat = newChat;
-	ui.lineEdit_nameChatOrContact->setText(name);
+	chat = theChatUsed;
+	userSender = chatUserIsYou;
+	ui.lineEdit_nameChatOrContact->setText(nameChat);
 	clearChatContent();
 	showChatContent();
 }
@@ -29,15 +29,15 @@ void InterfaceChat::clearChatContent()
 
 void InterfaceChat::showChatContent()
 {
-	QQueue<Message*> queueMsg = chat->showAllMessage();
+	QQueue<Message*> queueMsg = chat->getListOfChatMessage();
 	for (auto* msg : queueMsg)
-		addMessageToChatForm(msg->getContent(), msg->getSender());
+		addMessageToChatForm(msg);
 }
 
 void InterfaceChat::pushSendMessage()
 {
 	if (checkCorrectnessOfMessage(ui.lineEdit_chat->text()))
-		emit signalPushSendMessage(ui.lineEdit_chat->text(), user->getNickName());
+		emit signalSendMessage(ui.lineEdit_chat->text(), userSender);
 	else return void();
 }
 
@@ -50,38 +50,46 @@ bool InterfaceChat::checkCorrectnessOfMessage(QString contentMessage)
 
 void InterfaceChat::sendMessage(QString contentMessage, QString nickName)
 {
-	chat->addMessage(new Message(contentMessage, nickName));
-	emit signalAddMessageToChatForm(contentMessage, nickName);
+	chat->addMessageToChatList(new Message(contentMessage, nickName));
+	emit signalAddMessageToChatForm(new Message(contentMessage, nickName));
 }
 
-void InterfaceChat::addMessageToChatForm(QString msg, QString nick)
+void InterfaceChat::addMessageToChatForm(Message* msg)
 {
-	QString fullMessage = nick + "\n" + msg;
-	QListWidgetItem* message = new QListWidgetItem(fullMessage);
-	setMessageParametersAndStyle(message);
-	ui.listWidget_chat->addItem(message);
+	QString fullMessage = msg->getSender() + "\n" + msg->getContent();
+	QListWidgetItem* messageItem = new QListWidgetItem(fullMessage);
+	setMessageParametersAndStyle(messageItem, msg);
+	ui.listWidget_chat->addItem(messageItem);
 	ui.lineEdit_chat->clear();
 }
 
-void InterfaceChat::setMessageParametersAndStyle(QListWidgetItem* message)
+void InterfaceChat::setMessageParametersAndStyle(QListWidgetItem* messageItem, Message* msg)
 {
 	int size = 14;
 	QColor color(120, 120, 120);
-	setFontSize(message, size);
-	setFontBackground(message, color);
-	message->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+	setFontSize(messageItem, size);
+	setFontBackground(messageItem, color);
+	checkSender(messageItem, msg);
 }
 
-void InterfaceChat::setFontSize(QListWidgetItem* message, int size)
+void InterfaceChat::setFontSize(QListWidgetItem* messageItem, int size)
 {
-	QFont messageFont = message->font();
+	QFont messageFont = messageItem->font();
 	messageFont.setPointSize(14);
-	message->setFont(messageFont);
+	messageItem->setFont(messageFont);
 }
 
-void InterfaceChat::setFontBackground(QListWidgetItem* message, QColor color)
+void InterfaceChat::setFontBackground(QListWidgetItem* messageItem, QColor color)
 {
 	QBrush brush(color);
-	message->setBackground(brush);
+	messageItem->setBackground(brush);
+}
+
+void InterfaceChat::checkSender(QListWidgetItem* messageItem, Message* msg)
+{
+	if(msg->getSender() == userSender)
+		messageItem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+	else
+		messageItem->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
 }
 

@@ -14,9 +14,10 @@ protected:
 
 public:
 	ContactChat() {};
-	QQueue<Message*> showAllMessage();
-	void addMessage(Message* msg);
-	void deleteMessage();
+
+	QQueue<Message*> getListOfChatMessage();
+	void addMessageToChatList(Message* msg);
+	void deleteMessageFromChatList();
 
 	int getId() {return this->id;}
 };
