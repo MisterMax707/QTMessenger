@@ -5,6 +5,8 @@ InterfaceChat::InterfaceChat(QWidget* parent)
 {
 	ui.setupUi(this);
 	ui.lineEdit_nameChatOrContact->setEnabled(false);
+	ui.stackedWidget->setCurrentIndex(0);
+
 	QShortcut* pressChangeMessage = new QShortcut(QKeySequence(Qt::Key_C), this);
 	QShortcut* pressDeleteMessage = new QShortcut(QKeySequence(Qt::Key_D), this);
 

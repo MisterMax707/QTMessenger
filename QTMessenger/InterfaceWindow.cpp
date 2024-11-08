@@ -17,69 +17,73 @@ InterfaceWindow::InterfaceWindow(QWidget* parent)
 	scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 	scrollArea->setWidgetResizable(true);
 	scrollArea->setWidget(widget);
+
 	connect(ui.pushButton_add, &QPushButton::clicked, this, &InterfaceWindow::pushAdd);
-	connect(this, &InterfaceWindow::signalOpenAddWidget, this, &InterfaceWindow::openAddWidget);
-	connect(ui.pushButton_backToMainWindow, &QPushButton::clicked, this, &InterfaceWindow::openMainWindow);
 	connect(ui.pushButton_createGroup, &QPushButton::clicked, this, &InterfaceWindow::openEnterName);
 	connect(ui.pushButton_okCreateGroup, &QPushButton::clicked, this, &InterfaceWindow::pushOkCreateGroupChat);
+	connect(this, &InterfaceWindow::signalOpenAddWidget, this, &InterfaceWindow::openAddWidget);
 	connect(this, &InterfaceWindow::signalpushCreateGroupChat, this, &InterfaceWindow::createGroupChat);
 	connect(this, &InterfaceWindow::signalAddChatToForm, this, &InterfaceWindow::addChatToForm);
+	connect(ui.pushButton_backToMainWindow, &QPushButton::clicked, this, &InterfaceWindow::openMainWindow);
 	connect(ui.pushButton_returnToPageCreateGroupOrContact, &QPushButton::clicked, this, &InterfaceWindow::openAddWidget);
 }
 
 InterfaceWindow::~InterfaceWindow()
 {}
 
-void InterfaceWindow::initializationUser(User* newUser, QString name) {
+void InterfaceWindow::initializationUser(User* newUser, QString name) 
+{
 	ui.lineEdit_userName->setText("User: " + name);
 	user = newUser;
 }
 
-void InterfaceWindow::createGroupChat(QString name) {
-
-	user->createGroupChat(name);
-	//äîáàâèòü ñîçäàíèå âèäæåòà ïðè êëèêå íà êîòîðûé îòêðûâàåòñÿ îêíî ÷àòà
-
-	emit signalAddChatToForm(name, user->getLastGroupChat());
-    openMainWindow();
-}
-
-
-void InterfaceWindow::pushAdd() {
+void InterfaceWindow::pushAdd() 
+{
 	emit signalOpenAddWidget();
 }
 
-void InterfaceWindow::openAddWidget() {
+void InterfaceWindow::openAddWidget() 
+{
 	ui.stackedWidget->setCurrentIndex(1);
 }
 
-
-void InterfaceWindow::openMainWindow() {
-	ui.stackedWidget->setCurrentIndex(0);
-}
-
-void InterfaceWindow::openEnterName() {
+void InterfaceWindow::openEnterName() 
+{
 	ui.stackedWidget->setCurrentIndex(2);
 }
 
-void InterfaceWindow::pushOkCreateGroupChat() {
+void InterfaceWindow::pushOkCreateGroupChat() 
+{
 	emit signalpushCreateGroupChat(ui.lineEdit_groupChatName->text());
 	ui.lineEdit_groupChatName->clear();
 }
 
-void InterfaceWindow::addChatToForm(QString name, GroupChat* chat) {
+void InterfaceWindow::createGroupChat(QString name) 
+{
+
+	user->createGroupChat(name);
+	emit signalAddChatToForm(name, user->getLastGroupChat());
+    openMainWindow();
+}
+
+void InterfaceWindow::addChatToForm(QString name, GroupChat* chat) 
+{
 	QPushButton* newChat = new QPushButton(name);
 	connect(newChat, &QPushButton::clicked, this, &InterfaceWindow::openGroupChat);//ccûëêà íà ÷àò â ìîäåëè ñîåäèíèòü
 	newChat->setProperty("link", QVariant::fromValue(chat));
 	connect(this, &InterfaceWindow::signalInicializateChat, IC, &InterfaceChat::inicializeChat);
-	newChat->setSizePolicy(QSizePolicy(QSizePolicy::Minimum,QSizePolicy::Preferred));
+	newChat->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred));
 	newChat->setFixedHeight(chatHeight);
 	verticalLayout->addWidget(newChat);
-	
 }
 
+void InterfaceWindow::openMainWindow() 
+{
+	ui.stackedWidget->setCurrentIndex(0);
+}
 
-void InterfaceWindow::openGroupChat(/*GroupChat* chat*/) {
+void InterfaceWindow::openGroupChat(/*GroupChat* chat*/) 
+{
 	if (!IC->isVisible())
 	{
 		IC->show();
@@ -89,7 +93,8 @@ void InterfaceWindow::openGroupChat(/*GroupChat* chat*/) {
 	
 }
 
-void InterfaceWindow::openChat(ContactChat& chat) {
+void InterfaceWindow::openChat(ContactChat& chat) 
+{
 	if (!IC->isVisible())
 	{
 		IC->show();

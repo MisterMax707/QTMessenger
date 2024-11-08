@@ -30,7 +30,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page">
        <widget class="QLineEdit" name="lineEdit_userName">
@@ -172,7 +172,7 @@
      <x>0</x>
      <y>0</y>
      <width>430</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>
