@@ -22,17 +22,19 @@ private:
 
 	void clearChatContent();
 	void showChatContent();
+	void updateInformationChat();
 
 	bool checkCorrectnessOfMessage(QString contentMessage);
 	void setMessageParametersAndStyle(QListWidgetItem* messageItem, Message* msg);
 	void setFontSize(QListWidgetItem* messageItem, int size);
 	void setFontBackground(QListWidgetItem* messageItem, QColor color);
-	void setLinkToMessage(QListWidgetItem* messageItem, Message* msg);
 	void checkSender(QListWidgetItem* messageItem, Message* msg);
+	void setLinkToMessage(QListWidgetItem* messageItem, Message* msg);
 
 signals:
 	void signalSendMessage(QString contentMessage, QString nickName);
 	void signalAddMessageToChatForm(Message* msg);
+	void signalChangeContentMessage(QString);
 
 public slots:
 	void inicializeChat(GroupChat* theChatUsed, QString chatUserIsYou, QString nameChat);
@@ -41,5 +43,8 @@ public slots:
 	void sendMessage(QString contentMessage, QString nickName);
 	void addMessageToChatForm(Message* msg);
 
+	void changeInputToChangeByPressedKeyC();
+	void pushChangeContentMessage();
+	void changeContentMessage(QString);
 	void deleteMessageByPressedKeyD();
 };

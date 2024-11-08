@@ -18,7 +18,7 @@ public:
 	Message(QString content, QString sender) : content(content), mySender(sender) {};
 	QString getContent();
 	QString getSender();
-	void changeContent(QString newContent);
+	void changeContent(QString& newContent);
 
 };
 

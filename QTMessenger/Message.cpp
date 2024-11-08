@@ -10,7 +10,7 @@ QString Message::getSender()
 	return mySender;
 }
 
-void Message::changeContent(QString newContent)
+void Message::changeContent(QString& newContent)
 {
 	content = newContent;
 }
