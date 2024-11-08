@@ -17,7 +17,7 @@ public:
 
 	QQueue<Message*> getListOfChatMessage();
 	void addMessageToChatList(Message* msg);
-	void deleteMessageFromChatList();
+	void deleteMessageFromChatList(Message* msg);
 
 	int getId() {return this->id;}
 };

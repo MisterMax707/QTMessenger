@@ -5,9 +5,12 @@ InterfaceChat::InterfaceChat(QWidget* parent)
 {
 	ui.setupUi(this);
 	ui.lineEdit_nameChatOrContact->setEnabled(false);
+	QShortcut* pressDeleteMessage = new QShortcut(QKeySequence(Qt::Key_D), this);
+
 	connect(ui.pushButton_sendMessage, &QPushButton::clicked, this, &InterfaceChat::pushSendMessage);
 	connect(this, &InterfaceChat::signalSendMessage, this, &InterfaceChat::sendMessage);
 	connect(this, &InterfaceChat::signalAddMessageToChatForm, this, &InterfaceChat::addMessageToChatForm);
+	connect(pressDeleteMessage, &QShortcut::activated, this, &InterfaceChat::deleteMessageByPressedKeyD);
 }
 
 InterfaceChat::~InterfaceChat()
@@ -69,6 +72,7 @@ void InterfaceChat::setMessageParametersAndStyle(QListWidgetItem* messageItem, M
 	QColor color(120, 120, 120);
 	setFontSize(messageItem, size);
 	setFontBackground(messageItem, color);
+	setLinkToMessage(messageItem, msg);
 	checkSender(messageItem, msg);
 }
 
@@ -85,11 +89,31 @@ void InterfaceChat::setFontBackground(QListWidgetItem* messageItem, QColor color
 	messageItem->setBackground(brush);
 }
 
+void InterfaceChat::setLinkToMessage(QListWidgetItem* messageItem, Message* msg)
+{
+	messageItem->setData(Qt::UserRole, QVariant::fromValue(msg));
+}
+
 void InterfaceChat::checkSender(QListWidgetItem* messageItem, Message* msg)
 {
 	if(msg->getSender() == userSender)
 		messageItem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	else
 		messageItem->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+}
+
+void InterfaceChat::deleteMessageByPressedKeyD()
+{
+	if (ui.listWidget_chat->currentItem())
+	{
+		QListWidgetItem* selectMessageItem = ui.listWidget_chat->currentItem();
+		Message* msg = selectMessageItem->data(Qt::UserRole).value<Message*>();
+		delete ui.listWidget_chat->takeItem(ui.listWidget_chat->row(selectMessageItem));
+		chat->deleteMessageFromChatList(msg);
+		ui.statusBar->showMessage("delete message" , 5000);
+	}
+	else
+		ui.statusBar->showMessage("Select message for delete", 5000);
+
 }
 
