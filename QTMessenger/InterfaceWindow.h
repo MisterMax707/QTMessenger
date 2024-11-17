@@ -22,9 +22,9 @@ private:
     QScrollArea* scrollArea;
     InterfaceChat* IC=new InterfaceChat();
     int chatHeight = 40;
-    QWidget* widgetPage5;
-    QVBoxLayout* verticalLayoutPage5;
-    QScrollArea* scrollAreaPage5;
+    QWidget* widgetPage2;
+    QVBoxLayout* verticalLayoutPage2;
+    QScrollArea* scrollAreaPage2;
     
 signals:
     void signalpushCreateGroupChat(QString name);
@@ -32,6 +32,7 @@ signals:
     void signalBackToMainWindow();
     void signalAddChatToForm(QString name, GroupChat* chat);
     void signalInicializateChat(GroupChat* chat, QString user, QString name);
+    void signalInicializateContactChat(ContactChat* chat, QString name, User* user1, User* user2);
     void signalCreateContact();
      
 public slots:
@@ -48,6 +49,6 @@ public slots:
     void openInicializateContactPage();
     void createContact();
     void pushCreateContact();
-    void openContactsList();
+    void openContactChat();
 };
  

@@ -68,38 +68,32 @@ void InterfaceLogin::pushRegConfirm()
 
 User* InterfaceLogin::createUserEnteredDataForReg()
 {
-	QString fio = ui.lineEdit_regFIO->text();
-	QStringList splitFIO = splitFIOintoComponents(fio);
-
-	FullName name(splitFIO[0], splitFIO[1], splitFIO[2]);
+	QString tel = ui.lineEdit_regTel->text();
 	QString nick = ui.lineEdit_regNick->text();
 	QString pass = ui.lineEdit_regPass->text();
-	User* user = new User(name, nick, pass);
+	User* user = new User( nick, pass,tel);
 
 	return user;
 }
 
 bool InterfaceLogin::ChekingCorrectnessRegistartionOfData()
 {
-	bool correctnessRegFIO = ChekingCorrectnessRegFIO(ui.lineEdit_regFIO->text());
+	bool correctnessRegTel= ChekingCorrectnessRegTel(ui.lineEdit_regTel->text());
 	bool correctnessRegNick = ChekingCorrectnessRegNick(ui.lineEdit_regNick->text());
 	bool correctnessRegPass = ChekingCorrectnessRegPass(ui.lineEdit_regPass->text());
-	return correctnessRegFIO * correctnessRegNick * correctnessRegPass;
+	return  correctnessRegNick * correctnessRegPass;
 }
 
-bool InterfaceLogin::ChekingCorrectnessRegFIO(QString fio)
+bool InterfaceLogin::ChekingCorrectnessRegTel(QString tel)
 {
-	QStringList splitFIO = splitFIOintoComponents(fio);
-	QStringList nonEmptyWords = splitFIO.filter(QRegularExpression("\\S"));
-	int lenghtFullName = 3;
-	if (splitFIO.size() > lenghtFullName)
+	if (tel== "")
 	{
-		QMessageBox::warning(this, "Erorr", "So long full name!", QMessageBox::Ok);
+		QMessageBox::warning(this, "Erorr", "Fill in the telephone column", QMessageBox::Ok);
 		return false;
 	}
-	else if (nonEmptyWords.isEmpty())
+	else if (tel.contains(" "))
 	{
-		QMessageBox::warning(this, "Erorr", "Fill in the name column", QMessageBox::Ok);
+		QMessageBox::warning(this, "Erorr", "The telephone must have one word", QMessageBox::Ok);
 		return false;
 	}
 	else return true;

@@ -29,6 +29,11 @@ void InterfaceChat::inicializeChat(GroupChat* theChatUsed, QString chatUserIsYou
 	ui.lineEdit_nameChatOrContact->setText(nameChat);
 	updateInformationChat();
 }
+void InterfaceChat::inicializeContactChat(ContactChat* chat, QString nameChat, User* user1, User* user2) {
+	this->chat = chat;
+	ui.lineEdit_nameChatOrContact->setText(nameChat);
+
+}
 
 void InterfaceChat::updateInformationChat()
 {

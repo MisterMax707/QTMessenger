@@ -18,7 +18,7 @@ private:
 	User* createUserEnteredDataForReg();
 	bool ChekingCorrectnessLoginOfData(QString login, QString pass);
 	bool ChekingCorrectnessRegistartionOfData();
-	bool ChekingCorrectnessRegFIO(QString fio);
+	bool ChekingCorrectnessRegTel(QString fio);
 	bool ChekingCorrectnessRegNick(QString nick);
 	bool ChekingCorrectnessRegPass(QString pass);
 

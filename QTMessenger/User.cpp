@@ -18,11 +18,9 @@ void refillingFullName(QStringList& words)
 }
 
 
-void User::changeNameUser(FullName newFIO)
+void User::changeTelephone(QString newtel)
 {
-	FIO.name = newFIO.name;
-	FIO.surname = newFIO.surname;
-	FIO.patronymic = newFIO.patronymic;
+	telephoneNumber = newtel;
 }
 
 void User::changeNickName(QString newNickName)
@@ -35,9 +33,9 @@ void User::changeStatus(QString newStatus)
 	status = newStatus;
 }
 
-void User::addContact()
+void User::addContact(User* user)
 {
-	ListContacts.push_back(new Contact());
+	ListContacts.push_back(new Contact(user));
 }
 
 void User::createGroupChat(QString name)

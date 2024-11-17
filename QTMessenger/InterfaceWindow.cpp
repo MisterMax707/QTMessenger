@@ -18,16 +18,16 @@ InterfaceWindow::InterfaceWindow(QWidget* parent)
 	scrollArea->setWidgetResizable(true);
 	scrollArea->setWidget(widget);
 	
-	verticalLayoutPage5 = new QVBoxLayout();
-	verticalLayoutPage5->setAlignment(Qt::AlignTop);
-	widgetPage5 = new QWidget();
-	widgetPage5->setLayout(verticalLayoutPage5);
-	scrollAreaPage5 = new QScrollArea(ui.page_5);
-	scrollAreaPage5->setGeometry(20, 120, 350, 450);
-	scrollAreaPage5->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-	scrollAreaPage5->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-	scrollAreaPage5->setWidgetResizable(true);
-	scrollAreaPage5->setWidget(widgetPage5);
+	verticalLayoutPage2 = new QVBoxLayout();
+	verticalLayoutPage2->setAlignment(Qt::AlignTop);
+	widgetPage2 = new QWidget();
+	widgetPage2->setLayout(verticalLayoutPage2);
+	scrollAreaPage2 = new QScrollArea(ui.page_2);
+	scrollAreaPage2->setGeometry(20, 120, 350, 450);
+	scrollAreaPage2->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	scrollAreaPage2->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+	scrollAreaPage2->setWidgetResizable(true);
+	scrollAreaPage2->setWidget(widgetPage2);
 
 	connect(ui.pushButton_add, &QPushButton::clicked, this, &InterfaceWindow::pushAdd);
 	connect(ui.pushButton_createGroup, &QPushButton::clicked, this, &InterfaceWindow::openEnterNameGroupChat);
@@ -36,12 +36,12 @@ InterfaceWindow::InterfaceWindow(QWidget* parent)
 	connect(this, &InterfaceWindow::signalpushCreateGroupChat, this, &InterfaceWindow::createGroupChat);
 	connect(this, &InterfaceWindow::signalAddChatToForm, this, &InterfaceWindow::addChatToForm);
 	connect(ui.pushButton_backToMainWindow, &QPushButton::clicked, this, &InterfaceWindow::openMainWindow);
-	connect(ui.pushButton_backToMainWindow_2, &QPushButton::clicked, this, &InterfaceWindow::openMainWindow);
+	connect(ui.pushButton_returnToPageCreateContact, &QPushButton::clicked, this, &InterfaceWindow::openAddWidget);
 	connect(ui.pushButton_returnToPageCreateGroupOrContact, &QPushButton::clicked, this, &InterfaceWindow::openAddWidget);
 	connect(ui.pushButton_newContact, &QPushButton::clicked, this, &InterfaceWindow::openInicializateContactPage);
 	connect(ui.pushButton_CreateContact, &QPushButton::clicked, this, &InterfaceWindow::pushCreateContact);
 	connect(this, &InterfaceWindow::signalCreateContact, this, &InterfaceWindow::createContact);
-	connect(ui.pushButton_writeMessage, &QPushButton::clicked, this, &InterfaceWindow::openContactsList);
+	
 }
 
 InterfaceWindow::~InterfaceWindow()
@@ -126,23 +126,30 @@ void InterfaceWindow::pushCreateContact() {
 }
 
 void InterfaceWindow::createContact() {
-	QString fio = ui.lineEdit_FIO->text();
-	QStringList splitFIO = splitFIOintoComponents(fio);
-
-	FullName name(splitFIO[0], splitFIO[1], splitFIO[2]);
+	
 	QString nick = ui.lineEdit_Nick->text();
-	int telephoneNum = ui.lineEdit_telephoneNumber->text().toInt();
-	// new User(name, nick, telephoneNum);
+	QString telephoneNum = ui.lineEdit_telephoneNumber->text();
+	User* newUser = new User(nick, telephoneNum);
+	user->addContact(newUser);
+	QPushButton* newContact = new QPushButton(nick);
+	connect(newContact, &QPushButton::clicked, this, &InterfaceWindow::openContactChat);
+	//newContact->setProperty("link", QVariant::fromValue());дописать свойство ссылки на чат с контактом и сделать хранение ссылки на двух участников чата
+	connect(this, &InterfaceWindow::signalInicializateContactChat, IC, &InterfaceChat::inicializeContactChat);
+	newContact->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred));
+	newContact->setFixedHeight(chatHeight);
+	verticalLayoutPage2->addWidget(newContact);
 	//создать контакт используя данные созданного экземпляра
-	ui.lineEdit_FIO->clear();
+	
 	ui.lineEdit_telephoneNumber->clear();
 	ui.lineEdit_Nick->clear();
 	openMainWindow();
 }
-void InterfaceWindow::openContactsList() {
-	ui.stackedWidget->setCurrentIndex(4);
-	QPushButton* newChat = new QPushButton("Здесь будет список контактов");
-	newChat->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred));
-	newChat->setFixedHeight(chatHeight);
-	verticalLayoutPage5->addWidget(newChat);
+void InterfaceWindow::openContactChat() {//дописать для создания чата с контактом
+	if (!IC->isVisible())
+	{
+		IC->show();
+	}
+	QPushButton* button = (QPushButton*)sender();
+	//emit signalInicializateContactChat(button->property("link").value<ContactChat*>(), button->text(),);
+	
 }

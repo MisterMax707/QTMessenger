@@ -18,6 +18,7 @@ public:
 private:
 	Ui::InterfaceChatClass ui;
 	GroupChat* chat;
+	ContactChat* chat;
 	QString userSender;
 
 	void clearChatContent();
@@ -38,7 +39,7 @@ signals:
 
 public slots:
 	void inicializeChat(GroupChat* theChatUsed, QString chatUserIsYou, QString nameChat);
-
+	void inicializeContactChat(ContactChat* chat, QString nameChat, User* user1, User* user2);
 	void pushSendMessage();
 	void sendMessage(QString contentMessage, QString nickName);
 	void addMessageToChatForm(Message* msg);

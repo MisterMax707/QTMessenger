@@ -30,13 +30,13 @@ struct FullName
 class User
 {
 public:
-	User(FullName fio, QString nick, QString pass, QString telephoneNumber="") : FIO(fio), nickName(nick), password(pass) {}; // ƒобавить присовение айди, воспользовать€ static
-	User(FullName fio, QString nick, int telephoneNumber) :FIO(fio), nickName(nick), telephoneNumber(telephoneNumber) {};
-	void changeNameUser(FullName newFIO);
+	User(QString nick, QString pass, QString telephoneNumber) : nickName(nick), password(pass), telephoneNumber(telephoneNumber) {}; // ƒобавить присовение айди, воспользовать€ static
+	User( QString nick, QString telephoneNumber) : nickName(nick), telephoneNumber(telephoneNumber) {};
+	void changeTelephone(QString newtel);
 	void changeNickName(QString newNickName);
 	void changeStatus(QString newStatus);
 
-	void addContact();
+	void addContact(User* user);
 	void createGroupChat(QString name);
 
 	void chooseAndOpenContactChat();
@@ -49,10 +49,10 @@ public:
 
 private:
 	int id_user;
-	FullName FIO;
+	//FullName FIO;
 	QString nickName;
 	QString status;
-	/*QString*/ int telephoneNumber;
+	QString telephoneNumber;
 	QString password;
 	std::list<GroupChat*> ListGroupChats;
 	std::list<ContactChat*> ListContactChats;

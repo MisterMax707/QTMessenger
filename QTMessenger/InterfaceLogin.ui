@@ -180,16 +180,6 @@ border: none; /* Убираем границу */</string>
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
            <layout class="QFormLayout" name="formLayout_2">
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_regFIO">
-              <property name="text">
-               <string>    ФИО:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QLineEdit" name="lineEdit_regFIO"/>
-            </item>
             <item row="1" column="0">
              <widget class="QLabel" name="label_regNick">
               <property name="text">
@@ -209,6 +199,16 @@ border: none; /* Убираем границу */</string>
             </item>
             <item row="2" column="1">
              <widget class="QLineEdit" name="lineEdit_regPass"/>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>Номер:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="lineEdit_regTel"/>
             </item>
            </layout>
           </item>
