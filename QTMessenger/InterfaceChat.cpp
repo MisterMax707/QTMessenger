@@ -9,9 +9,9 @@ InterfaceChat::InterfaceChat(QWidget* parent)
 
 	QShortcut* pressChangeMessage = new QShortcut(QKeySequence(Qt::Key_C), this);
 	QShortcut* pressDeleteMessage = new QShortcut(QKeySequence(Qt::Key_D), this);
-
-	connect(ui.pushButton_sendMessage, &QPushButton::clicked, this, &InterfaceChat::pushSendMessage);
-	connect(ui.pushButton_changeMessage, &QPushButton::clicked, this, &InterfaceChat::pushChangeContentMessage);
+	connect(ui.pushButton_sendMessage, & QPushButton::clicked, this, & InterfaceChat::callnewsignal);
+	//connect(ui.pushButton_sendMessage, &QPushButton::clicked, this, &InterfaceChat::newpushSendMessage);
+	//connect(ui.pushButton_changeMessage, &QPushButton::clicked, this, &InterfaceChat::pushChangeContentMessage);
 	connect(this, &InterfaceChat::signalSendMessage, this, &InterfaceChat::sendMessage);
 	connect(this, &InterfaceChat::signalAddMessageToChatForm, this, &InterfaceChat::addMessageToChatForm);
 	connect(this, &InterfaceChat::signalChangeContentMessage, this, &InterfaceChat::changeContentMessage);
@@ -30,7 +30,7 @@ void InterfaceChat::inicializeChat(GroupChat* theChatUsed, QString chatUserIsYou
 	updateInformationChat();
 }
 void InterfaceChat::inicializeContactChat(ContactChat* chat, QString nameChat, User* user1, User* user2) {
-	this->chat = chat;
+//	this->chat = chat;
 	ui.lineEdit_nameChatOrContact->setText(nameChat);
 
 }
@@ -53,12 +53,19 @@ void InterfaceChat::showChatContent()
 		addMessageToChatForm(msg);
 }
 
-void InterfaceChat::pushSendMessage()
-{
-	if (checkCorrectnessOfMessage(ui.lineEdit_chat->text()))
-		emit signalSendMessage(ui.lineEdit_chat->text(), userSender);
-	else return void();
-}
+//QString /*void*/ InterfaceChat::pushSendMessage()
+//{
+//	if (checkCorrectnessOfMessage(ui.lineEdit_chat->text()))
+//	{
+//		
+//		return ui.lineEdit_chat->text();
+//	}
+//	ui.lineEdit_chat->clear();
+//		
+//
+//		//emit signalSendMessage(ui.lineEdit_chat->text(), userSender); потом раскоментировать 
+//	//else return void();
+//}
 
 bool InterfaceChat::checkCorrectnessOfMessage(QString contentMessage)
 {
@@ -180,3 +187,6 @@ void InterfaceChat::changeContentMessage(QString content)
 }
 
 
+void InterfaceChat::callnewsignal() {
+	emit newsignaladdmes(ui.lineEdit_chat->text());
+}

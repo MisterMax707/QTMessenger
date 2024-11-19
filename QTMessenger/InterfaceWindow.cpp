@@ -17,7 +17,7 @@ InterfaceWindow::InterfaceWindow(QWidget* parent)
 	scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 	scrollArea->setWidgetResizable(true);
 	scrollArea->setWidget(widget);
-	
+
 	verticalLayoutPage2 = new QVBoxLayout();
 	verticalLayoutPage2->setAlignment(Qt::AlignTop);
 	widgetPage2 = new QWidget();
@@ -28,6 +28,13 @@ InterfaceWindow::InterfaceWindow(QWidget* parent)
 	scrollAreaPage2->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 	scrollAreaPage2->setWidgetResizable(true);
 	scrollAreaPage2->setWidget(widgetPage2);
+	//поменять чисто для теста
+
+	socket = new QTcpSocket(this);
+	connect(socket, &QTcpSocket::readyRead, this, &InterfaceWindow::readyRead);
+	connect(socket, &QTcpSocket::disconnected, socket, &QTcpSocket::deleteLater);
+	
+	//
 
 	connect(ui.pushButton_add, &QPushButton::clicked, this, &InterfaceWindow::pushAdd);
 	connect(ui.pushButton_createGroup, &QPushButton::clicked, this, &InterfaceWindow::openEnterNameGroupChat);
@@ -51,6 +58,16 @@ void InterfaceWindow::initializationUser(User* newUser, QString name)
 {
 	ui.lineEdit_userName->setText("User: " + name);
 	user = newUser;
+	user->createGroupChat("***ПЕРВЫЙ ТЕСТОВЫЙ ЧАТ***");
+	QPushButton* newChat = new QPushButton("***ПЕРВЫЙ ТЕСТОВЫЙ ЧАТ***");
+	connect(newChat, &QPushButton::clicked, this, &InterfaceWindow::openGroupChat);
+	connect(newChat, &QPushButton::clicked, this, &InterfaceWindow::connectToServer);
+	newChat->setProperty("link", QVariant::fromValue(user->getLastGroupChat()));
+	connect(this, &InterfaceWindow::signalInicializateChat, IC, &InterfaceChat::inicializeChat);
+	newChat->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred));
+	newChat->setFixedHeight(chatHeight);
+	verticalLayout->addWidget(newChat);
+	connect(IC, &InterfaceChat::newsignaladdmes, this, &InterfaceWindow::sendToServer);
 }
 
 void InterfaceWindow::pushAdd()
@@ -153,3 +170,41 @@ void InterfaceWindow::openContactChat() {//дописать для создан�
 	//emit signalInicializateContactChat(button->property("link").value<ContactChat*>(), button->text(),);
 	
 }
+
+
+//только для теста
+void InterfaceWindow::connectToServer()
+{
+	socket->connectToHost("198.168.135.240",2323);
+}
+void InterfaceWindow::sendToServer(QString str)
+{
+	Data.clear();
+	QDataStream out(&Data, QIODevice::WriteOnly);
+	out.setVersion(QDataStream::Qt_6_2);
+	out << str;
+	socket->write(Data);
+
+}
+void InterfaceWindow::readyRead()
+{
+	socket = (QTcpSocket*)sender();
+	QDataStream in(socket);
+	in.setVersion(QDataStream::Qt_6_2);
+	if (in.status() == QDataStream::Ok)
+	{
+		QString str;
+		in >> str;
+		IC->sendMessage(str, "алеша");
+		
+	}
+	else
+	{
+		IC->sendMessage("read error", "ошибка+ошибка");
+
+	}
+}
+
+
+
+//

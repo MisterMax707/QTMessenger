@@ -18,7 +18,7 @@ public:
 private:
 	Ui::InterfaceChatClass ui;
 	GroupChat* chat;
-	ContactChat* chat;
+	//ContactChat* chat;
 	QString userSender;
 
 	void clearChatContent();
@@ -36,11 +36,11 @@ signals:
 	void signalSendMessage(QString contentMessage, QString nickName);
 	void signalAddMessageToChatForm(Message* msg);
 	void signalChangeContentMessage(QString);
-
+	void newsignaladdmes(QString mes);
 public slots:
 	void inicializeChat(GroupChat* theChatUsed, QString chatUserIsYou, QString nameChat);
 	void inicializeContactChat(ContactChat* chat, QString nameChat, User* user1, User* user2);
-	void pushSendMessage();
+	//QString /*void*/ pushSendMessage();
 	void sendMessage(QString contentMessage, QString nickName);
 	void addMessageToChatForm(Message* msg);
 
@@ -48,4 +48,5 @@ public slots:
 	void pushChangeContentMessage();
 	void changeContentMessage(QString);
 	void deleteMessageByPressedKeyD();
+	void callnewsignal();
 };

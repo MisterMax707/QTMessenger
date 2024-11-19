@@ -4,6 +4,8 @@
 #include "ui_InterfaceWindow.h"
 #include "InterfaceChat.h"
 #include "User.h"
+#include <qtcpserver.h>
+#include <qtcpsocket.h>
 
 
 class InterfaceWindow : public QMainWindow
@@ -25,6 +27,8 @@ private:
     QWidget* widgetPage2;
     QVBoxLayout* verticalLayoutPage2;
     QScrollArea* scrollAreaPage2;
+    QTcpSocket* socket;
+    QByteArray Data;
     
 signals:
     void signalpushCreateGroupChat(QString name);
@@ -50,5 +54,10 @@ public slots:
     void createContact();
     void pushCreateContact();
     void openContactChat();
+    //для теста потом удалить
+    void connectToServer();
+    void readyRead();
+    void sendToServer(QString str);
+
 };
  
