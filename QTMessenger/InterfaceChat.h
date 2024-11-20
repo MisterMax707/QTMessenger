@@ -1,6 +1,8 @@
 #pragma once
 #include <QMainWindow>
 #include "ui_InterfaceChat.h"
+#include "qtcpserver.h"
+#include "qtcpsocket.h"
 #include "QQueue.h"
 #include "QListWidget.h"
 #include "QShortcut.h"
@@ -20,10 +22,15 @@ private:
 	GroupChat* chat;
 	//ContactChat* chat;
 	QString userSender;
+	QTcpSocket* socket;
+	QByteArray Data;
 
 	void clearChatContent();
 	void showChatContent();
 	void updateInformationChat();
+
+	void sendToServer(QString str, QString nick);
+	void onReadyRead();
 
 	bool checkCorrectnessOfMessage(QString contentMessage);
 	void setMessageParametersAndStyle(QListWidgetItem* messageItem, Message* msg);
@@ -33,6 +40,8 @@ private:
 	void setLinkToMessage(QListWidgetItem* messageItem, Message* msg);
 
 signals:
+	void signalSendToServer(QString content, QString sender);
+
 	void signalSendMessage(QString contentMessage, QString nickName);
 	void signalAddMessageToChatForm(Message* msg);
 	void signalChangeContentMessage(QString);

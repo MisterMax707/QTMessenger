@@ -6,6 +6,8 @@ InterfaceChat::InterfaceChat(QWidget* parent, GroupChat* newChat, QString nameUs
 	ui.setupUi(this);
 	updateInformationChat();
 
+	socket = new QTcpSocket(this);
+	socket->connectToHost("127.0.0.1", 2323);
 	ui.lineEdit_nameChatOrContact->setText(nameChat);
 	ui.lineEdit_nameChatOrContact->setEnabled(false);
 	ui.stackedWidget->setCurrentIndex(0);
@@ -20,6 +22,10 @@ InterfaceChat::InterfaceChat(QWidget* parent, GroupChat* newChat, QString nameUs
 	connect(this, &InterfaceChat::signalChangeContentMessage, this, &InterfaceChat::changeContentMessage);
 	connect(pressChangeMessage, &QShortcut::activated, this, &InterfaceChat::changeInputToChangeByPressedKeyC);
 	connect(pressDeleteMessage, &QShortcut::activated, this, &InterfaceChat::deleteMessageByPressedKeyD);
+
+	connect(socket, &QTcpSocket::readyRead, this, &InterfaceChat::onReadyRead);
+	connect(socket, &QTcpSocket::disconnected, socket, &QTcpSocket::deleteLater);
+	connect(this, &InterfaceChat::signalSendToServer, this, &InterfaceChat::sendToServer);
 }
 
 InterfaceChat::~InterfaceChat()
@@ -52,7 +58,10 @@ void InterfaceChat::showChatContent()
 void InterfaceChat::pushSendMessage()
 {
 	if (checkCorrectnessOfMessage(ui.lineEdit_chat->text()))
-		emit signalSendMessage(ui.lineEdit_chat->text(), userSender);
+	{
+		//emit signalSendMessage(ui.lineEdit_chat->text(), userSender);
+		emit signalSendToServer(ui.lineEdit_chat->text(), userSender);
+	}
 	else return void();
 }
 
@@ -176,3 +185,31 @@ void InterfaceChat::changeContentMessage(QString content)
 }
 
 
+
+void InterfaceChat::sendToServer(QString str, QString nick)
+{
+	Data.clear();
+	QDataStream out(&Data, QIODevice::WriteOnly);
+	out.setVersion(QDataStream::Qt_6_2);
+	out << str << nick;
+	socket->write(Data);
+
+}
+
+void InterfaceChat::onReadyRead()
+{
+	socket = (QTcpSocket*)sender();
+	QDataStream in(socket);
+	in.setVersion(QDataStream::Qt_6_2);
+	if (in.status() == QDataStream::Ok)
+	{
+		QString str;
+		QString nick;
+		in >> str >> nick;
+		emit signalSendMessage(str, nick);
+	}
+	else
+	{
+		emit signalSendMessage("read error", "ошибка+ошибка");
+	}
+}
