@@ -6,13 +6,17 @@ InterfaceLogin::InterfaceLogin(QWidget* parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
+
+	ui.stackedWidget->setCurrentIndex(0);
+
 	connect(ui.pushButton_confirm, &QPushButton::clicked, this, &InterfaceLogin::pushLogConfirm);
 	connect(ui.pushButton_registration, &QPushButton::clicked, this, &InterfaceLogin::pushRegistration);
 	connect(ui.pushButton_regConfirm, &QPushButton::clicked, this, &InterfaceLogin::pushRegConfirm);
+	connect(ui.pushButton_back, &QPushButton::clicked, this, &InterfaceLogin::pushRegBack);
 	connect(this, &InterfaceLogin::signalPushLogConfirm, this, &InterfaceLogin::carryOutAuthorization);
 	connect(this, &InterfaceLogin::signalPushRegistartion, this, &InterfaceLogin::switchPageStackWidget);
 	connect(this, &InterfaceLogin::signalPushRegConfirmWithPage, this, &InterfaceLogin::switchPageStackWidget);
-	connect(this, &InterfaceLogin::signalPushRegConfirmWithUser, IW, &InterfaceWindow::initializationUser);
+	connect(this, &InterfaceLogin::signalCreateFormForUserInMessenger, this, &InterfaceLogin::createFormForUserInMessenger);
 }
 
 InterfaceLogin::~InterfaceLogin()
@@ -52,6 +56,12 @@ void InterfaceLogin::pushRegistration()
 	emit signalPushRegistartion(pageRegisrtation);
 }
 
+void InterfaceLogin::pushRegBack()
+{
+	int pageLogin = 0;
+	emit signalPushRegConfirmWithPage(pageLogin);
+}
+
 void InterfaceLogin::pushRegConfirm()
 {
 	if (ChekingCorrectnessRegistartionOfData())
@@ -60,6 +70,7 @@ void InterfaceLogin::pushRegConfirm()
 		User* user = createUserEnteredDataForReg();
 		saveNick = ui.lineEdit_regNick->text();
 		savePass = ui.lineEdit_regPass->text();
+		emit signalCreateFormForUserInMessenger(user, ui.lineEdit_regNick->text());
 		emit signalPushRegConfirmWithUser(user, ui.lineEdit_regNick->text());
 		emit signalPushRegConfirmWithPage(pageLogin);
 	}
@@ -68,20 +79,25 @@ void InterfaceLogin::pushRegConfirm()
 
 User* InterfaceLogin::createUserEnteredDataForReg()
 {
-	QString tel = ui.lineEdit_regTel->text();
+	QString telephone = ui.lineEdit_regTelephone->text();
 	QString nick = ui.lineEdit_regNick->text();
 	QString pass = ui.lineEdit_regPass->text();
-	User* user = new User( nick, pass,tel);
+	User* user = new User( nick, pass, telephone);
 
 	return user;
 }
 
+void InterfaceLogin::createFormForUserInMessenger(User* user, QString nick)
+{
+	IW = new InterfaceWindow(nullptr, user, nick);
+}
+
 bool InterfaceLogin::ChekingCorrectnessRegistartionOfData()
 {
-	bool correctnessRegTel= ChekingCorrectnessRegTel(ui.lineEdit_regTel->text());
+	bool correctnessRegTel= ChekingCorrectnessRegTel(ui.lineEdit_regTelephone->text());
 	bool correctnessRegNick = ChekingCorrectnessRegNick(ui.lineEdit_regNick->text());
 	bool correctnessRegPass = ChekingCorrectnessRegPass(ui.lineEdit_regPass->text());
-	return  correctnessRegNick * correctnessRegPass;
+	return correctnessRegTel * correctnessRegNick * correctnessRegPass;
 }
 
 bool InterfaceLogin::ChekingCorrectnessRegTel(QString tel)

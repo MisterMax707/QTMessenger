@@ -14,19 +14,6 @@ class ContactChat;
 class GroupChat;
 class Contact;
 
-QStringList splitFIOintoComponents(QString& fio);
-void refillingFullName(QStringList& words);
-
-struct FullName
-{
-	FullName(QString name, QString surname, QString patronymic) :
-		name(name), surname(surname), patronymic(patronymic) {}; // чтобы не было отчества надо передать пустоту "" или ничего не ставить
-
-	QString name;
-	QString surname;
-	QString patronymic;
-};
-
 class User
 {
 public:
@@ -45,11 +32,11 @@ public:
 	void deleteGroupChat();
 
 	QString getNickName();
+	Contact* getLastContact();
 	GroupChat* getLastGroupChat();
 
 private:
 	int id_user;
-	//FullName FIO;
 	QString nickName;
 	QString status;
 	QString telephoneNumber;

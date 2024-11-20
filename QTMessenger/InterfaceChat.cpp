@@ -1,9 +1,12 @@
 #include "InterfaceChat.h"
 
-InterfaceChat::InterfaceChat(QWidget* parent)
-	: QMainWindow(parent)
+InterfaceChat::InterfaceChat(QWidget* parent, GroupChat* newChat, QString nameUser, QString nameChat)
+	: QMainWindow(parent), chat(newChat), userSender(nameUser)
 {
 	ui.setupUi(this);
+	updateInformationChat();
+
+	ui.lineEdit_nameChatOrContact->setText(nameChat);
 	ui.lineEdit_nameChatOrContact->setEnabled(false);
 	ui.stackedWidget->setCurrentIndex(0);
 
@@ -22,18 +25,11 @@ InterfaceChat::InterfaceChat(QWidget* parent)
 InterfaceChat::~InterfaceChat()
 {}
 
-void InterfaceChat::inicializeChat(GroupChat* theChatUsed, QString chatUserIsYou, QString nameChat)
-{
-	chat = theChatUsed;
-	userSender = chatUserIsYou;
-	ui.lineEdit_nameChatOrContact->setText(nameChat);
-	updateInformationChat();
-}
-void InterfaceChat::inicializeContactChat(ContactChat* chat, QString nameChat, User* user1, User* user2) {
-	this->chat = chat;
-	ui.lineEdit_nameChatOrContact->setText(nameChat);
-
-}
+//void InterfaceChat::inicializeContactChat(ContactChat* chat, QString nameChat, User* user1, User* user2) {
+//	this->chat = chat;
+//	ui.lineEdit_nameChatOrContact->setText(nameChat);
+//
+//}
 
 void InterfaceChat::updateInformationChat()
 {

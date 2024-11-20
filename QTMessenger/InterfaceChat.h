@@ -12,13 +12,13 @@ class InterfaceChat : public QMainWindow
 	Q_OBJECT
 
 public:
-	explicit InterfaceChat(QWidget *parent = nullptr);
+	explicit InterfaceChat(QWidget* parent = nullptr, GroupChat* newChat = nullptr, QString nameUser = nullptr, QString nameChat = nullptr);
 	~InterfaceChat();
 
 private:
 	Ui::InterfaceChatClass ui;
 	GroupChat* chat;
-	ContactChat* chat;
+	//ContactChat* chat;
 	QString userSender;
 
 	void clearChatContent();
@@ -38,8 +38,7 @@ signals:
 	void signalChangeContentMessage(QString);
 
 public slots:
-	void inicializeChat(GroupChat* theChatUsed, QString chatUserIsYou, QString nameChat);
-	void inicializeContactChat(ContactChat* chat, QString nameChat, User* user1, User* user2);
+	//void inicializeContactChat(ContactChat* chat, QString nameChat, User* user1, User* user2);
 	void pushSendMessage();
 	void sendMessage(QString contentMessage, QString nickName);
 	void addMessageToChatForm(Message* msg);

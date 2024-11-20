@@ -11,20 +11,13 @@ class InterfaceWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    InterfaceWindow(QWidget* parent = nullptr);
+    InterfaceWindow(QWidget* parent = nullptr, User* newUser = nullptr, QString name = nullptr);
     ~InterfaceWindow();
     
 private:
     Ui::InterfaceWindowClass ui;
     User* user;
-    QWidget* widget;
-    QVBoxLayout* verticalLayout;
-    QScrollArea* scrollArea;
-    InterfaceChat* IC=new InterfaceChat();
-    int chatHeight = 40;
-    QWidget* widgetPage2;
-    QVBoxLayout* verticalLayoutPage2;
-    QScrollArea* scrollAreaPage2;
+    InterfaceChat* IC;
     
 signals:
     void signalpushCreateGroupChat(QString name);
@@ -34,9 +27,9 @@ signals:
     void signalInicializateChat(GroupChat* chat, QString user, QString name);
     void signalInicializateContactChat(ContactChat* chat, QString name, User* user1, User* user2);
     void signalCreateContact();
+    void signalAddContactToForm(QString nick, Contact* contact);
      
 public slots:
-    void initializationUser(User* newUser, QString name);
     void createGroupChat(QString name);
     void pushAdd();
     void openAddWidget();
@@ -48,6 +41,7 @@ public slots:
     void openChat(ContactChat& chat);
     void openInicializateContactPage();
     void createContact();
+    void AddContactToForm(QString nick, Contact* contact);
     void pushCreateContact();
     void openContactChat();
 };
