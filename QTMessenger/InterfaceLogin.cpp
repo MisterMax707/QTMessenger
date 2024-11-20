@@ -89,6 +89,12 @@ User* InterfaceLogin::createUserEnteredDataForReg()
 
 void InterfaceLogin::createFormForUserInMessenger(User* user, QString nick)
 {
+	if (IW != nullptr) 
+	{
+		IW->close();
+		delete IW;
+		IW = nullptr;
+	}
 	IW = new InterfaceWindow(nullptr, user, nick);
 }
 

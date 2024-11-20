@@ -61,6 +61,7 @@ void InterfaceChat::pushSendMessage()
 	{
 		//emit signalSendMessage(ui.lineEdit_chat->text(), userSender);
 		emit signalSendToServer(ui.lineEdit_chat->text(), userSender);
+		ui.lineEdit_chat->clear();
 	}
 	else return void();
 }
@@ -85,7 +86,6 @@ void InterfaceChat::addMessageToChatForm(Message* msg)
 	QListWidgetItem* messageItem = new QListWidgetItem(fullMessage);
 	setMessageParametersAndStyle(messageItem, msg);
 	ui.listWidget_chat->addItem(messageItem);
-	ui.lineEdit_chat->clear();
 }
 
 void InterfaceChat::setMessageParametersAndStyle(QListWidgetItem* messageItem, Message* msg)

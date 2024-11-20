@@ -83,7 +83,7 @@ void InterfaceWindow::openMainWindow()
 	ui.stackedWidget->setCurrentIndex(0);
 }
 
-void InterfaceWindow::openGroupChat(/*GroupChat* chat*/)
+void InterfaceWindow::openGroupChat()
 {
 	//if (!IC->isVisible())
 	//{
@@ -92,7 +92,12 @@ void InterfaceWindow::openGroupChat(/*GroupChat* chat*/)
 	//QPushButton* button = (QPushButton*)sender();
 	//emit signalInicializateChat(button->property("link").value<GroupChat*>(), user->getNickName(), button->text());
 	if (IC != nullptr)
+	{
 		IC->close();
+		delete IC;
+		IC = nullptr;
+	}
+
 	if (ui.listWidget_formChats->currentItem())
 	{
 		QListWidgetItem* currentChatItem = ui.listWidget_formChats->currentItem();
