@@ -52,8 +52,8 @@ public slots:
 	void sendMessage(QString contentMessage, QString nickName);
 	void addMessageToChatForm(Message* msg);
 
-	void changeInputToChangeByPressedKeyC();
-	void pushChangeContentMessage();
-	void changeContentMessage(QString);
-	void deleteMessageByPressedKeyD();
+	//void changeInputToChangeByPressedKeyC();
+	//void pushChangeContentMessage();
+	//void changeContentMessage(QString);
+	//void deleteMessageByPressedKeyD();
 };

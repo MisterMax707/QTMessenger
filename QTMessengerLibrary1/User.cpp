@@ -1,12 +1,14 @@
 #include "User.h"
 
+#include "User.h"
+
 int User::id_user = 0;
 
-User::User(QString nick, QString pass, QString telephoneNumber) : nickName(nick), password(pass), telephoneNumber(telephoneNumber) 
+User::User(QString nick, QString pass, QString telephoneNumber) : nickName(nick), password(pass), telephoneNumber(telephoneNumber)
 {
 	id_user++;
 };
-User::User(QString nick, QString telephoneNumber) : nickName(nick), telephoneNumber(telephoneNumber) 
+User::User(QString nick, QString telephoneNumber) : nickName(nick), telephoneNumber(telephoneNumber)
 {
 	id_user++;
 };
@@ -65,7 +67,7 @@ Contact* User::getLastContact()
 	return ListContacts.back();
 }
 
-GroupChat* User::getLastGroupChat() 
+GroupChat* User::getLastGroupChat()
 {
 	return ListGroupChats.back();
 }
@@ -73,8 +75,8 @@ GroupChat* User::getLastGroupChat()
 
 Contact* User::getAnIDContact(int id)
 {
-	for(auto& contact : ListContacts)
-		if(contact->getIDContact() == id)
+	for (auto& contact : ListContacts)
+		if (contact->getIDContact() == id)
 			return contact;
 }
 

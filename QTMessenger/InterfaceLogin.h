@@ -1,5 +1,6 @@
 #pragma once
 #include <QMainWindow>
+#include "QMessageBox.h"
 #include "ui_InterfaceLogin.h"
 #include "InterfaceWindow.h"
 

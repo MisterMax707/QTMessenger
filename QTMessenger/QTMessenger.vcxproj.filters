@@ -46,12 +46,6 @@
     <ClCompile Include="InterfaceChat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Contact.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GroupChat.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="InterfaceLogin.h">
@@ -68,37 +62,5 @@
     <QtUic Include="InterfaceChat.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <ClCompile Include="Message.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="User.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ContactChat.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Participator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="ContactChat.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Message.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="User.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GroupChat.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Participator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Contact.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

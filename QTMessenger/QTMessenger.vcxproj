@@ -63,6 +63,15 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
   </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Link>
+      <AdditionalLibraryDirectories>C:\Users\Данила\source\repos\c++_QT\QTMessenger\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>QTMessengerLibrary1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Данила\source\repos\c++_QT\QTMessenger\QTMessengerLibrary1;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
     <ClCompile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -92,29 +101,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Contact.cpp" />
-    <ClCompile Include="GroupChat.cpp" />
-    <ClCompile Include="Message.cpp" />
-    <ClCompile Include="Participator.cpp" />
-    <ClCompile Include="User.cpp" />
     <QtRcc Include="InterfaceWindow.qrc" />
     <QtUic Include="InterfaceChat.ui" />
     <QtUic Include="InterfaceLogin.ui" />
     <QtUic Include="InterfaceWindow.ui" />
     <QtMoc Include="InterfaceWindow.h" />
-    <ClCompile Include="ContactChat.cpp" />
     <ClCompile Include="InterfaceChat.cpp" />
     <ClCompile Include="InterfaceLogin.cpp" />
     <ClCompile Include="InterfaceWindow.cpp" />
     <ClCompile Include="main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Contact.h" />
-    <ClInclude Include="ContactChat.h" />
-    <ClInclude Include="GroupChat.h" />
-    <ClInclude Include="Message.h" />
-    <ClInclude Include="Participator.h" />
-    <ClInclude Include="User.h" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="InterfaceLogin.h" />
