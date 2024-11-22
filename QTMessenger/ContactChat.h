@@ -6,19 +6,19 @@
 
 class ContactChat
 {
-private:
-	int id;
-
-protected:
-	QQueue<Message*> messages;
-
 public:
-	ContactChat() {};
+	ContactChat();
 
 	QQueue<Message*> getListOfChatMessage();
 	void addMessageToChatList(Message* msg);
 	void deleteMessageFromChatList(Message* msg);
+	int getIDContactChat();
 
-	int getId() {return this->id;}
+protected:
+	QQueue<Message*> messages;
+
+private:
+	static int id_chat;
+
 };
 

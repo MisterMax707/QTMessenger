@@ -9,6 +9,8 @@ class Contact
 {
 public:
 	Contact(User* user): user(user)  {};
+	int getIDContact();
+
 private:
 	User* user;
 };

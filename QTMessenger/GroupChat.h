@@ -1,5 +1,5 @@
 #pragma once
-#include <list>
+#include <QList>
 #include "ContactChat.h"
 #include "Participator.h"
 
@@ -9,11 +9,12 @@ class Participator;
 class GroupChat : public ContactChat
 {
 public:
-	GroupChat(QString name) : GroupName(name) {};
+	GroupChat(QString name);
+	int getIDGroupChat();
 
 private:
-	int id;
+	static int id_group;
 	QString GroupName;
-	std::list <Participator*> ListParticipators;
-	std::list <Participator*> ListAdmins;
+	QList <Participator*> ListParticipators;
+	QList <Participator*> ListAdmins;
 };

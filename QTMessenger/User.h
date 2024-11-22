@@ -1,9 +1,9 @@
 #pragma once
-#include <list>
-#include "QString"
-#include "QStringList"
-#include "QRegularExpression"
-#include "QMessageBox"
+#include <QList>
+#include "QString.h"
+#include "QStringList.h"
+#include "QRegularExpression.h"
+#include "QMessageBox.h"
 #include "GroupChat.h"
 #include "ContactChat.h"
 #include "Contact.h"
@@ -17,11 +17,11 @@ class Contact;
 class User
 {
 public:
-	User(QString nick, QString pass, QString telephoneNumber) : nickName(nick), password(pass), telephoneNumber(telephoneNumber) {}; // ƒобавить присовение айди, воспользовать€ static
-	User( QString nick, QString telephoneNumber) : nickName(nick), telephoneNumber(telephoneNumber) {};
+	User(QString nick, QString pass, QString telephoneNumber); // ƒобавить присовение айди, воспользовать€ static
+	User(QString nick, QString telephoneNumber);
+
 	void changeTelephone(QString newtel);
 	void changeNickName(QString newNickName);
-	void changeStatus(QString newStatus);
 
 	void addContact(User* user);
 	void createGroupChat(QString name);
@@ -32,17 +32,22 @@ public:
 	void deleteGroupChat();
 
 	QString getNickName();
+	int getIDUser();
 	Contact* getLastContact();
 	GroupChat* getLastGroupChat();
 
+	Contact* getAnIDContact(int id);
+	GroupChat* getAnIDGroupChat(int id);
+	ContactChat* getAnIDContactChat(int id);
+
 private:
-	int id_user;
+	static int id_user;
+	bool status;
 	QString nickName;
-	QString status;
 	QString telephoneNumber;
 	QString password;
-	std::list<GroupChat*> ListGroupChats;
-	std::list<ContactChat*> ListContactChats;
-	std::list<Contact*> ListContacts;
+	QList<GroupChat*> ListGroupChats;
+	QList<ContactChat*> ListContactChats;
+	QList<Contact*> ListContacts;
 };
 

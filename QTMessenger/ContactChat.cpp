@@ -1,5 +1,10 @@
 #include "ContactChat.h"
 
+ContactChat::ContactChat()
+{
+	id_chat++;
+}
+
 void ContactChat::addMessageToChatList(Message* msg)
 {
 	messages.push_back(msg);
@@ -15,6 +20,11 @@ void ContactChat::deleteMessageFromChatList(Message* msg)
 			tempQueue.enqueue(current);
 	}
 	messages = tempQueue;
+}
+
+int ContactChat::getIDContactChat()
+{
+	return id_chat;
 }
 
 QQueue<Message*> ContactChat::getListOfChatMessage()
