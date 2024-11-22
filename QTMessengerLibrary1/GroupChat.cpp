@@ -11,3 +11,11 @@ int GroupChat::getIDGroupChat()
 {
     return id_group;
 }
+
+QDataStream& operator<<(QDataStream& out, GroupChat& groupChat) {
+    out << groupChat.GroupName;
+}
+
+QDataStream& operator>>(QDataStream& in, GroupChat& groupChat) {
+    in >> groupChat.GroupName;
+}

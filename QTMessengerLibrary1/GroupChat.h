@@ -1,5 +1,6 @@
 #pragma once
 #include <QList>
+#include <QDataStream>
 #include "ContactChat.h"
 #include "Participator.h"
 
@@ -21,6 +22,9 @@ class QTMESSENGERLIBRARY1_EXPORT GroupChat : public ContactChat
 public:
 	GroupChat(QString name);
 	int getIDGroupChat();
+
+	friend QDataStream& operator<<(QDataStream& out, const GroupChat& groupChat);
+	friend QDataStream& operator>>(QDataStream& in, GroupChat& groupChat);
 
 private:
 	static int id_group;
