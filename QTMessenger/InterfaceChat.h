@@ -33,24 +33,24 @@ private:
 	void onReadyRead();
 
 	bool checkCorrectnessOfMessage(QString contentMessage);
-	void setMessageParametersAndStyle(QListWidgetItem* messageItem, Message* msg);
+	void setMessageParametersAndStyle(QListWidgetItem* messageItem, QString sender, int id_msg);
 	void setFontSize(QListWidgetItem* messageItem, int size);
 	void setFontBackground(QListWidgetItem* messageItem, QColor color);
-	void checkSender(QListWidgetItem* messageItem, Message* msg);
-	void setLinkToMessage(QListWidgetItem* messageItem, Message* msg);
+	void checkSender(QListWidgetItem* messageItem, QString sender);
+	void setLinkToMessage(QListWidgetItem* messageItem, int id_msg);
 
 signals:
 	void signalSendToServer(QString content, QString sender);
 
-	void signalSendMessage(QString contentMessage, QString nickName);
-	void signalAddMessageToChatForm(Message* msg);
+	//void signalSendMessage(QString contentMessage, QString nickName);
+	void signalAddMessageToChatForm(QString content, QString sender, int id_msg);
 	void signalChangeContentMessage(QString);
 
 public slots:
 	//void inicializeContactChat(ContactChat* chat, QString nameChat, User* user1, User* user2);
 	void pushSendMessage();
-	void sendMessage(QString contentMessage, QString nickName);
-	void addMessageToChatForm(Message* msg);
+	//void sendMessage(QString contentMessage, QString nickName);
+	void addMessageToChatForm(QString content, QString sender, int id_msg);
 
 	//void changeInputToChangeByPressedKeyC();
 	//void pushChangeContentMessage();

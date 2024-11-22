@@ -20,7 +20,6 @@ void Server::incomingConnection(qintptr socketDescriptor)
 	connect(socket, &QTcpSocket::disconnected, socket, &QTcpSocket::deleteLater);
 	Sockets.push_back(socket);
 	qDebug() << "client " << socketDescriptor << " connected...";
-
 }
 
 void Server::readyRead()
@@ -33,28 +32,31 @@ void Server::readyRead()
 		qDebug() << "read....";
 		QString str;
 		QString nick;
-		in >> str >> nick;
-		qDebug() << str << " " << nick;
-		SendToClient(str, nick);
+		int id;
+		in >> str >> nick >> id;
+		qDebug() << str << " " << nick << " " << id;
 
+		messageSender = new MessageSender(nullptr, id);
+		connect(messageSender, &MessageSender::signalSendToClient, this, &Server::SendToClient);
+		messageSender->addMessageToQueueForSending(str, nick);
+		qDebug() << "this :" << str << " " << nick;
+		//SendToClient(str, nick);
 	}
 	else
 	{
 		qDebug() << "DataStream Error";
-
 	}
 
 }
 
 
-void Server::SendToClient(QString str, QString nick)
+void Server::SendToClient(QString str, QString nick, int id)
 {
 	Data.clear();
 	QDataStream out(&Data, QIODevice::WriteOnly);
 	out.setVersion(QDataStream::Qt_6_2);
-	out << str << nick;
+	out << str << nick << id;
 	//socket->write(Data);
-	for (int i = 0; i < Sockets.size(); i++) {
-		Sockets[i]->write(Data);
-	}
+	for (auto& socket : Sockets)
+		socket->write(Data);
 }
