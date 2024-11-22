@@ -1,5 +1,7 @@
 #include "User.h"
 
+int User::id_user = 0;
+
 User::User(QString nick, QString pass, QString telephoneNumber) : nickName(nick), password(pass), telephoneNumber(telephoneNumber) 
 {
 	id_user++;

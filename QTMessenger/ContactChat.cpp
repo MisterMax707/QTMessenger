@@ -1,5 +1,7 @@
 #include "ContactChat.h"
 
+int ContactChat::id_chat = 0;
+
 ContactChat::ContactChat()
 {
 	id_chat++;
