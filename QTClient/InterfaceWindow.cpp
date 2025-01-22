@@ -13,7 +13,7 @@ InterfaceWindow::InterfaceWindow(QString id, SocketManager* socket, QWidget* par
 	this->socket = socket;
 
 	connect(this->socket, &SocketManager::signalTransmitChatsToForm, this, &InterfaceWindow::downloadChats);
-	connect(this->socket, &SocketManager::signalTransmitContactsToForm, this, &InterfaceWindow::createContacts);
+	connect(this->socket, &SocketManager::signalTransmitContactsToForm, this, &InterfaceWindow::createListOfContacts);
 	connect(this->socket, &SocketManager::signalAddChatToForm, this, &InterfaceWindow::addChat);
 	connect(ui.pushButton_add, &QPushButton::clicked, this, &InterfaceWindow::pushAdd);
 	connect(ui.pushButton_backToMainWindow, &QPushButton::clicked, this, &InterfaceWindow::openMainWindow);
@@ -22,12 +22,14 @@ InterfaceWindow::InterfaceWindow(QString id, SocketManager* socket, QWidget* par
 	connect(ui.pushButton_returnToPageCreateGroupOrContact, &QPushButton::clicked, this, &InterfaceWindow::pushAdd);
 	connect(ui.listWidget, &QListWidget::itemClicked, this, &InterfaceWindow::onGroupChatClicked);
 	connect(this, &InterfaceWindow::signalCreateChatWindow, this, &InterfaceWindow::createChatWindow);
+	connect(ui.pushButton_newContact, &QPushButton::clicked, this, &InterfaceWindow::createContact);
+	connect(ui.pushButton_CreateContact, &QPushButton::clicked, this, &InterfaceWindow::pushCreateContact);
 	//connect(ui.pushButton_returnToPageCreateContact, &QPushButton::clicked, this, &InterfaceWindow::pushAdd);
 
 	//connect(this, &InterfaceWindow::signalpushCreateGroupChat, this, &InterfaceWindow::createGroupChat);
 	//connect(this, &InterfaceWindow::signalAddChatToForm, this, &InterfaceWindow::addChatToForm);
 	/*connect(ui.pushButton_newContact, &QPushButton::clicked, this, &InterfaceWindow::openInicializateContactPage);
-	connect(ui.pushButton_CreateContact, &QPushButton::clicked, this, &InterfaceWindow::pushCreateContact);
+	
 	connect(this, &InterfaceWindow::signalCreateContact, this, &InterfaceWindow::createContact);*/
 
 }
@@ -97,10 +99,11 @@ void InterfaceWindow::pushOkCreateGroupChat()
 	idOfSelectedContacts += userId;
 	socket->sendToServer("ADD_CHAT " + ui.lineEdit_groupChatName->text() + "#" + idOfSelectedContacts);
 	ui.lineEdit_groupChatName->clear();
+	ui.stackedWidget->setCurrentIndex(0);
 }
 
 
-void InterfaceWindow::createContacts(QString str)
+void InterfaceWindow::createListOfContacts(QString str)
 {
 	ui.listWidget_2->clear();
 	QString contactName, id;
@@ -159,8 +162,19 @@ void InterfaceWindow::createChatWindow(QString id, QString name,QString userId, 
 
 }
 
+void InterfaceWindow::createContact()
+{
+	ui.stackedWidget->setCurrentIndex(3);
+}
 
 
+void InterfaceWindow::pushCreateContact()
+{
+	socket->sendToServer("ADD_CONTACT " + ui.lineEdit_Nick->text() + "#" + ui.lineEdit_telephoneNumber->text() + "#" + userId);
+	ui.lineEdit_Nick->clear();
+	ui.lineEdit_telephoneNumber->clear();
+	ui.stackedWidget->setCurrentIndex(0);
+}
 //
 //void InterfaceWindow::openAddWidget()
 //{
@@ -248,8 +262,3 @@ void InterfaceWindow::createChatWindow(QString id, QString name,QString userId, 
 //}
 
 
-//только для теста
-
-
-
-//

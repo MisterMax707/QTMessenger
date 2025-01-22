@@ -27,7 +27,10 @@ void User::changeNickName(QString newNickName)
 {
 	nickName = newNickName;
 }
-
+void User::changePassword(QString newpassword)
+{
+	password = newpassword;
+}
 void User::changeStatus(QString newStatus)
 {
 	status = newStatus;
@@ -74,7 +77,10 @@ QString User::getPassword()
 {
 	return password;
 }
-
+QString User::getTel()
+{
+	return telephoneNumber;
+}
 GroupChat* User::getLastGroupChat() {
 	return ListGroupChats.back();
 }

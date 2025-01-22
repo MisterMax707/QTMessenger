@@ -28,10 +28,13 @@ private:
 	void SendToClient(QString str, QString id);
 	void SendToClient(QString str, QStringList listOfId);
 	QString checkUser(QString nick, QString pass);
+	QString checkUser(QString tel);
 	Socket* findSocketById(QString id);
 	User* findUserById(QString id);
 	GroupChat* findChatById(QString id);
 	QString AddChatOnServer(QString str);
+	void AddUserOnServer(QString str);
+	void AddContactToUser(QString str);
 	QStringList idOfUsersToIdOfSockets(QStringList idOfUsers);
 	
 	

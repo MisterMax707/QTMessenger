@@ -35,10 +35,11 @@ public:
 		id = QString::number(count++);
 	}; // Добавить присовение айди, воспользоватья static
 	User(QString nick, QString telephoneNumber) : nickName(nick), telephoneNumber(telephoneNumber) {};
+	User(QString tel) :telephoneNumber(tel) {};
 	void changeTelephone(QString newtel);
 	void changeNickName(QString newNickName);
 	void changeStatus(QString newStatus);
-
+	void changePassword(QString password);
 	void addContact(QString id, QString NickName);
 	void createGroupChat(QString name, QStringList listOfIdUsers);//возможно не понадобится так как чаты будут добавляться сначала на сервер а потом уже к пользователям по id пользователей
 	void createGroupChat(GroupChat* chat);
@@ -49,6 +50,7 @@ public:
 
 	QString getNickName();
 	QString getPassword();
+	QString getTel();
 	QString getGroupChats();
 	QString getContacts();
 	GroupChat* getLastGroupChat();

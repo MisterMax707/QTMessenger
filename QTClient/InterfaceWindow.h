@@ -42,12 +42,12 @@ public slots:
 	  // void openGroupChat(/*GroupChat* chat*/);
 	 //  void openChat(ContactChat& chat);
 	  /* void openInicializateContactPage();
-	   void createContact();
-	   void pushCreateContact();
+	   
+	   
 	   void openContactChat();*/
 
 	void downloadChats(QString str);
-	void createContacts(QString str);
+	void createListOfContacts(QString str);
 	void pushAdd();
 	void openMainWindow();
 	void openEnterNameGroupChat();
@@ -55,4 +55,6 @@ public slots:
 	void addChat(QString str);
 	void onGroupChatClicked(QListWidgetItem* item);
 	void createChatWindow(QString id, QString name,QString userId,SocketManager* socket);
+	void createContact();
+	void pushCreateContact();
 };

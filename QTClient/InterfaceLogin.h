@@ -18,11 +18,11 @@ private:
 	Ui::InterfaceLoginClass ui;
 	InterfaceWindow* IW;
 	//User* createUserEnteredDataForReg();
-	/*bool ChekingCorrectnessLoginOfData(QString login, QString pass);
+	bool ChekingCorrectnessLoginOfData(QString login, QString pass);
 	bool ChekingCorrectnessRegistartionOfData();
 	bool ChekingCorrectnessRegTel(QString fio);
 	bool ChekingCorrectnessRegNick(QString nick);
-	bool ChekingCorrectnessRegPass(QString pass);*/
+	bool ChekingCorrectnessRegPass(QString pass);
 	SocketManager* socket;
 
 
@@ -35,14 +35,18 @@ signals:
 	void signalSetSocketManagerOnMainWindow(SocketManager* socket);
 
 private slots:
-	//void pushRegistration();
+	void pushRegistration();
 	void pushLogConfirm();
-	//void pushRegConfirm();
+	void pushRegConfirm();
 	void createMainWindow(QString str, SocketManager* socket);
 	void writeErrorNoSuchUser();
 	
 	void deleteMainWindow();
+	void registrationSuccess();
+
 	//void carryOutAuthorization(QString loginNick, QString loginPass);
 	//void switchPageStackWidget(int page);
 	//void displayMessage();
+
+
 };

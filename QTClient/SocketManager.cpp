@@ -75,6 +75,12 @@ void SocketManager::readyRead()
 			{
 				emit signalAddMessageToForm(str);
 			}
+			else if (codeWord == "REGISTRATION_ANSWER")
+			{
+				emit signalRegistrationSuccess();
+				socket->disconnect();
+			}
+			
 			break;
 		}
 

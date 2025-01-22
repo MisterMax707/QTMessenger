@@ -23,7 +23,7 @@ Server::Server() {
 	users[0]->addContact("1", "Dan");
 	users[0]->addContact("2", "Darina");
 	users[1]->addContact("0", "Max");
-	
+
 }
 
 void Server::incomingConnection(qintptr socketDescriptor)
@@ -71,6 +71,11 @@ void Server::readyRead()
 				qDebug() << "online user with id: " + checkUser(str.left(str.indexOf(' ')), str.mid(str.indexOf(' ') + 1));
 
 			}
+			else if (codeWord == "REGISTRATION")
+			{
+				AddUserOnServer(str);
+				SendToClient("REGISTRATION_ANSWER ", socket->id);
+			}
 			else if (codeWord == "LIST_OF_CHATS")
 			{
 				SendToClient("LIST_OF_CHATS_ANSWER " + findUserById(str)->getGroupChats(), socket->id);
@@ -91,6 +96,7 @@ void Server::readyRead()
 			}
 			else if (codeWord == "ADD_CONTACT")
 			{
+				AddContactToUser(str);
 
 			}
 			else if (codeWord == "LIST_OF_CONTACTS")
@@ -178,6 +184,17 @@ QString Server::checkUser(QString nick, QString pass) {//проверяет есть ли польз
 	return "Error";
 }
 
+QString Server::checkUser(QString tel)
+{
+	for (int i = 0; i < users.size(); i++)
+		if (users[i]->getTel() == tel)
+		{
+			return users[i]->id;
+
+		}
+	return "Error";
+}
+
 
 
 void Server::deleteSocket(QString id)//удаляет из списка Sockets сокет по id сокета
@@ -249,4 +266,46 @@ QStringList Server::idOfUsersToIdOfSockets(QStringList idOfUsers)
 
 	}
 	return result;
+}
+
+
+void Server::AddUserOnServer(QString str)
+{
+	QString nick = str.left(str.indexOf('#'));
+	str = str.mid(str.indexOf('#') + 1);
+	QString pass = str.left(str.indexOf('#'));
+	str = str.mid(str.indexOf('#') + 1);
+	QString tel = str.left(str.indexOf('#'));
+	QString idOfUser = checkUser(tel);
+	if (idOfUser != "Error")
+	{
+		User* user = findUserById(idOfUser);
+		if (user->getPassword().isEmpty())
+		{
+			user->changeNickName(nick);
+			user->changePassword(pass);
+		}
+
+	}
+	else
+		users.push_back(new User(nick, pass, tel));
+}
+
+void Server::AddContactToUser(QString str)
+{
+	QString nick = str.left(str.indexOf('#'));
+	str = str.mid(str.indexOf('#') + 1);
+	QString tel = str.left(str.indexOf('#'));
+	str = str.mid(str.indexOf('#') + 1);
+	QString idOfUser = str.left(str.indexOf('#'));
+	QString idOfContact = checkUser(tel);
+	if (idOfContact == "Error")
+	{
+		User* newUser = new User(tel);
+		users.push_back(newUser);
+		findUserById(idOfUser)->addContact(newUser->id, nick);
+	}
+	else
+		findUserById(idOfUser)->addContact(idOfContact, nick);
+
 }
