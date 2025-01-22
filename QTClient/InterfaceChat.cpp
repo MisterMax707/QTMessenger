@@ -1,12 +1,18 @@
 #include "InterfaceChat.h"
 
-InterfaceChat::InterfaceChat(QWidget* parent)
+InterfaceChat::InterfaceChat(QString id, QString name,QString senderId,SocketManager* socket, QWidget* parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
 	ui.lineEdit_nameChatOrContact->setEnabled(false);
-	ui.stackedWidget->setCurrentIndex(0);
-
+	idOfChat = id;
+	ui.lineEdit_nameChatOrContact->setText(name);
+	
+	this->socket = socket;
+	idOfSender = senderId;
+	connect(this->socket, &SocketManager::signalTransmitMessangesToForm, this, &InterfaceChat::downloadMessages);
+	connect(ui.pushButton_sendMessage, &QPushButton::clicked, this, &InterfaceChat::sendMessage);
+	connect(this->socket, &SocketManager::signalAddMessageToForm, this, &InterfaceChat::addMessageToForm);
 	/*QShortcut* pressChangeMessage = new QShortcut(QKeySequence(Qt::Key_C), this);
 	QShortcut* pressDeleteMessage = new QShortcut(QKeySequence(Qt::Key_D), this);*/
 	//connect(ui.pushButton_sendMessage, & QPushButton::clicked, this, & InterfaceChat::callnewsignal);
@@ -21,6 +27,59 @@ InterfaceChat::InterfaceChat(QWidget* parent)
 
 InterfaceChat::~InterfaceChat()
 {}
+
+
+
+void InterfaceChat::downloadMessages(QString str)
+{
+	ui.listWidget_chat->clear();
+	//QString idOfMessage, messageContent;
+	while (!str.isEmpty())
+	{
+
+		QString messageContent = str.left(str.indexOf('#'));
+		str = str.mid(str.indexOf('#') + 1);
+		QString idOfSender = str.left(str.indexOf('#'));
+		str = str.mid(str.indexOf('#') + 1);
+		QString idOfMessage = str.left(str.indexOf('#'));
+		QListWidgetItem* newItem = new QListWidgetItem(messageContent);
+		if (str.indexOf('#') == -1)
+		{
+			setMessageParametersAndStyle(newItem, idOfSender, idOfMessage);
+			ui.listWidget_chat->addItem(newItem);
+			break;
+		}
+		else {
+			str = str.mid(str.indexOf('#') + 1);
+			setMessageParametersAndStyle(newItem, idOfSender, idOfMessage);
+			ui.listWidget_chat->addItem(newItem);
+		}
+
+
+	}
+}
+
+
+void InterfaceChat::addMessageToForm(QString str)//строка состоит из содержания сообщения id отправителя и  id сообщения
+{
+	QString messageContent = str.left(str.indexOf('#'));
+	str = str.mid(str.indexOf('#') + 1);
+	QString idOfSender= str.left(str.indexOf('#'));
+	str = str.mid(str.indexOf('#') + 1);
+	QString idOfMessage = str.left(str.indexOf('#'));
+	QListWidgetItem* newItem = new QListWidgetItem(messageContent);
+	setMessageParametersAndStyle(newItem, idOfSender, idOfMessage);
+	ui.listWidget_chat->addItem(newItem);
+
+}
+
+void InterfaceChat::sendMessage()
+{
+	socket->sendToServer("ADD_MESSAGE " + ui.lineEdit_chat->text() + "#" + idOfSender + "#" + idOfChat);
+}
+
+
+
 
 //void InterfaceChat::inicializeChat(GroupChat* theChatUsed, QString chatUserIsYou, QString nameChat)
 //{
@@ -90,41 +149,41 @@ bool InterfaceChat::checkCorrectnessOfMessage(QString contentMessage)
 //	ui.lineEdit_chat->clear();
 //}
 //
-//void InterfaceChat::setMessageParametersAndStyle(QListWidgetItem* messageItem, Message* msg)
-//{
-//	int size = 14;
-//	QColor color(120, 120, 120);
-//	setFontSize(messageItem, size);
-//	setFontBackground(messageItem, color);
-//	setLinkToMessage(messageItem, msg);
-//	checkSender(messageItem, msg);
-//}
+void InterfaceChat::setMessageParametersAndStyle(QListWidgetItem* messageItem, QString idSender,QString idMessage)
+{
+	int size = 14;
+	QColor color(120, 120, 120);
+	setFontSize(messageItem, size);
+	setFontBackground(messageItem, color);
+	setLinkToMessage(messageItem, idMessage);
+	checkSender(messageItem, idSender);
+}
 //
-//void InterfaceChat::setFontSize(QListWidgetItem* messageItem, int size)
-//{
-//	QFont messageFont = messageItem->font();
-//	messageFont.setPointSize(14);
-//	messageItem->setFont(messageFont);
-//}
+void InterfaceChat::setFontSize(QListWidgetItem* messageItem, int size)
+{
+	QFont messageFont = messageItem->font();
+	messageFont.setPointSize(14);
+	messageItem->setFont(messageFont);
+}
+
+void InterfaceChat::setFontBackground(QListWidgetItem* messageItem, QColor color)
+{
+	QBrush brush(color);
+	messageItem->setBackground(brush);
+}
+
+void InterfaceChat::setLinkToMessage(QListWidgetItem* messageItem, QString idOfMessage)
+{
+	messageItem->setData(Qt::UserRole, idOfMessage);
+}
 //
-//void InterfaceChat::setFontBackground(QListWidgetItem* messageItem, QColor color)
-//{
-//	QBrush brush(color);
-//	messageItem->setBackground(brush);
-//}
-//
-//void InterfaceChat::setLinkToMessage(QListWidgetItem* messageItem, Message* msg)
-//{
-//	messageItem->setData(Qt::UserRole, QVariant::fromValue(msg));
-//}
-//
-//void InterfaceChat::checkSender(QListWidgetItem* messageItem, Message* msg)
-//{
-//	if(msg->getSender() == userSender)
-//		messageItem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-//	else
-//		messageItem->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
-//}
+void InterfaceChat::checkSender(QListWidgetItem* messageItem, QString idSender)
+{
+	if(idOfSender ==idSender)
+		messageItem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+	else
+		messageItem->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+}
 //
 //
 //void InterfaceChat::deleteMessageByPressedKeyD()

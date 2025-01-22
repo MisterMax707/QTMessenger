@@ -8,13 +8,12 @@ class InterfaceChat : public QMainWindow
 	Q_OBJECT
 
 public:
-	explicit InterfaceChat(QWidget *parent = nullptr);
+	explicit InterfaceChat(QString id, QString name,QString senderId,SocketManager* socket, QWidget* parent = nullptr);
 	~InterfaceChat();
 
 private:
 	Ui::InterfaceChatClass ui;
-//	GroupChat* chat;
-	//ContactChat* chat;
+	
 	QString userSender;
 
 	void clearChatContent();
@@ -22,13 +21,17 @@ private:
 	void updateInformationChat();
 
 	bool checkCorrectnessOfMessage(QString contentMessage);
-	//void setMessageParametersAndStyle(QListWidgetItem* messageItem, Message* msg);
-	//void setFontSize(QListWidgetItem* messageItem, int size);
-	//void setFontBackground(QListWidgetItem* messageItem, QColor color);
-	//void checkSender(QListWidgetItem* messageItem, Message* msg);
-//	void setLinkToMessage(QListWidgetItem* messageItem, Message* msg);
-	SocketManager socket;
+	void setMessageParametersAndStyle(QListWidgetItem* messageItem,QString idSender,QString idMessage);
+	void setFontSize(QListWidgetItem* messageItem, int size);
+	void setFontBackground(QListWidgetItem* messageItem, QColor color);
+	void checkSender(QListWidgetItem* messageItem, QString idSender);
+	void setLinkToMessage(QListWidgetItem* messageItem, QString idOfMessage);
+	SocketManager* socket;
 	QByteArray Data;
+	QString idOfChat;
+	QString idOfParticipators;
+	QString idOfSender;
+
 
 signals:
 	void signalSendMessage(QString contentMessage, QString nickName);
@@ -36,6 +39,9 @@ signals:
 	void signalChangeContentMessage(QString);
 	void newsignaladdmes(QString mes);
 public slots:
+	void downloadMessages(QString str);
+	void sendMessage();
+	void addMessageToForm(QString idOfChat);
 	//void inicializeChat(GroupChat* theChatUsed, QString chatUserIsYou, QString nameChat);
 	//void inicializeContactChat(ContactChat* chat, QString nameChat, User* user1, User* user2);
 	//QString /*void*/ pushSendMessage();

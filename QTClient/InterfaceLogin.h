@@ -10,11 +10,11 @@ class InterfaceLogin : public QMainWindow
 	Q_OBJECT
 
 public:
-	InterfaceLogin(QWidget *parent = nullptr);
+	InterfaceLogin(QWidget* parent = nullptr);
 	~InterfaceLogin();
 
 private:
-	
+
 	Ui::InterfaceLoginClass ui;
 	InterfaceWindow* IW;
 	//User* createUserEnteredDataForReg();
@@ -24,7 +24,7 @@ private:
 	bool ChekingCorrectnessRegNick(QString nick);
 	bool ChekingCorrectnessRegPass(QString pass);*/
 	SocketManager* socket;
-	
+
 
 signals:
 	/*void signalPushLogConfirm(QString loginNick, QString loginPass);
@@ -33,14 +33,14 @@ signals:
 	//void signalPushRegConfirmWithUser(User*, QString);
 	void signalSetUserIdOnMainWindow(QString idOfUser);
 	void signalSetSocketManagerOnMainWindow(SocketManager* socket);
-	
+
 private slots:
 	//void pushRegistration();
 	void pushLogConfirm();
 	//void pushRegConfirm();
 	void createMainWindow(QString str, SocketManager* socket);
 	void writeErrorNoSuchUser();
-	void closeThisWindow();
+	
 	void deleteMainWindow();
 	//void carryOutAuthorization(QString loginNick, QString loginPass);
 	//void switchPageStackWidget(int page);

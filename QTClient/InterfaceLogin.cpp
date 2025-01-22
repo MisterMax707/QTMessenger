@@ -9,9 +9,8 @@ InterfaceLogin::InterfaceLogin(QWidget* parent)
 	connect(ui.pushButton_confirm, &QPushButton::clicked, this, &InterfaceLogin::pushLogConfirm);
 	//connect(ui.pushButton_registration, &QPushButton::clicked, this, &InterfaceLogin::pushRegistration);
 	//connect(ui.pushButton_regConfirm, &QPushButton::clicked, this, &InterfaceLogin::pushRegConfirm);
-	
-	connect(this, &InterfaceLogin::signalSetUserIdOnMainWindow, IW, &InterfaceWindow::setUserId);
-	connect(this, &InterfaceLogin::signalSetSocketManagerOnMainWindow, IW, &InterfaceWindow::setSocket);
+
+
 	connect(IW, &InterfaceWindow::destroyed, this, &InterfaceLogin::deleteMainWindow);
 	//connect(this, &InterfaceLogin::signalPushLogConfirm, this, &InterfaceLogin::carryOutAuthorization);
 	//connect(this, &InterfaceLogin::signalPushRegistartion, this, &InterfaceLogin::switchPageStackWidget);
@@ -25,24 +24,27 @@ InterfaceLogin::~InterfaceLogin()
 void InterfaceLogin::pushLogConfirm()
 {
 	socket = new SocketManager();
+	connect(socket, &SocketManager::signalCreateMainWindow, this, &InterfaceLogin::createMainWindow);
+	connect(socket, &SocketManager::signalErrorNoSuchUser, this, &InterfaceLogin::writeErrorNoSuchUser);
 	socket->connectToServer("127.0.0.1", 2323);
 	QString commandword = "LOGIN";
-	QString str =commandword+' ' + ui.lineEdit_login->text() + ' ' + ui.lineEdit_password->text();
+	QString str = commandword + ' ' + ui.lineEdit_login->text() + ' ' + ui.lineEdit_password->text();
 	socket->sendToServer(str);
 
 }
 
 void InterfaceLogin::createMainWindow(QString idOfUser, SocketManager* socket) {
-	IW = new InterfaceWindow();
+	IW = new InterfaceWindow(idOfUser, socket);
 	IW->show();
-	emit signalSetUserIdOnMainWindow(idOfUser);
-	emit signalSetSocketManagerOnMainWindow(socket);
-	
+	this->close();//закрытие окна входа/регистрации
+
 }
 
 void InterfaceLogin::writeErrorNoSuchUser() {
 	QMessageBox::warning(this, "Error!", "NO SUCH USER!", QMessageBox::Ok);
+
 }
+
 
 
 

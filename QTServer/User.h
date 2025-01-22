@@ -1,11 +1,12 @@
 #pragma once
-#include <list>
+#include <Qlist>
 #include "QString"
 #include "QStringList"
 #include "QRegularExpression"
 #include "GroupChat.h"
 #include "ContactChat.h"
 #include "Contact.h"
+
 
 // предварительный вызов, чтобы избежать цикличности 
 // Pragma once + предварительный вызов + * = все хорошо
@@ -29,32 +30,43 @@ struct FullName
 class User
 {
 public:
-	User(QString nick, QString pass, QString telephoneNumber) : nickName(nick), password(pass), telephoneNumber(telephoneNumber) {}; // Добавить присовение айди, воспользоватья static
-	User( QString nick, QString telephoneNumber) : nickName(nick), telephoneNumber(telephoneNumber) {};
+	User(QString nick, QString pass, QString telephoneNumber) : nickName(nick), password(pass), telephoneNumber(telephoneNumber) 
+	{
+		id = QString::number(count++);
+	}; // Добавить присовение айди, воспользоватья static
+	User(QString nick, QString telephoneNumber) : nickName(nick), telephoneNumber(telephoneNumber) {};
 	void changeTelephone(QString newtel);
 	void changeNickName(QString newNickName);
 	void changeStatus(QString newStatus);
 
-	void addContact(User* user);
-	void createGroupChat(QString name);
-
+	void addContact(QString id, QString NickName);
+	void createGroupChat(QString name, QStringList listOfIdUsers);//возможно не понадобится так как чаты будут добавляться сначала на сервер а потом уже к пользователям по id пользователей
+	void createGroupChat(GroupChat* chat);
 	void chooseAndOpenContactChat();
 	void chooseAndOpenGroupChat();
 	void deleteContactChat();
 	void deleteGroupChat();
 
 	QString getNickName();
+	QString getPassword();
+	QString getGroupChats();
+	QString getContacts();
 	GroupChat* getLastGroupChat();
+	QString id;
+	
+	static inline unsigned count{}; //статическая переменная для хранения последнего ID, созданного экземпляра
+
 
 private:
-	int id_user;
+	
 	//FullName FIO;
 	QString nickName;
 	QString status;
 	QString telephoneNumber;
 	QString password;
-	std::list<GroupChat*> ListGroupChats;
-	std::list<ContactChat*> ListContactChats;
-	std::list<Contact*> ListContacts;
+	
+	QList<GroupChat*> ListGroupChats;
+	QList<ContactChat*> ListContactChats;
+	QList<Contact*> ListContacts;
 };
 

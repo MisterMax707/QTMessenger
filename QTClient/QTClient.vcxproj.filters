@@ -28,38 +28,6 @@
     </QtRcc>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\QTMessenger\Contact.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\QTMessenger\ContactChat.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\QTMessenger\GroupChat.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\QTMessenger\InterfaceChat.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\QTMessenger\InterfaceLogin.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\QTMessenger\InterfaceWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\QTMessenger\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\QTMessenger\Message.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\QTMessenger\Participator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\QTMessenger\User.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
     <QtUic Include="..\QTMessenger\InterfaceWindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
@@ -71,34 +39,34 @@
     </QtUic>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\QTMessenger\Contact.h">
+    <QtMoc Include="SocketManager.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\QTMessenger\ContactChat.h">
+    </QtMoc>
+    <QtMoc Include="InterfaceLogin.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\QTMessenger\GroupChat.h">
+    </QtMoc>
+    <QtMoc Include="InterfaceWindow.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\QTMessenger\Message.h">
+    </QtMoc>
+    <QtMoc Include="InterfaceChat.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\QTMessenger\Participator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\QTMessenger\User.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="..\QTMessenger\InterfaceChat.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="..\QTMessenger\InterfaceLogin.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="..\QTMessenger\InterfaceWindow.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
+    <ClCompile Include="..\QTMessenger\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SocketManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InterfaceLogin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InterfaceWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InterfaceChat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

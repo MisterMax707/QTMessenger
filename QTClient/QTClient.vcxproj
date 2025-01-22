@@ -93,16 +93,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <QtRcc Include="..\QTMessenger\InterfaceWindow.qrc" />
-    <ClCompile Include="..\QTMessenger\Contact.cpp" />
-    <ClCompile Include="..\QTMessenger\ContactChat.cpp" />
-    <ClCompile Include="..\QTMessenger\GroupChat.cpp" />
-    <ClCompile Include="..\QTMessenger\InterfaceChat.cpp" />
-    <ClCompile Include="..\QTMessenger\InterfaceLogin.cpp" />
-    <ClCompile Include="..\QTMessenger\InterfaceWindow.cpp" />
-    <ClCompile Include="..\QTMessenger\main.cpp" />
-    <ClCompile Include="..\QTMessenger\Message.cpp" />
-    <ClCompile Include="..\QTMessenger\Participator.cpp" />
-    <ClCompile Include="..\QTMessenger\User.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="..\QTMessenger\InterfaceChat.ui" />
@@ -110,15 +100,23 @@
     <QtUic Include="..\QTMessenger\InterfaceWindow.ui" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\QTMessenger\Contact.h" />
-    <ClInclude Include="..\QTMessenger\ContactChat.h" />
-    <ClInclude Include="..\QTMessenger\GroupChat.h" />
-    <ClInclude Include="..\QTMessenger\Message.h" />
-    <ClInclude Include="..\QTMessenger\Participator.h" />
-    <ClInclude Include="..\QTMessenger\User.h" />
-    <QtMoc Include="..\QTMessenger\InterfaceWindow.h" />
-    <QtMoc Include="..\QTMessenger\InterfaceLogin.h" />
-    <QtMoc Include="..\QTMessenger\InterfaceChat.h" />
+    <ClCompile Include="..\QTMessenger\main.cpp" />
+    <ClCompile Include="InterfaceChat.cpp" />
+    <ClCompile Include="InterfaceLogin.cpp" />
+    <ClCompile Include="InterfaceWindow.cpp" />
+    <ClCompile Include="SocketManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="SocketManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="InterfaceLogin.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="InterfaceWindow.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="InterfaceChat.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
