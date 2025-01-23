@@ -115,7 +115,7 @@ void Server::readyRead()
 				QString idOfChat = str.left(str.indexOf('#'));
 				Message* newMessage = new Message(textOfMessage, findUserById(idOfSender)->getNickName(), idOfSender);
 				findChatById(idOfChat)->addMessageToChatList(newMessage);
-				SendToClient("ADD_MESSAGE_ANSWER " + findUserById(idOfSender)->getNickName() + "\n" + textOfMessage + "#" + idOfSender + "#" + newMessage->getId(), idOfUsersToIdOfSockets(findChatById(idOfChat)->usersId));
+				SendToClient("ADD_MESSAGE_ANSWER " + idOfChat + "#" + findUserById(idOfSender)->getNickName() + "\n" + textOfMessage + "#" + idOfSender + "#" + newMessage->getId(), idOfUsersToIdOfSockets(findChatById(idOfChat)->usersId));
 				qDebug() << "ADD_MESSAGE_ANSWER";
 			}
 			else {

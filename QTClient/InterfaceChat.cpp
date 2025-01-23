@@ -1,13 +1,13 @@
 #include "InterfaceChat.h"
 
-InterfaceChat::InterfaceChat(QString id, QString name,QString senderId,SocketManager* socket, QWidget* parent)
+InterfaceChat::InterfaceChat(QString id, QString name, QString senderId, SocketManager* socket, QWidget* parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
 	ui.lineEdit_nameChatOrContact->setEnabled(false);
 	idOfChat = id;
 	ui.lineEdit_nameChatOrContact->setText(name);
-	
+
 	this->socket = socket;
 	idOfSender = senderId;
 	connect(this->socket, &SocketManager::signalTransmitMessangesToForm, this, &InterfaceChat::downloadMessages);
@@ -62,14 +62,20 @@ void InterfaceChat::downloadMessages(QString str)
 
 void InterfaceChat::addMessageToForm(QString str)//строка состоит из содержания сообщения id отправителя и  id сообщения
 {
-	QString messageContent = str.left(str.indexOf('#'));
+	QString idChat = str.left(str.indexOf('#'));
 	str = str.mid(str.indexOf('#') + 1);
-	QString idOfSender= str.left(str.indexOf('#'));
-	str = str.mid(str.indexOf('#') + 1);
-	QString idOfMessage = str.left(str.indexOf('#'));
-	QListWidgetItem* newItem = new QListWidgetItem(messageContent);
-	setMessageParametersAndStyle(newItem, idOfSender, idOfMessage);
-	ui.listWidget_chat->addItem(newItem);
+	if (idChat == idOfChat)
+	{
+		QString messageContent = str.left(str.indexOf('#'));
+		str = str.mid(str.indexOf('#') + 1);
+		QString idOfSender = str.left(str.indexOf('#'));
+		str = str.mid(str.indexOf('#') + 1);
+		QString idOfMessage = str.left(str.indexOf('#'));
+		QListWidgetItem* newItem = new QListWidgetItem(messageContent);
+		setMessageParametersAndStyle(newItem, idOfSender, idOfMessage);
+		ui.listWidget_chat->addItem(newItem);
+	}
+		
 
 }
 
@@ -150,7 +156,7 @@ bool InterfaceChat::checkCorrectnessOfMessage(QString contentMessage)
 //	ui.lineEdit_chat->clear();
 //}
 //
-void InterfaceChat::setMessageParametersAndStyle(QListWidgetItem* messageItem, QString idSender,QString idMessage)
+void InterfaceChat::setMessageParametersAndStyle(QListWidgetItem* messageItem, QString idSender, QString idMessage)
 {
 	int size = 14;
 	QColor color(120, 120, 120);
@@ -180,7 +186,7 @@ void InterfaceChat::setLinkToMessage(QListWidgetItem* messageItem, QString idOfM
 //
 void InterfaceChat::checkSender(QListWidgetItem* messageItem, QString idSender)
 {
-	if(idOfSender ==idSender)
+	if (idOfSender == idSender)
 		messageItem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	else
 		messageItem->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
