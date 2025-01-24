@@ -1,17 +1,17 @@
 #include "InterfaceChat.h"
 
 InterfaceChat::InterfaceChat(QString id, QString name, QString senderId, SocketManager* socket, QWidget* parent)
-	: QMainWindow(parent)
+	: QMainWindow(parent), idOfChat(id), idOfSender(senderId), socket(socket)
 {
 	ui.setupUi(this);
 	ui.lineEdit_nameChatOrContact->setEnabled(false);
-	idOfChat = id;
 	ui.lineEdit_nameChatOrContact->setText(name);
 
-	this->socket = socket;
-	idOfSender = senderId;
+	QShortcut* shortcut = new QShortcut(QKeySequence(Qt::Key_Return), this); // enter
+
 	connect(this->socket, &SocketManager::signalTransmitMessangesToForm, this, &InterfaceChat::downloadMessages);
 	connect(ui.pushButton_sendMessage, &QPushButton::clicked, this, &InterfaceChat::sendMessage);
+	connect(shortcut, &QShortcut::activated, this, &InterfaceChat::sendMessage);
 	connect(this->socket, &SocketManager::signalAddMessageToForm, this, &InterfaceChat::addMessageToForm);
 	/*QShortcut* pressChangeMessage = new QShortcut(QKeySequence(Qt::Key_C), this);
 	QShortcut* pressDeleteMessage = new QShortcut(QKeySequence(Qt::Key_D), this);*/

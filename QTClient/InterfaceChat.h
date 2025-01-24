@@ -1,5 +1,6 @@
 #pragma once
 #include <QMainWindow>
+#include <QShortcut>
 #include "ui_InterfaceChat.h"
 #include "SocketManager.h"
 
