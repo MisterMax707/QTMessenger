@@ -4,7 +4,6 @@
 #include "InterfaceWindow.h"
 #include "SocketManager.h"
 
-
 class InterfaceLogin : public QMainWindow
 {
 	Q_OBJECT
@@ -14,7 +13,6 @@ public:
 	~InterfaceLogin();
 
 private:
-
 	Ui::InterfaceLoginClass ui;
 	InterfaceWindow* IW;
 	//User* createUserEnteredDataForReg();
@@ -24,7 +22,6 @@ private:
 	bool ChekingCorrectnessRegNick(QString nick);
 	bool ChekingCorrectnessRegPass(QString pass);
 	SocketManager* socket;
-
 
 signals:
 	/*void signalPushLogConfirm(QString loginNick, QString loginPass);

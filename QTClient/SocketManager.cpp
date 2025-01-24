@@ -1,9 +1,8 @@
 #include "SocketManager.h"
-#include "InterfaceLogin.h"
+
 void SocketManager::connectToServer(const QString& host, quint16 port)
 {
 	socket->connectToHost(host, port);
-
 }
 void SocketManager::sendToServer(QString str)
 {
@@ -92,8 +91,6 @@ void SocketManager::readyRead()
 			
 			break;
 		}
-
-
 	}
 	else
 	{
@@ -107,7 +104,6 @@ SocketManager::SocketManager() {
 	socket = new QTcpSocket;
 	connect(socket, &QTcpSocket::readyRead, this, &SocketManager::readyRead);
 	connect(socket, &QTcpSocket::disconnected, socket, &QTcpSocket::deleteLater);
-	
 	
 	nextBlockSize = 0;
 }

@@ -4,8 +4,6 @@
 #include "InterfaceChat.h"
 #include "SocketManager.h"
 
-
-
 class InterfaceWindow : public QMainWindow
 {
 	Q_OBJECT

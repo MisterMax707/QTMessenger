@@ -3,6 +3,8 @@
 #include "ui_InterfaceChat.h"
 #include "SocketManager.h"
 
+class SocketManager;
+
 class InterfaceChat : public QMainWindow
 {
 	Q_OBJECT

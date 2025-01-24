@@ -13,7 +13,6 @@ public:
 
 private:
 	Ui::InterfaceChatClass ui;
-	
 	QString userSender;
 
 	void clearChatContent();
@@ -38,6 +37,7 @@ signals:
 	//void signalAddMessageToChatForm(Message* msg);
 	void signalChangeContentMessage(QString);
 	void newsignaladdmes(QString mes);
+
 public slots:
 	void downloadMessages(QString str);
 	void sendMessage();

@@ -37,9 +37,6 @@ InterfaceWindow::InterfaceWindow(QString id, SocketManager* socket, QWidget* par
 InterfaceWindow::~InterfaceWindow()
 {}
 
-
-
-
 void InterfaceWindow::downloadChats(QString str)
 {
 	ui.listWidget->clear();
@@ -62,8 +59,6 @@ void InterfaceWindow::downloadChats(QString str)
 			chatListItem->setData(Qt::UserRole, id);
 			ui.listWidget->addItem(chatListItem);
 		}
-
-
 	}
 }
 
@@ -83,9 +78,6 @@ void InterfaceWindow::openEnterNameGroupChat()
 {
 	socket->sendToServer("LIST_OF_CONTACTS " + userId);
 	ui.stackedWidget->setCurrentIndex(2);
-
-
-
 }
 
 void InterfaceWindow::pushOkCreateGroupChat()
@@ -125,8 +117,6 @@ void InterfaceWindow::createListOfContacts(QString str)
 			chatListItem->setData(Qt::UserRole, id);
 			ui.listWidget_2->addItem(chatListItem);
 		}
-
-
 	}
 }
 
@@ -148,18 +138,16 @@ void InterfaceWindow::onGroupChatClicked(QListWidgetItem* item)
 {
 	emit signalCreateChatWindow(item->data(Qt::UserRole).toString(), item->text(),userId, socket);
 	socket->sendToServer("LIST_OF_MESSAGES " + item->data(Qt::UserRole).toString());//передать id чата взятые из item на серве
-
-
 }
 
 
 void InterfaceWindow::createChatWindow(QString id, QString name,QString userId, SocketManager* socket)
-{if(IC!=nullptr)
-	if (IC->isVisible())
-		IC->close();
+{
+	if(IC!=nullptr)
+		if (IC->isVisible())
+			IC->close();
 	IC = new InterfaceChat(id, name,userId, socket);
 	IC->show();
-
 }
 
 void InterfaceWindow::createContact()

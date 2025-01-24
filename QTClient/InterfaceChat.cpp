@@ -28,15 +28,12 @@ InterfaceChat::InterfaceChat(QString id, QString name, QString senderId, SocketM
 InterfaceChat::~InterfaceChat()
 {}
 
-
-
 void InterfaceChat::downloadMessages(QString str)
 {
 	ui.listWidget_chat->clear();
 	//QString idOfMessage, messageContent;
 	while (!str.isEmpty())
 	{
-
 		QString messageContent = str.left(str.indexOf('#'));
 		str = str.mid(str.indexOf('#') + 1);
 		QString idOfSender = str.left(str.indexOf('#'));
@@ -54,8 +51,6 @@ void InterfaceChat::downloadMessages(QString str)
 			setMessageParametersAndStyle(newItem, idOfSender, idOfMessage);
 			ui.listWidget_chat->addItem(newItem);
 		}
-
-
 	}
 }
 
@@ -75,8 +70,6 @@ void InterfaceChat::addMessageToForm(QString str)//строка состоит из содержания 
 		setMessageParametersAndStyle(newItem, idOfSender, idOfMessage);
 		ui.listWidget_chat->addItem(newItem);
 	}
-		
-
 }
 
 void InterfaceChat::sendMessage()

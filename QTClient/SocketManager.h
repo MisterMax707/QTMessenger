@@ -1,7 +1,6 @@
 #pragma once
 #include <qtcpserver.h>
 #include <qtcpsocket.h>
-
 #include "SendThread.h"
 
 class SocketManager :public QObject

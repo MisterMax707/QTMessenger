@@ -1,5 +1,4 @@
 #include "InterfaceLogin.h"
-#include "InterfaceWindow.h"
 #include <qmessagebox.h>
 
 InterfaceLogin::InterfaceLogin(QWidget* parent)
@@ -30,12 +29,10 @@ void InterfaceLogin::pushLogConfirm()
 	QString commandword = "LOGIN";
 	QString str = commandword + ' ' + ui.lineEdit_login->text() + ' ' + ui.lineEdit_password->text();
 	socket->sendToServer(str);
-
 }
 void InterfaceLogin::pushRegistration()
 {
 	ui.stackedWidget->setCurrentIndex(1);
-
 }
 
 void InterfaceLogin::pushRegConfirm()
@@ -57,25 +54,23 @@ void InterfaceLogin::pushRegConfirm()
 	else return void();
 }
 
-void InterfaceLogin::createMainWindow(QString idOfUser, SocketManager* socket) {
+void InterfaceLogin::createMainWindow(QString idOfUser, SocketManager* socket) 
+{
 	IW = new InterfaceWindow(idOfUser, socket);
 	IW->show();
 	this->close();//закрытие окна входа/регистрации
-
 }
 
-void InterfaceLogin::writeErrorNoSuchUser() {
+void InterfaceLogin::writeErrorNoSuchUser() 
+{
 	QMessageBox::warning(this, "Error!", "NO SUCH USER!", QMessageBox::Ok);
-
 }
 
 
-void InterfaceLogin::registrationSuccess() {
+void InterfaceLogin::registrationSuccess() 
+{
 	QMessageBox::warning(this, "MESSAGE", "REGISTRATION WAS SUCCSESFULL!", QMessageBox::Ok);
 }
-
-
-
 
 void InterfaceLogin::deleteMainWindow()
 {
