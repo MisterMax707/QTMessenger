@@ -7,15 +7,24 @@ void SocketManager::connectToServer(const QString& host, quint16 port)
 }
 void SocketManager::sendToServer(QString str)
 {
-	Data.clear();
-	QDataStream out(&Data, QIODevice::WriteOnly);
-	out.setVersion(QDataStream::Qt_6_2);
-	out << quint16(0) << str;
-	out.device()->seek(0);
-	out << quint16(Data.size() - sizeof(quint16));
-	socket->write(Data);
-
+	//Data.clear();
+	//QDataStream out(&Data, QIODevice::WriteOnly);
+	//out.setVersion(QDataStream::Qt_6_2);
+	//out << quint16(0) << str;
+	//out.device()->seek(0);
+	//out << quint16(Data.size() - sizeof(quint16));
+	//socket->write(Data);
+	SendThread* thread = new SendThread(socket, str, this);
+	connect(thread, &QThread::finished, thread, &QObject::deleteLater);
+	connect(thread, &SendThread::sendData, this, &SocketManager::handlySendData);
+	thread->start();
 }
+
+void SocketManager::handlySendData(QTcpSocket* socket, QByteArray data)
+{
+	socket->write(data);
+}
+
 void SocketManager::readyRead()
 {
 	socket = (QTcpSocket*)sender();

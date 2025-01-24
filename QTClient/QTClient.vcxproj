@@ -104,6 +104,7 @@
     <ClCompile Include="InterfaceChat.cpp" />
     <ClCompile Include="InterfaceLogin.cpp" />
     <ClCompile Include="InterfaceWindow.cpp" />
+    <ClCompile Include="SendThread.cpp" />
     <ClCompile Include="SocketManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -117,6 +118,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="InterfaceChat.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="SendThread.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
