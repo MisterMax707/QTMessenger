@@ -24,6 +24,7 @@ InterfaceWindow::InterfaceWindow(QString id, SocketManager* socket, QWidget* par
 	connect(this, &InterfaceWindow::signalCreateChatWindow, this, &InterfaceWindow::createChatWindow);
 	connect(ui.pushButton_newContact, &QPushButton::clicked, this, &InterfaceWindow::createContact);
 	connect(ui.pushButton_CreateContact, &QPushButton::clicked, this, &InterfaceWindow::pushCreateContact);
+	connect(ui.pushButton_writeMessage, &QPushButton::clicked, this, &InterfaceWindow::deleteUser);
 	//connect(ui.pushButton_returnToPageCreateContact, &QPushButton::clicked, this, &InterfaceWindow::pushAdd);
 
 	//connect(this, &InterfaceWindow::signalpushCreateGroupChat, this, &InterfaceWindow::createGroupChat);
@@ -162,6 +163,14 @@ void InterfaceWindow::pushCreateContact()
 	ui.lineEdit_Nick->clear();
 	ui.lineEdit_telephoneNumber->clear();
 	ui.stackedWidget->setCurrentIndex(0);
+}
+
+
+
+void InterfaceWindow::deleteUser()
+{
+	socket->sendToServer("DELETE_CHAT " + userId);
+	//this->close();
 }
 //
 //void InterfaceWindow::openAddWidget()

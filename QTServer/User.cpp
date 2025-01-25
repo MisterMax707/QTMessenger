@@ -95,7 +95,18 @@ QString User::getGroupChats() //выдает строку для передачи с сервера в которой ч
 	result.chop(1);
 	return result;
 }
-
+QStringList User::getOnlyIdChats()
+{
+	QString result = "";
+	for (int i = 0; i < ListGroupChats.size(); i++)
+	{
+		result +=  ListGroupChats[i]->getId() + '#';
+	}
+	result.chop(1);
+	QStringList myresult = result.split('#');
+	return myresult;
+	
+}
 QString User::getContacts()
 {
 	QString result = "";
@@ -105,4 +116,15 @@ QString User::getContacts()
 	}
 	result.chop(1);
 	return result;
+}
+QStringList User::getOnlyIdContacts()
+{
+	QString result = "";
+	for (int i = 0; i < ListContacts.size(); i++)
+	{
+		result += ListContacts[i]->getId() + '#';
+	}
+	result.chop(1);
+	QStringList myresult=result.split('#');
+	return myresult;
 }

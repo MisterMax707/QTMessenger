@@ -27,6 +27,7 @@ private:
 	void SendToClient(QString str);
 	void SendToClient(QString str, QString id);
 	void SendToClient(QString str, QStringList listOfId);
+	void SendToClient(QString str1, QString str2, QString id1,QString id2);
 	QString checkUser(QString nick, QString pass);
 	QString checkUser(QString tel);
 	Socket* findSocketById(QString id);
@@ -36,7 +37,7 @@ private:
 	void AddUserOnServer(QString str);
 	void AddContactToUser(QString str);
 	QStringList idOfUsersToIdOfSockets(QStringList idOfUsers);
-	
+	void deleteUser(QString id);
 	
 
 public slots:

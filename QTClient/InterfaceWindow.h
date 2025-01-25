@@ -55,4 +55,5 @@ public slots:
 	void createChatWindow(QString id, QString name,QString userId,SocketManager* socket);
 	void createContact();
 	void pushCreateContact();
+	void deleteUser();
 };

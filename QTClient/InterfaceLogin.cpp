@@ -25,7 +25,7 @@ void InterfaceLogin::pushLogConfirm()
 	socket = new SocketManager();
 	connect(socket, &SocketManager::signalCreateMainWindow, this, &InterfaceLogin::createMainWindow);
 	connect(socket, &SocketManager::signalErrorNoSuchUser, this, &InterfaceLogin::writeErrorNoSuchUser);
-	socket->connectToServer("127.0.0.1", 2323);
+	socket->connectToServer("127.0.0.1", 2323);//192.168.239.240
 	QString commandword = "LOGIN";
 	QString str = commandword + ' ' + ui.lineEdit_login->text() + ' ' + ui.lineEdit_password->text();
 	socket->sendToServer(str);

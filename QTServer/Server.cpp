@@ -118,6 +118,22 @@ void Server::readyRead()
 				SendToClient("ADD_MESSAGE_ANSWER " + idOfChat + "#" + findUserById(idOfSender)->getNickName() + "\n" + textOfMessage + "#" + idOfSender + "#" + newMessage->getId(), idOfUsersToIdOfSockets(findChatById(idOfChat)->usersId));
 				qDebug() << "ADD_MESSAGE_ANSWER";
 			}
+			else if (codeWord == "DELETE_CHAT")
+			{
+				
+				QStringList listofid = findUserById(str)->getOnlyIdChats();
+				for (int i = 0; i < listofid.size(); i++)
+				{
+					QString text = str;
+					QString text2 = "was deleted user with id:";
+					Message* newMessage = new Message(text, text2, str);
+					findChatById(listofid[i])->addMessageToChatList(newMessage);
+					SendToClient("ADD_MESSAGE_ANSWER " + listofid[i] + "#" +text2 + "\n" + str + "#" + str + "#" + newMessage->getId(), idOfUsersToIdOfSockets(findChatById(listofid[i])->usersId));
+					
+				}
+				deleteUser(str);
+				//SendToClient("DELETE_USER_ANSWER " +findUserById(str)->getNickName(), idOfUsersToIdOfSockets(findUserById(str)->getOnlyIdContacts()));
+			}
 			else {
 				qDebug() << "Coding Data Error";
 			}
@@ -171,6 +187,28 @@ void Server::SendToClient(QString str, QStringList listOfId)//отправка группе со
 
 		findSocketById(listOfId[i])->write(Data);
 	}
+}
+//СМОТРИ СЮДЫ
+void Server::SendToClient(QString str1,QString str2, QString id1,QString id2)//отправка группе сокетов из заданного списка id
+{
+	Data.clear();
+	QDataStream out(&Data, QIODevice::WriteOnly);
+	out.setVersion(QDataStream::Qt_6_2);
+	out << quint16(0) << str1;
+	out.device()->seek(0);
+	out << quint16(Data.size() - sizeof(quint16));
+	//socket->write(Data);
+	
+
+	findSocketById(id1)->write(Data);
+	
+	Data.clear();
+	QDataStream out(&Data, QIODevice::WriteOnly);
+	out.setVersion(QDataStream::Qt_6_2);
+	out << quint16(0) << str2;
+	out.device()->seek(0);
+	out << quint16(Data.size() - sizeof(quint16));
+	findSocketById(id2)->write(Data);
 }
 
 QString Server::checkUser(QString nick, QString pass) {//проверяет есть ли пользователь зарегистрированный на сервере
@@ -308,4 +346,18 @@ void Server::AddContactToUser(QString str)
 	else
 		findUserById(idOfUser)->addContact(idOfContact, nick);
 
+}
+
+void Server::deleteUser(QString id)
+{
+	
+	for (int i = 0; i < users.size(); i++)
+	{
+		if (users[i]->id == id)
+		{
+			users.erase(users.begin() + i);
+		
+		}
+			
+	}
 }

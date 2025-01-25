@@ -52,7 +52,9 @@ public:
 	QString getPassword();
 	QString getTel();
 	QString getGroupChats();
+	QStringList getOnlyIdChats();
 	QString getContacts();
+	QStringList getOnlyIdContacts();
 	GroupChat* getLastGroupChat();
 	QString id;
 	

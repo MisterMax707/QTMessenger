@@ -69,7 +69,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>Написать</string>
+         <string>удалить пользователя</string>
         </property>
        </widget>
        <widget class="QListWidget" name="listWidget">

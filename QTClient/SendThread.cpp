@@ -16,6 +16,6 @@ void SendThread::run()
 	out.device()->seek(0);
 	out << quint16(Data.size() - sizeof(quint16));
 
-	QThread::msleep(150);
+	//QThread::msleep(15000);
 	emit sendData(socket, Data);
 }
