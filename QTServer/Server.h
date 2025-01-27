@@ -1,10 +1,11 @@
 #pragma once
-#include "User.h"
+#include "../include/GlobalFile/CodeWord.h"
 #include <qtcpserver.h>
 #include <qvector.h>
-#include <vector>
+#include <QMap>
 #include "Socket.h"
 #include "variant"
+#include "User.h"
 using ReturnType = std::variant<Socket*, QString>;
 /*
 * одовые слова
@@ -14,13 +15,17 @@ using ReturnType = std::variant<Socket*, QString>;
 class Server:public QTcpServer
 {
 	Q_OBJECT
+
 public:
 	Server();
 	Socket* socket;
+
 private:
 	QVector<Socket*> Sockets;
+	QMap<cod::CodeWord, void (Server::*)()> actionKey;
 	QByteArray Data;
 	quint16 nextBlockSize;
+
 	std::vector <User*> users;
 	std::vector<GroupChat*> chats;
 	std::vector<Message*> messages;
@@ -36,12 +41,21 @@ private:
 	void AddUserOnServer(QString str);
 	void AddContactToUser(QString str);
 	QStringList idOfUsersToIdOfSockets(QStringList idOfUsers);
-	
+
+	void performAction_Login();
+	void performAction_Registration();
+	void performAction_ListOfChat();
+	void performAction_ListOfMessages();
+	void performAction_ListOfContacts();
+	void performAction_AddChat();
+	void performAction_AddContact();
+	void performAction_AddMessage();
 	
 
 public slots:
 	void incomingConnection(qintptr socketDescriptor);
 	void readyRead();
+	void startRead(QDataStream& in);
 	void deleteSocket(QString i);//удал€ет сокет из вектора сокетов когда клиент отключаетс€ от сервера
 };
 

@@ -24,6 +24,14 @@ Server::Server() {
 	users[0]->addContact("2", "Darina");
 	users[1]->addContact("0", "Max");
 
+	actionKey[cod::CodeWord::LOGIN] = &Server::performAction_Login;
+	actionKey[cod::CodeWord::REGISTRATION] = &Server::performAction_Registration;
+	actionKey[cod::CodeWord::LIST_OF_CHATS] = &Server::performAction_ListOfChat;
+	actionKey[cod::CodeWord::LIST_OF_MESSAGES] = &Server::performAction_ListOfMessages;
+	actionKey[cod::CodeWord::LIST_OF_CONTACTS] = &Server::performAction_ListOfContacts;
+	actionKey[cod::CodeWord::ADD_CHAT] = &Server::performAction_AddChat;
+	actionKey[cod::CodeWord::ADD_CONTACT] = &Server::performAction_AddContact;
+	actionKey[cod::CodeWord::ADD_MESSAGE] = &Server::performAction_AddMessage;
 }
 
 void Server::incomingConnection(qintptr socketDescriptor)
@@ -45,92 +53,105 @@ void Server::readyRead()
 	in.setVersion(QDataStream::Qt_6_2);
 	if (in.status() == QDataStream::Ok)
 	{
-		for (;;)
-		{
-			if (nextBlockSize == 0)
-			{
-				if (socket->bytesAvailable() < 2)
-					break;
-				in >> nextBlockSize;
-
-			}
-			if (socket->bytesAvailable() > nextBlockSize)
-				break;
-			qDebug() << "read....";
-			QString str;
-			in >> str;
-			QString codeWord = str.left(str.indexOf(' '));
-			str = str.mid(str.indexOf(' ') + 1);
-			if (codeWord == "LOGIN")
-			{
-				QString userId = checkUser(str.left(str.indexOf(' ')), str.mid(str.indexOf(' ') + 1));
-				if (userId != "ERROR")
-					socket->userId = userId;
-				SendToClient("LOGIN_ANSWER " + userId, socket->id);
-
-				qDebug() << "online user with id: " + checkUser(str.left(str.indexOf(' ')), str.mid(str.indexOf(' ') + 1));
-
-			}
-			else if (codeWord == "REGISTRATION")
-			{
-				AddUserOnServer(str);
-				SendToClient("REGISTRATION_ANSWER ", socket->id);
-			}
-			else if (codeWord == "LIST_OF_CHATS")
-			{
-				SendToClient("LIST_OF_CHATS_ANSWER " + findUserById(str)->getGroupChats(), socket->id);
-				//qDebug() << "CHATS_OF_USER_ANSWER "  + findUserById(str)->getGroupChats();
-
-			}
-			else if (codeWord == "ADD_CHAT")
-			{
-				QString idOfNewGroupChat = AddChatOnServer(str);
-				SendToClient("ADD_CHAT_ANSWER " + str.left(str.indexOf('#')) + "#" + idOfNewGroupChat, idOfUsersToIdOfSockets(str.mid(str.indexOf('#') + 1).split('#')));//возвращает на форму название и id чата
-
-			}
-			else if (codeWord == "LIST_OF_MESSAGES")
-			{
-
-				SendToClient("LIST_OF_MESSAGES_ANSWER " + findChatById(str)->getStringOfMessage(), socket->id);
-				qDebug() << "LIST_OF_MESSAGES_ANSWER";
-			}
-			else if (codeWord == "ADD_CONTACT")
-			{
-				AddContactToUser(str);
-
-			}
-			else if (codeWord == "LIST_OF_CONTACTS")
-			{
-				SendToClient("LIST_OF_CONTACTS_ANSWER " + findUserById(str)->getContacts(), socket->id);
-				qDebug() << "LIST_OF_CONTACTS_ANSWER " + findUserById(str)->getContacts();
-
-			}
-			else if (codeWord == "ADD_MESSAGE")
-			{
-
-				QString textOfMessage = str.left(str.indexOf('#'));
-				str = str.mid(str.indexOf('#') + 1);
-				QString idOfSender = str.left(str.indexOf('#'));
-				str = str.mid(str.indexOf('#') + 1);
-				QString idOfChat = str.left(str.indexOf('#'));
-				Message* newMessage = new Message(textOfMessage, findUserById(idOfSender)->getNickName(), idOfSender);
-				findChatById(idOfChat)->addMessageToChatList(newMessage);
-				SendToClient("ADD_MESSAGE_ANSWER " + idOfChat + "#" + findUserById(idOfSender)->getNickName() + "\n" + textOfMessage + "#" + idOfSender + "#" + newMessage->getId(), idOfUsersToIdOfSockets(findChatById(idOfChat)->usersId));
-				qDebug() << "ADD_MESSAGE_ANSWER";
-			}
-			else {
-				qDebug() << "Coding Data Error";
-			}
-
-			break;
-		}
+		startRead(in);
 	}
 	else
 	{
 		qDebug() << "DataStream Error";
-
 	}
 	nextBlockSize = 0;
+}
+
+void Server::startRead(QDataStream& in)
+{
+	while (true)
+	{
+		////////////// спросить у макса
+		if (nextBlockSize == 0)
+		{
+			if (socket->bytesAvailable() < 2)
+				break;
+			in >> nextBlockSize;
+		}
+		if (socket->bytesAvailable() > nextBlockSize)
+			break;
+		//////////////////
+
+		qDebug() << "read....";
+		cod::CodeWord key;
+		QString str;
+		in >> key >> str;
+		QString codeWord = str.left(str.indexOf(' '));
+		str = str.mid(str.indexOf(' ') + 1);
+		if (actionKey.contains(key))
+		{
+			(this->*actionKey[key])();
+		}
+		else 
+		{
+			qDebug() << "Coding Data Error";
+		}
+
+		break;
+	}
+}
+
+void Server::performAction_Login()
+{
+	QString userId = checkUser(str.left(str.indexOf(' ')), str.mid(str.indexOf(' ') + 1));
+	if (userId != "ERROR")
+		socket->userId = userId;
+	SendToClient("LOGIN_ANSWER " + userId, socket->id);
+
+	qDebug() << "online user with id: " + checkUser(str.left(str.indexOf(' ')), str.mid(str.indexOf(' ') + 1));
+}
+
+void Server::performAction_Registration()
+{
+	AddUserOnServer(str);
+	SendToClient("REGISTRATION_ANSWER ", socket->id);
+}
+
+void Server::performAction_ListOfChat()
+{
+	SendToClient("LIST_OF_CHATS_ANSWER " + findUserById(str)->getGroupChats(), socket->id);
+	//qDebug() << "CHATS_OF_USER_ANSWER "  + findUserById(str)->getGroupChats();
+}
+
+void Server::performAction_ListOfMessages()
+{
+	SendToClient("LIST_OF_MESSAGES_ANSWER " + findChatById(str)->getStringOfMessage(), socket->id);
+	qDebug() << "LIST_OF_MESSAGES_ANSWER";
+}
+
+void Server::performAction_ListOfContacts()
+{
+	SendToClient("LIST_OF_CONTACTS_ANSWER " + findUserById(str)->getContacts(), socket->id);
+	qDebug() << "LIST_OF_CONTACTS_ANSWER " + findUserById(str)->getContacts();
+}
+
+void Server::performAction_AddChat()
+{
+	QString idOfNewGroupChat = AddChatOnServer(str);
+	SendToClient("ADD_CHAT_ANSWER " + str.left(str.indexOf('#')) + "#" + idOfNewGroupChat, idOfUsersToIdOfSockets(str.mid(str.indexOf('#') + 1).split('#')));//возвращает на форму название и id чата
+}
+
+void Server::performAction_AddContact()
+{
+	AddContactToUser(str);
+}
+
+void Server::performAction_AddMessage()
+{
+	QString textOfMessage = str.left(str.indexOf('#'));
+	str = str.mid(str.indexOf('#') + 1);
+	QString idOfSender = str.left(str.indexOf('#'));
+	str = str.mid(str.indexOf('#') + 1);
+	QString idOfChat = str.left(str.indexOf('#'));
+	Message* newMessage = new Message(textOfMessage, findUserById(idOfSender)->getNickName(), idOfSender);
+	findChatById(idOfChat)->addMessageToChatList(newMessage);
+	SendToClient("ADD_MESSAGE_ANSWER " + idOfChat + "#" + findUserById(idOfSender)->getNickName() + "\n" + textOfMessage + "#" + idOfSender + "#" + newMessage->getId(), idOfUsersToIdOfSockets(findChatById(idOfChat)->usersId));
+	qDebug() << "ADD_MESSAGE_ANSWER";
 }
 
 
@@ -195,8 +216,6 @@ QString Server::checkUser(QString tel)
 	return "Error";
 }
 
-
-
 void Server::deleteSocket(QString id)//удаляет из списка Sockets сокет по id сокета
 {
 	for (int i = 0; i < Sockets.size(); i++)
@@ -208,7 +227,7 @@ void Server::deleteSocket(QString id)//удаляет из списка Sockets сокет по id сок
 		}
 	}
 }
-//ХЕРНЮ НАПИСАЛ
+
 Socket* Server::findSocketById(QString id)// возвращает индекс в списке сокетов сервера по id сокета
 {
 	for (int i = 0; i < Sockets.size(); i++)
@@ -268,7 +287,6 @@ QStringList Server::idOfUsersToIdOfSockets(QStringList idOfUsers)
 	return result;
 }
 
-
 void Server::AddUserOnServer(QString str)
 {
 	QString nick = str.left(str.indexOf('#'));
@@ -308,4 +326,16 @@ void Server::AddContactToUser(QString str)
 	else
 		findUserById(idOfUser)->addContact(idOfContact, nick);
 
+}
+
+
+QDataStream& operator<<(QDataStream& out, const cod::CodeWord& value) {
+	return out << static_cast<quint8>(value); // Преобразуем в байт
+}
+
+QDataStream& operator>>(QDataStream& in, cod::CodeWord& value) {
+	quint8 byteValue;
+	in >> byteValue;
+	value = static_cast<cod::CodeWord>(byteValue); // Преобразуем обратно в enum
+	return in;
 }
