@@ -9,7 +9,6 @@ InterfaceLogin::InterfaceLogin(QWidget* parent)
 	connect(ui.pushButton_registration, &QPushButton::clicked, this, &InterfaceLogin::pushRegistration);
 	connect(ui.pushButton_regConfirm, &QPushButton::clicked, this, &InterfaceLogin::pushRegConfirm);
 
-
 	connect(IW, &InterfaceWindow::destroyed, this, &InterfaceLogin::deleteMainWindow);
 	//connect(this, &InterfaceLogin::signalPushLogConfirm, this, &InterfaceLogin::carryOutAuthorization);
 	//connect(this, &InterfaceLogin::signalPushRegistartion, this, &InterfaceLogin::switchPageStackWidget);
@@ -25,7 +24,6 @@ void InterfaceLogin::pushLogConfirm()
 	socket = new SocketManager();
 	connect(socket, &SocketManager::signalCreateMainWindow, this, &InterfaceLogin::createMainWindow);
 	connect(socket, &SocketManager::signalErrorNoSuchUser, this, &InterfaceLogin::writeErrorNoSuchUser);
-	socket->connectToServer("127.0.0.1", 2323);
 	QString commandword = "LOGIN";
 	QString str = commandword + ' ' + ui.lineEdit_login->text() + ' ' + ui.lineEdit_password->text();
 	socket->sendToServer(str);
@@ -40,9 +38,8 @@ void InterfaceLogin::pushRegConfirm()
 	if (ChekingCorrectnessRegistartionOfData())
 	{
 		socket = new SocketManager();
-		socket->connectToServer("127.0.0.1", 2323);
 		connect(socket, &SocketManager::signalRegistrationSuccess, this, &InterfaceLogin::registrationSuccess);
-		socket->sendToServer("REGISTRATION " + ui.lineEdit_regNick->text() + "#" + ui.lineEdit_regPass->text() + "#" + ui.lineEdit_regTel->text());
+		socket->sendToServer(cod::CodeWord::REGISTRATION, ui.lineEdit_regNick->text() + "#" + ui.lineEdit_regPass->text() + "#" + ui.lineEdit_regTel->text());
 		ui.stackedWidget->setCurrentIndex(0);
 		/*int pageLogin = 0;
 		User* user = createUserEnteredDataForReg();

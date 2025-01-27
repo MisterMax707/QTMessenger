@@ -1,8 +1,11 @@
 #pragma once
+#include "../include/GlobalFile/CodeWord.h"
 #include <QMainWindow>
+#include <QSet>
 #include "ui_InterfaceLogin.h"
 #include "InterfaceWindow.h"
 #include "SocketManager.h"
+
 
 class InterfaceLogin : public QMainWindow
 {
