@@ -1,5 +1,7 @@
 #pragma once
+#include <optional>
 #include "../include/QtCore/qstring.h"
+#include "../include/QtCore/qdatastream.h"
 
 class InformationWord
 {
@@ -58,4 +60,42 @@ InformationWord operator+(const InformationWord& infoWord1, const InformationWor
     return InformationWord("|" + infoWord1.getAllWord() + "|" + infoWord2.getAllWord());
 }
 
+QDataStream& operator<<(QDataStream& out, const InformationWord& infoWord)
+{
+    out << infoWord.getAllWord();
+    return out;
+}
 
+QDataStream& operator>>(QDataStream& in, InformationWord infoWord)
+{
+    QString allWord;
+    in >> allWord;
+    infoWord = InformationWord(allWord);
+    return in;
+}
+
+QDataStream& operator<<(QDataStream& out, const std::optional<InformationWord>& value)
+{
+    if (value.has_value()) {
+        out << true;
+        out << value.value();
+    }
+    else {
+        out << false;
+    }
+    return out;
+}
+
+QDataStream& operator>>(QDataStream& in, std::optional<InformationWord>& value) {
+    bool hasValue;
+    in >> hasValue;
+    if (hasValue) {
+        InformationWord infoWord;
+        in >> infoWord;
+        value = infoWord;
+    }
+    else {
+        value = std::nullopt;
+    }
+    return in;
+}
