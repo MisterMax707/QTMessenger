@@ -1,27 +1,32 @@
 #include "SocketManager.h"
 
-void SocketManager::connectToServer(const QString& host, quint16 port)
+
+
+SocketManager::SocketManager()
+{
+	socket = new QTcpSocket;
+	connect(socket, &QTcpSocket::readyRead, this, &SocketManager::readyRead);
+	connect(socket, &QTcpSocket::disconnected, socket, &QTcpSocket::deleteLater);
+	connectToServer();
+
+	nextBlockSize = 0;
+}
+
+void SocketManager::connectToServer()
 {
 	socket->connectToHost(host, port);
 }
-void SocketManager::sendToServer(QString str)
-{
-	//Data.clear();
-	//QDataStream out(&Data, QIODevice::WriteOnly);
-	//out.setVersion(QDataStream::Qt_6_2);
-	//out << quint16(0) << str;
-	//out.device()->seek(0);
-	//out << quint16(Data.size() - sizeof(quint16));
-	//socket->write(Data);
-	SendThread* thread = new SendThread(socket, str, this);
-	connect(thread, &QThread::finished, thread, &QObject::deleteLater);
-	connect(thread, &SendThread::sendData, this, &SocketManager::handlySendData);
-	thread->start();
-}
 
-void SocketManager::handlySendData(QTcpSocket* socket, QByteArray data)
+
+void SocketManager::sendToServer(const cod::CodeWord& cd, const OptInfoWord& word = std::nullopt, const OptInfoNum& number = std::nullopt)
 {
-	socket->write(data);
+	Data.clear();
+	QDataStream out(&Data, QIODevice::WriteOnly);
+	out.setVersion(QDataStream::Qt_6_2);
+	out << quint16(0) << cd << word << number;
+	out.device()->seek(0);
+	out << quint16(Data.size() - sizeof(quint16));
+	socket->write(Data);
 }
 
 void SocketManager::readyRead()
@@ -100,10 +105,14 @@ void SocketManager::readyRead()
 	nextBlockSize = 0;
 }
 
-SocketManager::SocketManager() {
-	socket = new QTcpSocket;
-	connect(socket, &QTcpSocket::readyRead, this, &SocketManager::readyRead);
-	connect(socket, &QTcpSocket::disconnected, socket, &QTcpSocket::deleteLater);
-	
-	nextBlockSize = 0;
+
+QDataStream& operator<<(QDataStream& out, const cod::CodeWord& value) {
+	return out << static_cast<quint8>(value); // Преобразуем в байт
+}
+
+QDataStream& operator>>(QDataStream& in, cod::CodeWord& value) {
+	quint8 byteValue;
+	in >> byteValue;
+	value = static_cast<cod::CodeWord>(byteValue); // Преобразуем обратно в enum
+	return in;
 }

@@ -1,5 +1,4 @@
 #include "InterfaceLogin.h"
-#include <qmessagebox.h>
 
 InterfaceLogin::InterfaceLogin(QWidget* parent)
 	: QMainWindow(parent)
@@ -24,9 +23,9 @@ void InterfaceLogin::pushLogConfirm()
 	socket = new SocketManager();
 	connect(socket, &SocketManager::signalCreateMainWindow, this, &InterfaceLogin::createMainWindow);
 	connect(socket, &SocketManager::signalErrorNoSuchUser, this, &InterfaceLogin::writeErrorNoSuchUser);
-	QString commandword = "LOGIN";
-	QString str = commandword + ' ' + ui.lineEdit_login->text() + ' ' + ui.lineEdit_password->text();
-	socket->sendToServer(str);
+	InformationWord word = ui.lineEdit_login->text() + ui.lineEdit_password->text();
+	InformationNumber number;
+	socket->sendToServer(cod::CodeWord::LOGIN, word, std::nullopt);
 }
 void InterfaceLogin::pushRegistration()
 {
@@ -39,7 +38,8 @@ void InterfaceLogin::pushRegConfirm()
 	{
 		socket = new SocketManager();
 		connect(socket, &SocketManager::signalRegistrationSuccess, this, &InterfaceLogin::registrationSuccess);
-		socket->sendToServer(cod::CodeWord::REGISTRATION, ui.lineEdit_regNick->text() + "#" + ui.lineEdit_regPass->text() + "#" + ui.lineEdit_regTel->text());
+		InformationWord word = ui.lineEdit_regNick->text() + ui.lineEdit_regPass->text() + ui.lineEdit_regTel->text();
+		socket->sendToServer(cod::CodeWord::REGISTRATION, word, std::nullopt);
 		ui.stackedWidget->setCurrentIndex(0);
 		/*int pageLogin = 0;
 		User* user = createUserEnteredDataForReg();
@@ -73,27 +73,6 @@ void InterfaceLogin::deleteMainWindow()
 {
 	delete IW;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

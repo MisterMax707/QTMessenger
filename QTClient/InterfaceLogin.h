@@ -1,11 +1,13 @@
 #pragma once
-#include "../include/GlobalFile/CodeWord.h"
 #include <QMainWindow>
+#include <qmessagebox.h>
 #include <QSet>
 #include "ui_InterfaceLogin.h"
 #include "InterfaceWindow.h"
 #include "SocketManager.h"
-
+#include "../include/GlobalFile/CodeWord.h"
+#include "../include/GlobalFile/InformationWord.h"
+#include "../include/GlobalFile/InformationNumber.h"
 
 class InterfaceLogin : public QMainWindow
 {
@@ -18,13 +20,14 @@ public:
 private:
 	Ui::InterfaceLoginClass ui;
 	InterfaceWindow* IW;
+	SocketManager* socket;
+
 	//User* createUserEnteredDataForReg();
 	bool ChekingCorrectnessLoginOfData(QString login, QString pass);
 	bool ChekingCorrectnessRegistartionOfData();
 	bool ChekingCorrectnessRegTel(QString fio);
 	bool ChekingCorrectnessRegNick(QString nick);
 	bool ChekingCorrectnessRegPass(QString pass);
-	SocketManager* socket;
 
 signals:
 	/*void signalPushLogConfirm(QString loginNick, QString loginPass);
