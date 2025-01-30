@@ -9,21 +9,17 @@ class Participator;
 class GroupChat : public ContactChat
 {
 public:
-	GroupChat(QString name, QStringList usersId) : GroupName(name),usersId(usersId) {
-		id =QString::number( count++);
-
-	};
+	GroupChat(const QString& name, const QVector<QString>& usersId);
 	
-	QString getId() { return this->id; };
+	QString getId();
 	QString getGroupName() { return this->GroupName; };
-	QStringList usersId;
 
 private:
 	QString id;
 	QString GroupName;
 	
-	std::list <Participator*> ListParticipators;
-	std::list <Participator*> ListAdmins;
-private:
+	QList <QString> ListParticipators;
+	//QList <Participator*> ListAdmins;
+
 	static inline unsigned count{};
 };

@@ -51,8 +51,11 @@ public:
 	QString getNickName();
 	QString getPassword();
 	QString getTel();
-	QString getGroupChats();
+	QList<QString> getListNameGroupChats();
+	QList<QString> getListIdGroupChats();
 	QString getContacts();
+	QList<QString> getListNameContacts();
+	QList<QString> getListIdContacts();
 	GroupChat* getLastGroupChat();
 	QString id;
 	

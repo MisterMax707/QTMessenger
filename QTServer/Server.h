@@ -1,12 +1,16 @@
 #pragma once
-#include "../include/GlobalFile/CodeWord.h"
 #include <qtcpserver.h>
 #include <qvector.h>
 #include <QMap>
 #include "Socket.h"
 #include "variant"
 #include "User.h"
+#include "../include/GlobalFile/CodeWord.h"
+#include "../include/GlobalFile/InformationWord.h"
+#include "../include/GlobalFile/InformationNumber.h"
+
 using ReturnType = std::variant<Socket*, QString>;
+//using ServerMethodPtr = void (Server::*)(const QVector<QString>&, const QVector<QString>&);
 /*
 * Ó‰Ó‚˚Â ÒÎÓ‚‡
 * LOGIN - œ–»ÿ≈À ÀŒ√»Õ » œ¿–ŒÀ‹ ◊≈–≈« œ–Œ¡≈À. Õ¿…“» œŒÀ‹«Œ¬¿“≈Àﬂ — “¿ »Ã» ƒ¿ÕÕ€Ã» » ¬€ƒ¿“‹ ID. ¬€¡–¿“‹ ‘”Õ ÷»ﬁ checkUser()
@@ -22,34 +26,47 @@ public:
 
 private:
 	QVector<Socket*> Sockets;
-	QMap<cod::CodeWord, void (Server::*)()> actionKey;
 	QByteArray Data;
 	quint16 nextBlockSize;
 
 	std::vector <User*> users;
-	std::vector<GroupChat*> chats;
+	QVector<GroupChat*> chats;
 	std::vector<Message*> messages;
-	void SendToClient(QString str);
-	void SendToClient(QString str, QString id);
-	void SendToClient(QString str, QStringList listOfId);
-	QString checkUser(QString nick, QString pass);
-	QString checkUser(QString tel);
+	QMap<cod::CodeWord, void (Server::*)(const QVector<QString>&, const QVector<QString>&)> actionKey;
+
+	//void SendToClient(QString str);
+	//void SendToClient(QString str, QString id);
+	//void SendToClient(QString str, QStringList listOfId);
+
+	void SendToClient(const cod::CodeWord& cod, const OptInfoWord& word, const OptInfoNum& number, OptInfoNum idSocket);
+
+
+	//QString checkUser(QString tel);
 	Socket* findSocketById(QString id);
 	User* findUserById(QString id);
 	GroupChat* findChatById(QString id);
-	QString AddChatOnServer(QString str);
-	void AddUserOnServer(QString str);
+
 	void AddContactToUser(QString str);
 	QStringList idOfUsersToIdOfSockets(QStringList idOfUsers);
 
-	void performAction_Login();
-	void performAction_Registration();
-	void performAction_ListOfChat();
-	void performAction_ListOfMessages();
-	void performAction_ListOfContacts();
-	void performAction_AddChat();
-	void performAction_AddContact();
-	void performAction_AddMessage();
+
+	void performAction_Login(const QVector<QString>& word, const QVector<QString>& number);
+	QString getIdOfLoggedUser(QString nick, QString pass);
+
+	void performAction_Registration(const QVector<QString>& word, const QVector<QString>& number);
+	void AddUserOnServer(const QVector<QString>& word);
+
+	void performAction_ListOfChat(const QVector<QString>& word, const QVector<QString>& number);
+	void performAction_ListOfMessages(const QVector<QString>& word, const QVector<QString>& number);
+	void performAction_ListOfContacts(const QVector<QString>& word, const QVector<QString>& number);
+
+	void performAction_AddChat(const QVector<QString>& word, const QVector<QString>& number);
+	void AddChatOnServer(const QVector<QString>& word, const QVector<QString>& number);
+	void addChatForSelectedUsers(const QVector<QString>& number);
+	inline QString getIdOfNewGroupChat();
+
+	void performAction_AddContact(const QVector<QString>& word, const QVector<QString>& number);
+	void performAction_AddMessage(const QVector<QString>& word, const QVector<QString>& number);
 	
 
 public slots:

@@ -85,24 +85,42 @@ GroupChat* User::getLastGroupChat() {
 	return ListGroupChats.back();
 }
 
-QString User::getGroupChats() //выдает строку для передачи с сервера в которой чередуются имя чата и его id
+QList<QString> User::getListNameGroupChats() //выдает строку для передачи с сервера в которой чередуются имя чата и его id
 {
-	QString result = "";
-	for (int i = 0; i < ListGroupChats.size(); i++)
-	{
-		result += ListGroupChats[i]->getGroupName() + '#' + ListGroupChats[i]->getId() + '#';
-	}
-	result.chop(1);
-	return result;
+	QList<QString> listNameGroupChat;
+	for (auto& listChat : ListGroupChats)
+		listNameGroupChat.push_back(listChat->getGroupName());
+	return listNameGroupChat;
 }
 
-QString User::getContacts()
+QList<QString> User::getListIdGroupChats() //выдает строку для передачи с сервера в которой чередуются имя чата и его id
 {
-	QString result = "";
-	for (int i = 0; i < ListContacts.size(); i++)
-	{
-		result += ListContacts[i]->getName() + '#' + ListContacts[i]->getId() + '#';
-	}
-	result.chop(1);
-	return result;
+	//QString result = "";
+	//for (int i = 0; i < ListGroupChats.size(); i++)
+	//{
+	//	result += ListGroupChats[i]->getGroupName() + '#' + ListGroupChats[i]->getId() + '#';
+	//}
+	//result.chop(1);
+	//return result;
+	QList<QString> listIdGroupChat;
+	for (auto& listChat : ListGroupChats)
+		listIdGroupChat.push_back(listChat->getId());
+	return listIdGroupChat;
 }
+
+QList<QString> User::getListNameContacts()
+{
+	QList<QString> listNameContacts;
+	for (auto& listCont : ListContacts)
+		listNameContacts.push_back(listCont->getName());
+	return listNameContacts;
+}
+
+QList<QString> User::getListIdContacts()
+{
+	QList<QString> listIdContacts;
+	for (auto& listCont : ListContacts)
+		listIdContacts.push_back(listCont->getId());
+	return listIdContacts;
+}
+

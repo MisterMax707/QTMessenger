@@ -25,9 +25,9 @@ QQueue<Message*> ContactChat::getListOfChatMessage()
 QString ContactChat::getStringOfMessage()
 {
 	QString result = "";
-	for (int i = 0; i < messages.size(); i++)
+	for (auto& mes : messages)
 	{
-		result += messages[i]->getSender() + "\n" + messages[i]->getContent() + "#" +messages[i]->getSenderid()+"#"+ messages[i]->getId() + "#";
+		result += mes->getSender() + "\n" + mes->getContent() + "#" + mes->getSenderid() + "#" + mes->getId() + "#";
 	}
 	result.chop(1);
 	return result;
