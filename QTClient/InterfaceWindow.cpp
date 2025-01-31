@@ -37,28 +37,45 @@ InterfaceWindow::InterfaceWindow(QString id, SocketManager* socket, QWidget* par
 InterfaceWindow::~InterfaceWindow()
 {}
 
-void InterfaceWindow::downloadChats(QString str)
+//void InterfaceWindow::downloadChats(const QVector<QString>& word, const QVector<QString>& number)
+//{
+//	ui.listWidget->clear();
+//	QString chatName, id;
+//	while (!str.isEmpty())
+//	{
+//		chatName = str.left(str.indexOf('#'));
+//		str = str.mid(str.indexOf('#') + 1);
+//		QListWidgetItem* chatListItem = new QListWidgetItem(chatName);
+//		chatListItem->setSizeHint(QSize(60, 50));
+//		id = str.left(str.indexOf('#'));
+//		if (str.indexOf('#') == -1)
+//		{
+//			chatListItem->setData(Qt::UserRole, id);
+//			ui.listWidget->addItem(chatListItem);
+//			break;
+//		}
+//		else {
+//			str = str.mid(str.indexOf('#') + 1);
+//			chatListItem->setData(Qt::UserRole, id);
+//			ui.listWidget->addItem(chatListItem);
+//		}
+//	}
+//}
+
+void InterfaceWindow::downloadChats(const QVector<QString>& word, const QVector<QString>& number)
 {
 	ui.listWidget->clear();
-	QString chatName, id;
-	while (!str.isEmpty())
-	{
-		chatName = str.left(str.indexOf('#'));
-		str = str.mid(str.indexOf('#') + 1);
+
+	for (int i = 0; i < word.size(); ++i) {
+		QString chatName = word.at(i);
+		QString id = number.at(i);
+
 		QListWidgetItem* chatListItem = new QListWidgetItem(chatName);
 		chatListItem->setSizeHint(QSize(60, 50));
-		id = str.left(str.indexOf('#'));
-		if (str.indexOf('#') == -1)
-		{
-			chatListItem->setData(Qt::UserRole, id);
-			ui.listWidget->addItem(chatListItem);
-			break;
-		}
-		else {
-			str = str.mid(str.indexOf('#') + 1);
-			chatListItem->setData(Qt::UserRole, id);
-			ui.listWidget->addItem(chatListItem);
-		}
+
+		chatListItem->setData(Qt::UserRole, id);
+
+		ui.listWidget->addItem(chatListItem);
 	}
 }
 
@@ -71,64 +88,100 @@ void InterfaceWindow::pushAdd()
 
 void InterfaceWindow::openMainWindow()
 {
-	socket->sendToServer("LIST_OF_CHATS " + userId);
+	InformationNumber idUs = userId;
+	socket->sendToServer(cod::CodeWord::LIST_OF_CHATS, std::nullopt, idUs);
+	//socket->sendToServer("LIST_OF_CHATS " + userId);
 	ui.stackedWidget->setCurrentIndex(0);
 }
+
 void InterfaceWindow::openEnterNameGroupChat()
 {
-	socket->sendToServer("LIST_OF_CONTACTS " + userId);
+	InformationNumber idUs = userId;
+	socket->sendToServer(cod::CodeWord::LIST_OF_CONTACTS, std::nullopt, idUs);
+	//socket->sendToServer("LIST_OF_CONTACTS " + userId);
 	ui.stackedWidget->setCurrentIndex(2);
 }
 
 void InterfaceWindow::pushOkCreateGroupChat()
 {
-	QList<QListWidgetItem*> selectedItems = ui.listWidget_2->selectedItems();
-	QString idOfSelectedContacts = "";
-	for (int i = 0; i < selectedItems.size(); i++)
-	{
-		idOfSelectedContacts += selectedItems[i]->data(256).toString() + "#";
-	}
-	idOfSelectedContacts += userId;
-	socket->sendToServer("ADD_CHAT " + ui.lineEdit_groupChatName->text() + "#" + idOfSelectedContacts);
+	InformationWord nameCreatingChat = ui.lineEdit_groupChatName->text();
+	InformationNumber idOfSelectedContacts = getIdSelectedUsersForGroupChat();
+	socket->sendToServer(cod::CodeWord::ADD_CHAT, nameCreatingChat, idOfSelectedContacts);
+	//socket->sendToServer("ADD_CHAT " + ui.lineEdit_groupChatName->text() + "#" + idOfSelectedContacts);
 	ui.lineEdit_groupChatName->clear();
 	ui.stackedWidget->setCurrentIndex(0);
 }
 
+InformationNumber InterfaceWindow::getIdSelectedUsersForGroupChat()
+{
+	QList<QListWidgetItem*> selectedItems = ui.listWidget_2->selectedItems();
+	InformationNumber idOfSelectedContacts;
+	for (auto& item : selectedItems)
+	{
+		idOfSelectedContacts += item->data(256).toString();
+	}
+	idOfSelectedContacts += userId;
+	return idOfSelectedContacts;
+}
 
-void InterfaceWindow::createListOfContacts(QString str)
+//void InterfaceWindow::createListOfContacts(const QVector<QString>& word, const QVector<QString>& number)
+//{
+//	ui.listWidget_2->clear();
+//	QString contactName, id;
+//	while (!str.isEmpty())
+//	{
+//		contactName = str.left(str.indexOf('#'));
+//		str = str.mid(str.indexOf('#') + 1);
+//		QListWidgetItem* chatListItem = new QListWidgetItem(contactName);
+//		chatListItem->setSizeHint(QSize(60, 50));
+//		id = str.left(str.indexOf('#'));
+//		if (str.indexOf('#') == -1)
+//		{
+//			chatListItem->setData(Qt::UserRole, id);
+//			ui.listWidget_2->addItem(chatListItem);
+//			break;
+//		}
+//		else {
+//			str = str.mid(str.indexOf('#') + 1);
+//			chatListItem->setData(Qt::UserRole, id);
+//			ui.listWidget_2->addItem(chatListItem);
+//		}
+//	}
+//}
+
+void InterfaceWindow::createListOfContacts(const QVector<QString>& word, const QVector<QString>& number)
 {
 	ui.listWidget_2->clear();
-	QString contactName, id;
-	while (!str.isEmpty())
-	{
-		contactName = str.left(str.indexOf('#'));
-		str = str.mid(str.indexOf('#') + 1);
-		QListWidgetItem* chatListItem = new QListWidgetItem(contactName);
-		chatListItem->setSizeHint(QSize(60, 50));
-		id = str.left(str.indexOf('#'));
-		if (str.indexOf('#') == -1)
-		{
-			chatListItem->setData(Qt::UserRole, id);
-			ui.listWidget_2->addItem(chatListItem);
-			break;
-		}
-		else {
-			str = str.mid(str.indexOf('#') + 1);
-			chatListItem->setData(Qt::UserRole, id);
-			ui.listWidget_2->addItem(chatListItem);
-		}
+
+	for (int i = 0; i < word.size(); ++i) {
+		QString contactName = word.at(i);
+		QString id = number.at(i);
+
+		QListWidgetItem* contactListItem = new QListWidgetItem(contactName);
+		contactListItem->setSizeHint(QSize(60, 50));
+
+		contactListItem->setData(Qt::UserRole, id);
+
+		ui.listWidget_2->addItem(contactListItem);
 	}
 }
 
 
 
-void InterfaceWindow::addChat(QString str)
+void InterfaceWindow::addChat(const QVector<QString>& word, const QVector<QString>& number)
 {
-	QString chatName = str.left(str.indexOf('#'));
-	str = str.mid(str.indexOf('#') + 1);
+	//QString chatName = str.left(str.indexOf('#'));
+	//str = str.mid(str.indexOf('#') + 1);
+	//QListWidgetItem* newItem = new QListWidgetItem(chatName);
+	//newItem->setSizeHint(QSize(60, 50));
+	//newItem->setData(Qt::UserRole, str);
+	//ui.listWidget->addItem(newItem);
+
+	QString chatName = word.last();
+	QString chatId = number.last();
 	QListWidgetItem* newItem = new QListWidgetItem(chatName);
 	newItem->setSizeHint(QSize(60, 50));
-	newItem->setData(Qt::UserRole, str);
+	newItem->setData(Qt::UserRole, chatId);
 	ui.listWidget->addItem(newItem);
 }
 
@@ -136,8 +189,11 @@ void InterfaceWindow::addChat(QString str)
 
 void InterfaceWindow::onGroupChatClicked(QListWidgetItem* item)
 {
-	emit signalCreateChatWindow(item->data(Qt::UserRole).toString(), item->text(),userId, socket);
-	socket->sendToServer("LIST_OF_MESSAGES " + item->data(Qt::UserRole).toString());//передать id чата взятые из item на серве
+	emit signalCreateChatWindow(item->data(Qt::UserRole).toString(), item->text(), userId, socket);
+
+	InformationNumber idClickedChat = item->data(Qt::UserRole).toString();
+	socket->sendToServer(cod::CodeWord::LIST_OF_MESSAGES, std::nullopt, idClickedChat);
+	//socket->sendToServer("LIST_OF_MESSAGES " + item->data(Qt::UserRole).toString());//передать id чата взятые из item на серве
 }
 
 
@@ -146,7 +202,7 @@ void InterfaceWindow::createChatWindow(QString id, QString name,QString userId, 
 	if(IC!=nullptr)
 		if (IC->isVisible())
 			IC->close();
-	IC = new InterfaceChat(id, name,userId, socket);
+	IC = new InterfaceChat(id, name, userId, socket);
 	IC->show();
 }
 
@@ -158,11 +214,12 @@ void InterfaceWindow::createContact()
 
 void InterfaceWindow::pushCreateContact()
 {
-	socket->sendToServer("ADD_CONTACT " + ui.lineEdit_Nick->text() + "#" + ui.lineEdit_telephoneNumber->text() + "#" + userId);
-	ui.lineEdit_Nick->clear();
-	ui.lineEdit_telephoneNumber->clear();
-	ui.stackedWidget->setCurrentIndex(0);
+	//socket->sendToServer("ADD_CONTACT " + ui.lineEdit_Nick->text() + "#" + ui.lineEdit_telephoneNumber->text() + "#" + userId);
+	//ui.lineEdit_Nick->clear();
+	//ui.lineEdit_telephoneNumber->clear();
+	//ui.stackedWidget->setCurrentIndex(0);
 }
+
 //
 //void InterfaceWindow::openAddWidget()
 //{

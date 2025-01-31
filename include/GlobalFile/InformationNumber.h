@@ -49,10 +49,10 @@ public:
         return *this;
     }
 
-    InformationNumber operator+(const QString& str) const
-    {
-        return InformationNumber(allNumber + "#" + str);
-    }
+    //InformationNumber operator+(const QString& str) const
+    //{
+    //    return InformationNumber(allNumber + "#" + str);
+    //}
 
     InformationNumber operator+=(const QString& str)
     {
@@ -72,7 +72,7 @@ public:
         Container<T> result;
         QStringList tempWords = allNumber.split('#', Qt::SkipEmptyParts);
         for (const QString& word : tempWords)
-            result.insert(tempWords.end(), word);
+            result.append(word);
         return result;
     }
 
@@ -82,30 +82,30 @@ public:
     }
 };
 
-InformationNumber operator+(const QString& str, const InformationNumber& infoNumber)
+inline InformationNumber operator+(const QString& str, const InformationNumber& infoNumber)
 {
     return InformationNumber("#" + str + "#" + infoNumber.getAllNumber());
 }
 
-InformationNumber operator+(const InformationNumber& infoNumber, const QString& str)
+inline InformationNumber operator+(const InformationNumber& infoNumber, const QString& str)
 {
     return InformationNumber("#" + infoNumber.getAllNumber() + "#" + str);
 }
 
-InformationNumber operator+(const InformationNumber& infoNumber1, const InformationNumber& infoNumber2)
+inline InformationNumber operator+(const InformationNumber& infoNumber1, const InformationNumber& infoNumber2)
 {
     return InformationNumber("#" + infoNumber1.getAllNumber() + "#" + infoNumber2.getAllNumber());
 }
 
-QDataStream& operator<<(QDataStream& out, const InformationNumber& infoWord)
+
+// потоки ввода и ввывода (серилизация и десерилизация)
+inline QDataStream& operator<<(QDataStream& out, const InformationNumber& infoWord)
 {
     out << infoWord.getAllNumber();
     return out;
 }
 
-
-// потоки ввода и ввывода (серилизация и десерилизация)
-QDataStream& operator>>(QDataStream& in, InformationNumber infoWord)
+inline QDataStream& operator>>(QDataStream& in, InformationNumber infoWord)
 {
     QString allNumber;
     in >> allNumber;
@@ -113,7 +113,7 @@ QDataStream& operator>>(QDataStream& in, InformationNumber infoWord)
     return in;
 }
 
-QDataStream& operator<<(QDataStream& out, const std::optional<InformationNumber>& value)
+inline QDataStream& operator<<(QDataStream& out, const std::optional<InformationNumber>& value)
 {
     if (value.has_value()) {
         out << true;
@@ -125,7 +125,7 @@ QDataStream& operator<<(QDataStream& out, const std::optional<InformationNumber>
     return out;
 }
 
-QDataStream& operator>>(QDataStream& in, std::optional<InformationNumber>& value) {
+inline QDataStream& operator>>(QDataStream& in, std::optional<InformationNumber>& value) {
     bool hasValue;
     in >> hasValue;
     if (hasValue) {

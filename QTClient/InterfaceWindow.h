@@ -1,5 +1,6 @@
 #pragma once
 #include <QtWidgets/QMainWindow>
+#include <QSet>
 #include "ui_InterfaceWindow.h"
 #include "InterfaceChat.h"
 #include "SocketManager.h"
@@ -18,6 +19,8 @@ private:
 	SocketManager* socket;
 	InterfaceChat* IC;
 	QByteArray Data;
+
+	InformationNumber getIdSelectedUsersForGroupChat();
 
 signals:
 	/* void signalpushCreateGroupChat(QString name);
@@ -44,13 +47,15 @@ public slots:
 	   
 	   void openContactChat();*/
 
-	void downloadChats(QString str);
-	void createListOfContacts(QString str);
+	void downloadChats(const QVector<QString>& word, const QVector<QString>& number);
+	void createListOfContacts(const QVector<QString>& word, const QVector<QString>& number);
 	void pushAdd();
 	void openMainWindow();
 	void openEnterNameGroupChat();
+
 	void pushOkCreateGroupChat();
-	void addChat(QString str);
+
+	void addChat(const QVector<QString>& word, const QVector<QString>& number);
 	void onGroupChatClicked(QListWidgetItem* item);
 	void createChatWindow(QString id, QString name,QString userId,SocketManager* socket);
 	void createContact();

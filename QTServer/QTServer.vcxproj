@@ -106,7 +106,6 @@
     <QtMoc Include="Server.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\GlobalFile\CodeWord.h" />
     <ClInclude Include="Contact.h" />
     <ClInclude Include="ContactChat.h" />
     <ClInclude Include="GroupChat.h" />

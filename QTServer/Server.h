@@ -38,7 +38,7 @@ private:
 	//void SendToClient(QString str, QString id);
 	//void SendToClient(QString str, QStringList listOfId);
 
-	void SendToClient(const cod::CodeWord& cod, const OptInfoWord& word, const OptInfoNum& number, OptInfoNum idSocket);
+	void SendToClient(const cod::CodeWord& cod, OptInfoWord word, OptInfoNum number, OptInfoNum idSocket);
 
 
 	//QString checkUser(QString tel);

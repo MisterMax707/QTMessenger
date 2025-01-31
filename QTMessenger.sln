@@ -7,6 +7,15 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QTServer", "QTServer\QTServ
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QTClient", "QTClient\QTClient.vcxproj", "{07BFEAD9-77A5-4D7C-AC8E-F18200F4683F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "include", "include", "{856F5CDB-3D7A-414D-B4DF-3AD2EAD4038A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GlobalFile", "GlobalFile", "{F1558F10-4CE1-48B3-B552-23FB1A69D169}"
+	ProjectSection(SolutionItems) = preProject
+		include\GlobalFile\CodeWord.h = include\GlobalFile\CodeWord.h
+		include\GlobalFile\InformationNumber.h = include\GlobalFile\InformationNumber.h
+		include\GlobalFile\InformationWord.h = include\GlobalFile\InformationWord.h
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -24,6 +33,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F1558F10-4CE1-48B3-B552-23FB1A69D169} = {856F5CDB-3D7A-414D-B4DF-3AD2EAD4038A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C597B7E2-309D-4B3F-A169-37866638D58F}

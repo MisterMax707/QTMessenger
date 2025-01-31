@@ -23,8 +23,9 @@ void InterfaceLogin::pushLogConfirm()
 	socket = new SocketManager();
 	connect(socket, &SocketManager::signalCreateMainWindow, this, &InterfaceLogin::createMainWindow);
 	connect(socket, &SocketManager::signalErrorNoSuchUser, this, &InterfaceLogin::writeErrorNoSuchUser);
-	InformationWord word = ui.lineEdit_login->text() + ui.lineEdit_password->text();
-	InformationNumber number;
+	QString login = ui.lineEdit_login->text();
+	QString pass = ui.lineEdit_password->text();
+	InformationWord word = space::combine(login, pass);
 	socket->sendToServer(cod::CodeWord::LOGIN, word, std::nullopt);
 }
 void InterfaceLogin::pushRegistration()

@@ -83,8 +83,8 @@ void Server::startRead(QDataStream& in)
 		InformationNumber number;
 		in >> key >> word >> number;
 
-		QVector<QString> arrWord = word.createArrayWord<QVector, QString>();
-		QVector<QString> arrNumber = number.createArrayNumber<QVector, QString>();
+		QVector<QString> arrWord;//= word.createArrayWord<QVector, QString>();
+		QVector<QString> arrNumber;// = number.createArrayNumber<QVector, QString>();
 		if (actionKey.contains(key))
 		{
 			(this->*actionKey[key])(arrWord, arrNumber);
@@ -241,7 +241,8 @@ void Server::performAction_AddMessage(const QVector<QString>& word, const QVecto
 }
 
 
-void Server::SendToClient(const cod::CodeWord& cod, const OptInfoWord& word = std::nullopt, const OptInfoNum& number = std::nullopt, OptInfoNum idSocket)
+void Server::SendToClient(const cod::CodeWord& cod, OptInfoWord word = std::nullopt, 
+	OptInfoNum number = std::nullopt, OptInfoNum idSocket = std::nullopt)
 {
 	Data.clear();
 	QDataStream out(&Data, QIODevice::WriteOnly);

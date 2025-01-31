@@ -1,13 +1,11 @@
 #pragma once
 #include <qtcpserver.h>
 #include <qtcpsocket.h>
+#include <qmap.h>
 #include <optional>
 #include "../include/GlobalFile/CodeWord.h"
 #include "../include/GlobalFile/InformationWord.h"
 #include "../include/GlobalFile/InformationNumber.h"
-
-using OptInfoWord = std::optional<InformationWord>;
-using OptInfoNum = std::optional<InformationNumber>;
 
 class SocketManager :public QObject
 {
@@ -19,6 +17,15 @@ private:
 	QTcpSocket* socket;
 	QByteArray Data;
 	quint16 nextBlockSize;
+	QMap<cod::CodeWord, void (SocketManager::*)(const QVector<QString>&, const QVector<QString>&)> actionKey;
+
+	void performAction_LoginAnswer(const QVector<QString>& word, const QVector<QString>& number);
+	void performAction_RegistrationAnswer(const QVector<QString>& word, const QVector<QString>& number);
+	void performAction_ListOfChatAnswer(const QVector<QString>& word, const QVector<QString>& number);
+	void performAction_ListOfMessagesAnswer(const QVector<QString>& word, const QVector<QString>& number);
+	void performAction_ListOfContactsAnswer(const QVector<QString>& word, const QVector<QString>& number);
+	void performAction_AddChatAnswer(const QVector<QString>& word, const QVector<QString>& number);
+	void performAction_AddMessageAnswer(const QVector<QString>& word, const QVector<QString>& number);
 
 public:
 	SocketManager();
@@ -29,9 +36,13 @@ signals:
 	void signalCreateMainWindow(QString idOfUser, SocketManager* socket);
 	void signalErrorNoSuchUser();
 	void signalCloseInterfaceLogin();
-	void signalTransmitChatsToForm(QString str);
-	void signalTransmitContactsToForm(QString str);
-	void signalAddChatToForm(QString str);
+
+	void signalTransmitChatsToForm(const QVector<QString>& word, const QVector<QString>& number);
+
+	void signalTransmitContactsToForm(const QVector<QString>& word, const QVector<QString>& number);
+
+	void signalAddChatToForm(const QVector<QString>& word, const QVector<QString>& number);
+
 	void signalAddMessageToForm(QString str);
 	void signalTransmitMessangesToForm(QString str);
 	void signalRegistrationSuccess();
@@ -39,5 +50,6 @@ signals:
 
 private slots:
 	void readyRead();
+	void startRead(QDataStream& in);
 };
 

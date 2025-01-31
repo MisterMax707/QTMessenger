@@ -78,8 +78,5 @@
     <ClInclude Include="Participator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\GlobalFile\CodeWord.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

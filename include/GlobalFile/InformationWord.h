@@ -15,11 +15,11 @@ private:
 public:
     InformationWord() : allWord("") {}
 
-    InformationWord(const QString& str) : allWord(str) 
+    InformationWord(const QString& str)
     {
-        if (allWord.isEmpty() || allWord[0] != '|')
+        if (allWord.isEmpty())
         {
-            allWord = "|" + allWord;
+            allWord = "|" + str;
         }
     }
 
@@ -72,7 +72,7 @@ public:
         Container<T> result;
         QStringList tempWords = allWord.split('|', Qt::SkipEmptyParts);
         for (const QString& word : tempWords)
-            result.insert(tempWords.end(), word);
+            result.append(word);
         return result;
     }
 
@@ -82,30 +82,30 @@ public:
     }
 };
 
-InformationWord operator+(const QString& str, const InformationWord& infoWord)
-{
-    return InformationWord("|" + str + "|" + infoWord.getAllWord());
-}
-
-InformationWord operator+(const InformationWord& infoWord, const QString& str)
-{
-    return InformationWord("|" + infoWord.getAllWord() + "|" + str);
-}
-
-InformationWord operator+(const InformationWord& infoWord1, const InformationWord& infoWord2)
-{
-    return InformationWord("|" + infoWord1.getAllWord() + "|" + infoWord2.getAllWord());
-}
+//inline InformationWord operator+(const QString& str, const InformationWord& infoWord)
+//{
+//    return InformationWord(str + "|" + infoWord.getAllWord());
+//}
+//
+//inline InformationWord operator+(const InformationWord& infoWord, const QString& str)
+//{
+//    return InformationWord(infoWord.getAllWord() + "|" + str);
+//}
+//
+//inline InformationWord operator+(const InformationWord& infoWord1, const InformationWord& infoWord2)
+//{
+//    return InformationWord(infoWord1.getAllWord() + infoWord2.getAllWord());
+//}
 
 
 // потоки ввода и ввывода (серилизация и десерилизация)
-QDataStream& operator<<(QDataStream& out, const InformationWord& infoWord)
+inline QDataStream& operator<<(QDataStream& out, const InformationWord& infoWord)
 {
     out << infoWord.getAllWord();
     return out;
 }
 
-QDataStream& operator>>(QDataStream& in, InformationWord infoWord)
+inline QDataStream& operator>>(QDataStream& in, InformationWord& infoWord)
 {
     QString allWord;
     in >> allWord;
@@ -113,7 +113,7 @@ QDataStream& operator>>(QDataStream& in, InformationWord infoWord)
     return in;
 }
 
-QDataStream& operator<<(QDataStream& out, const std::optional<InformationWord>& value)
+inline QDataStream& operator<<(QDataStream& out, const std::optional<InformationWord>& value)
 {
     if (value.has_value()) {
         out << true;
@@ -126,7 +126,7 @@ QDataStream& operator<<(QDataStream& out, const std::optional<InformationWord>& 
     return out;
 }
 
-QDataStream& operator>>(QDataStream& in, std::optional<InformationWord>& value) {
+inline QDataStream& operator>>(QDataStream& in, std::optional<InformationWord>& value) {
     bool hasValue;
     in >> hasValue;
     if (hasValue) {
@@ -138,4 +138,34 @@ QDataStream& operator>>(QDataStream& in, std::optional<InformationWord>& value) 
         value = InformationWord("nan");
     }
     return in;
+}
+
+namespace space
+{
+    namespace
+    {
+        inline QString concatenate(const QString& str1, const QString& str2)
+        {
+            return str1 + "|" + str2;
+        }
+
+        // Шаблонная функция для обработки переменного количества аргументов
+        template<typename... Args>
+        inline QString concatenate(const QString& first, const QString& second, Args... args)
+        {
+            return concatenate(first + "|" + second, args...);
+        }
+    }
+
+    template<typename... Args>
+    inline InformationWord combine(const QString& first, const QString& second, Args... args)
+    {
+        return Info(concatenate(first, second, args...));
+    }
+
+    // Специализация для двух аргументов
+    inline InformationWord combine(const QString& first, const QString& second)
+    {
+        return InformationWord(concatenate(first, second));
+    }
 }

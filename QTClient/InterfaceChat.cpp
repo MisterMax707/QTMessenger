@@ -74,8 +74,8 @@ void InterfaceChat::addMessageToForm(QString str)//строка состоит из содержания 
 
 void InterfaceChat::sendMessage()
 {
-	socket->sendToServer("ADD_MESSAGE " + ui.lineEdit_chat->text() + "#" + idOfSender + "#" + idOfChat);
-	ui.lineEdit_chat->clear();
+	//socket->sendToServer("ADD_MESSAGE " + ui.lineEdit_chat->text() + "#" + idOfSender + "#" + idOfChat);
+	//ui.lineEdit_chat->clear();
 }
 
 

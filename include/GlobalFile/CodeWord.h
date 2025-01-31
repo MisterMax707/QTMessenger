@@ -29,11 +29,11 @@ namespace cod
 	};
 }
 
-QDataStream& operator<<(QDataStream& out, const cod::CodeWord& value) {
+inline QDataStream& operator<<(QDataStream& out, const cod::CodeWord& value) {
 	return out << static_cast<quint8>(value); // Преобразуем в байт
 }
 
-QDataStream& operator>>(QDataStream& in, cod::CodeWord& value) {
+inline QDataStream& operator>>(QDataStream& in, cod::CodeWord& value) {
 	quint8 byteValue;
 	in >> byteValue;
 	value = static_cast<cod::CodeWord>(byteValue); // Преобразуем обратно в enum
