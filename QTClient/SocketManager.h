@@ -27,6 +27,7 @@ signals:
 	void signalAddMessageToForm(QString str);
 	void signalTransmitMessangesToForm(QString str);
 	void signalRegistrationSuccess();
+	void signalAddContact(QString str);
 	//void signalCreateChatWindow(QString idOfChat,QString name, SocketManager* socket);
 
 private slots:

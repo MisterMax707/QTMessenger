@@ -1,5 +1,8 @@
 #include "InterfaceWindow.h"
 
+
+#include <qmessagebox.h>
+
 InterfaceWindow::InterfaceWindow(QString id, SocketManager* socket, QWidget* parent)
 	: QMainWindow(parent)
 {
@@ -15,6 +18,7 @@ InterfaceWindow::InterfaceWindow(QString id, SocketManager* socket, QWidget* par
 	connect(this->socket, &SocketManager::signalTransmitChatsToForm, this, &InterfaceWindow::downloadChats);
 	connect(this->socket, &SocketManager::signalTransmitContactsToForm, this, &InterfaceWindow::createListOfContacts);
 	connect(this->socket, &SocketManager::signalAddChatToForm, this, &InterfaceWindow::addChat);
+	connect(this->socket, &SocketManager::signalAddContact, this, &InterfaceWindow::addContactMessage);
 	connect(ui.pushButton_add, &QPushButton::clicked, this, &InterfaceWindow::pushAdd);
 	connect(ui.pushButton_backToMainWindow, &QPushButton::clicked, this, &InterfaceWindow::openMainWindow);
 	connect(ui.pushButton_createGroup, &QPushButton::clicked, this, &InterfaceWindow::openEnterNameGroupChat);
@@ -171,6 +175,14 @@ void InterfaceWindow::deleteUser()
 {
 	socket->sendToServer("DELETE_CHAT " + userId);
 	//this->close();
+}
+
+
+void InterfaceWindow::addContactMessage(QString str) {
+	if(str=="ERROR")
+		QMessageBox::warning(this, "MESSAGE", "User with such phone number does not exist!", QMessageBox::Ok);
+	else
+		QMessageBox::warning(this, "MESSAGE", "Contact was created succesfully!", QMessageBox::Ok);
 }
 //
 //void InterfaceWindow::openAddWidget()

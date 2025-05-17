@@ -17,7 +17,7 @@ public:
 	};
 
 private:
-	static inline unsigned count{};
+	static inline unsigned count=1;
 signals:
 	void signalDeleteSocket(QString id);
 public slots:

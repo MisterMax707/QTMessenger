@@ -88,6 +88,9 @@ void SocketManager::readyRead()
 				emit signalRegistrationSuccess();
 				socket->disconnect();
 			}
+			else if (codeWord == "ADD_CONTACT_ANSWER") {
+				emit signalAddContact(str);
+			}
 			
 			break;
 		}

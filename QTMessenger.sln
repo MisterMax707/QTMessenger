@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QTServer", "QTServer\QTServ
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QTClient", "QTClient\QTClient.vcxproj", "{07BFEAD9-77A5-4D7C-AC8E-F18200F4683F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QtDataBase", "QtDataBase\QtDataBase.vcxproj", "{D3835CDD-CAB5-41C2-AE15-531A5DB31063}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,10 @@ Global
 		{07BFEAD9-77A5-4D7C-AC8E-F18200F4683F}.Debug|x64.Build.0 = Debug|x64
 		{07BFEAD9-77A5-4D7C-AC8E-F18200F4683F}.Release|x64.ActiveCfg = Release|x64
 		{07BFEAD9-77A5-4D7C-AC8E-F18200F4683F}.Release|x64.Build.0 = Release|x64
+		{D3835CDD-CAB5-41C2-AE15-531A5DB31063}.Debug|x64.ActiveCfg = Debug|x64
+		{D3835CDD-CAB5-41C2-AE15-531A5DB31063}.Debug|x64.Build.0 = Debug|x64
+		{D3835CDD-CAB5-41C2-AE15-531A5DB31063}.Release|x64.ActiveCfg = Release|x64
+		{D3835CDD-CAB5-41C2-AE15-531A5DB31063}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

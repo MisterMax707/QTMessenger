@@ -11,11 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{9C55292B-E3D7-4BAA-98D2-AFEC5E5349B5}</ProjectGuid>
+    <ProjectGuid>{D84F7273-AD3E-4AEE-AE9F-43459628EE76}</ProjectGuid>
     <Keyword>QtVS_v304</Keyword>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">10.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">10.0</WindowsTargetPlatformVersion>
-    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')"
+      >$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
@@ -37,16 +38,19 @@
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
     <QtInstall>6.8.0_msvc2022_64</QtInstall>
-    <QtModules>core;network;sql</QtModules>
+    <QtModules>core;sql</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
     <QtInstall>6.8.0_msvc2022_64</QtInstall>
-    <QtModules>core;network</QtModules>
+    <QtModules>core</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
   </PropertyGroup>
-  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
-    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
+  <Target Name="QtMsBuildNotFound"
+    BeforeTargets="CustomBuild;ClCompile"
+    Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
+    <Message Importance="High"
+      Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
   </Target>
   <ImportGroup Label="ExtensionSettings" />
   <ImportGroup Label="Shared" />
@@ -92,27 +96,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Contact.cpp" />
-    <ClCompile Include="ContactChat.cpp" />
-    <ClCompile Include="GroupChat.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Message.cpp" />
-    <ClCompile Include="Participator.cpp" />
-    <ClCompile Include="Server.cpp" />
-    <ClCompile Include="Socket.cpp" />
-    <ClCompile Include="User.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="Server.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Contact.h" />
-    <ClInclude Include="ContactChat.h" />
-    <ClInclude Include="GroupChat.h" />
-    <ClInclude Include="Message.h" />
-    <ClInclude Include="Participator.h" />
-    <QtMoc Include="Socket.h" />
-    <ClInclude Include="User.h" />
+
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

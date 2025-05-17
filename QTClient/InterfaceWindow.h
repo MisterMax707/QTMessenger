@@ -56,4 +56,5 @@ public slots:
 	void createContact();
 	void pushCreateContact();
 	void deleteUser();
+	void addContactMessage(QString str);
 };

@@ -5,6 +5,10 @@
 #include <vector>
 #include "Socket.h"
 #include "variant"
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlError>
+#include <QSqlQuery>
+#include <QDateTime>
 using ReturnType = std::variant<Socket*, QString>;
 /*
 *Кодовые слова
@@ -19,6 +23,7 @@ public:
 	Socket* socket;
 private:
 	QVector<Socket*> Sockets;
+	QSqlDatabase db;
 	QByteArray Data;
 	quint16 nextBlockSize;
 	std::vector <User*> users;
@@ -29,16 +34,24 @@ private:
 	void SendToClient(QString str, QStringList listOfId);
 	void SendToClient(QString str1, QString str2, QString id1,QString id2);
 	QString checkUser(QString nick, QString pass);
-	QString checkUser(QString tel);
+	bool checkUser(QString tel);
+	QString checkContact(QString tel);
 	Socket* findSocketById(QString id);
-	User* findUserById(QString id);
-	GroupChat* findChatById(QString id);
+	//User* findUserById(QString id);
+	//GroupChat* findChatById(QString id);
 	QString AddChatOnServer(QString str);
 	void AddUserOnServer(QString str);
-	void AddContactToUser(QString str);
+	QString AddContactToUser(QString str);
 	QStringList idOfUsersToIdOfSockets(QStringList idOfUsers);
 	void deleteUser(QString id);
-	
+	void createNewUserOnServer(QString tel,QString nick, QString pass);
+	void findAndUpdateUser(QString tel, QString nick, QString pass);
+	void recordUserIsOnline(QString userId,QString socketId);
+	QString getListOfChatsByIdUser(QString userId);
+	QString getListOfMessagesByIdChat(QString chatId);
+	QString addMessageOnServer(QString str);
+	QStringList getListOfParticipatorsByIdChat(QString chatId);
+	QString getContactsByIdUser(QString userId);
 
 public slots:
 	void incomingConnection(qintptr socketDescriptor);

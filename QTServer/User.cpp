@@ -85,16 +85,16 @@ GroupChat* User::getLastGroupChat() {
 	return ListGroupChats.back();
 }
 
-QString User::getGroupChats() //выдает строку для передачи с сервера в которой чередуются имя чата и его id
-{
-	QString result = "";
-	for (int i = 0; i < ListGroupChats.size(); i++)
-	{
-		result += ListGroupChats[i]->getGroupName() + '#' + ListGroupChats[i]->getId() + '#';
-	}
-	result.chop(1);
-	return result;
-}
+//QString User::getGroupChats() //выдает строку для передачи с сервера в которой чередуются имя чата и его id
+//{
+//	QString result = "";
+//	for (int i = 0; i < ListGroupChats.size(); i++)
+//	{
+//		result += ListGroupChats[i]->getGroupName() + '#' + ListGroupChats[i]->getId() + '#';
+//	}
+//	result.chop(1);
+//	return result;
+//}
 QStringList User::getOnlyIdChats()
 {
 	QString result = "";
