@@ -52,6 +52,7 @@ private:
 	QString addMessageOnServer(QString str);
 	QStringList getListOfParticipatorsByIdChat(QString chatId);
 	QString getContactsByIdUser(QString userId);
+	QString forwardMessageOnServer(QString str);
 
 public slots:
 	void incomingConnection(qintptr socketDescriptor);

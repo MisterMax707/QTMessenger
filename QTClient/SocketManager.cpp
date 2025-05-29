@@ -91,6 +91,10 @@ void SocketManager::readyRead()
 			else if (codeWord == "ADD_CONTACT_ANSWER") {
 				emit signalAddContact(str);
 			}
+			else if (codeWord == "LIST_OF_CHATS_FORWARD_ANSWER")
+			{
+				emit signalTransmitChatsForForwardToForm(str);
+			}
 			
 			break;
 		}

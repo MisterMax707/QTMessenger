@@ -31,7 +31,7 @@ private:
 	QString idOfChat;
 	QString idOfParticipators;
 	QString idOfSender;
-
+	QString idOfMessageToForward;
 
 signals:
 	void signalSendMessage(QString contentMessage, QString nickName);
@@ -43,6 +43,10 @@ public slots:
 	void downloadMessages(QString str);
 	void sendMessage();
 	void addMessageToForm(QString idOfChat);
+	void showContextMenu(const QPoint& pos);
+	void forwardMessage();
+	void downloadChats(QString str);
+	void selectChatForForward(QListWidgetItem* item);
 	//void inicializeChat(GroupChat* theChatUsed, QString chatUserIsYou, QString nameChat);
 	//void inicializeContactChat(ContactChat* chat, QString nameChat, User* user1, User* user2);
 	//QString /*void*/ pushSendMessage();

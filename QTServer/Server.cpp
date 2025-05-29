@@ -133,6 +133,19 @@ void Server::readyRead()
 				qDebug() << "CHATS_OF_USER_ANSWER " + getListOfChatsByIdUser(str);
 
 			}
+			else if (codeWord == "LIST_OF_CHATS_FORWARD")
+			{
+				SendToClient("LIST_OF_CHATS_FORWARD_ANSWER " + getListOfChatsByIdUser(str), socket->id);//посылает имя чата и его id через # // str на вход это idUser
+
+			}
+			else if (codeWord == "FORWARD_MESSAGE")
+			{
+				QString newstr = str;
+				newstr = newstr.mid(newstr.indexOf('#') + 1);
+				QString idOfChat = newstr.left(newstr.indexOf('#'));
+				SendToClient("ADD_MESSAGE_ANSWER " + forwardMessageOnServer(str), idOfUsersToIdOfSockets(getListOfParticipatorsByIdChat(idOfChat)));
+				qDebug() << "ADD_MESSAGE_ANSWER";
+			}
 			else if (codeWord == "ADD_CHAT")
 			{
 				QString nameOfChat = str.left(str.indexOf('#'));
@@ -679,4 +692,34 @@ QString Server::getContactsByIdUser(QString idUser)
 	}
 	result.chop(1);
 	return result;
+}
+
+QString Server::forwardMessageOnServer(QString str) {
+	QSqlQuery query;
+	QString idOfMessage = str.left(str.indexOf('#'));
+	str = str.mid(str.indexOf('#') + 1);
+	QString idOfChat = str.left(str.indexOf('#'));
+	QString nickSender, textOfMessage,idOfSender;
+	query.prepare("SELECT users.id_user,content_message,nick_user from message\\
+					JOIN users ON users.id_user=message.id_user\\
+					WHERE id_message=:idMessage");
+	query.bindValue(":idMessage", idOfMessage);
+	if (!query.exec()) {
+		qDebug() << "Query error:" << query.lastError().text();
+
+	}
+	if (query.next()) {
+		idOfSender = query.value("id_user").toString();
+		nickSender = query.value("nick_user").toString();
+		textOfMessage = query.value("content_message").toString();
+	}
+	query.prepare("INSERT INTO chat_message_link (id_message, id_chat,is_reposted) VALUES (:id_messages,:id_chat,TRUE)");
+	query.bindValue(":id_chat", idOfChat.toInt());
+	query.bindValue(":id_messages", idOfMessage.toInt());
+	if (!query.exec()) {
+		qDebug() << "Query error:" << query.lastError().text();
+		
+	}
+	
+	return idOfChat + "#" + nickSender + '\n' + textOfMessage + '#' + idOfSender + '#' + idOfMessage;
 }

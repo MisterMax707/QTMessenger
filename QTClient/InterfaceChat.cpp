@@ -1,5 +1,5 @@
 #include "InterfaceChat.h"
-
+#include "qmessagebox.h"
 InterfaceChat::InterfaceChat(QString id, QString name, QString senderId, SocketManager* socket, QWidget* parent)
 	: QMainWindow(parent), idOfChat(id), idOfSender(senderId), socket(socket)
 {
@@ -13,6 +13,10 @@ InterfaceChat::InterfaceChat(QString id, QString name, QString senderId, SocketM
 	connect(ui.pushButton_sendMessage, &QPushButton::clicked, this, &InterfaceChat::sendMessage);
 	connect(shortcut, &QShortcut::activated, this, &InterfaceChat::sendMessage);
 	connect(this->socket, &SocketManager::signalAddMessageToForm, this, &InterfaceChat::addMessageToForm);
+	ui.listWidget_chat->setContextMenuPolicy(Qt::CustomContextMenu);
+	connect(ui.listWidget_chat, &QListWidget::customContextMenuRequested, this, &InterfaceChat::showContextMenu);
+	connect(this->socket, &SocketManager::signalTransmitChatsForForwardToForm, this, &InterfaceChat::downloadChats);
+	connect(ui.listWidget, &QListWidget::itemClicked, this, &InterfaceChat::selectChatForForward);
 	/*QShortcut* pressChangeMessage = new QShortcut(QKeySequence(Qt::Key_C), this);
 	QShortcut* pressDeleteMessage = new QShortcut(QKeySequence(Qt::Key_D), this);*/
 	//connect(ui.pushButton_sendMessage, & QPushButton::clicked, this, & InterfaceChat::callnewsignal);
@@ -24,6 +28,8 @@ InterfaceChat::InterfaceChat(QString id, QString name, QString senderId, SocketM
 	connect(pressChangeMessage, &QShortcut::activated, this, &InterfaceChat::changeInputToChangeByPressedKeyC);
 	connect(pressDeleteMessage, &QShortcut::activated, this, &InterfaceChat::deleteMessageByPressedKeyD);*/
 }
+
+
 
 InterfaceChat::~InterfaceChat()
 {}
@@ -183,6 +189,74 @@ void InterfaceChat::checkSender(QListWidgetItem* messageItem, QString idSender)
 		messageItem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	else
 		messageItem->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+}
+
+void InterfaceChat::showContextMenu(const QPoint& pos)
+{
+	QListWidgetItem* item = ui.listWidget_chat->itemAt(pos);
+	if (!item) return;
+
+	// Создаем меню
+	QMenu menu(this);
+
+	// Добавляем действие "Переслать"
+	QAction* forwardAction = menu.addAction("forward");
+	forwardAction->setData(item->data(Qt::UserRole)); // Передаем ID в данные действия
+	connect(forwardAction, &QAction::triggered, this, &InterfaceChat::forwardMessage);
+
+
+
+	// Показываем меню
+	menu.exec(ui.listWidget_chat->viewport()->mapToGlobal(pos));
+}
+void InterfaceChat::forwardMessage()
+{
+	QAction* action = qobject_cast<QAction*>(sender());
+	if (!action) return;
+
+	QString messageId = action->data().toString(); // Получаем ID из данных действия
+	idOfMessageToForward = messageId;
+	socket->sendToServer("LIST_OF_CHATS_FORWARD " + idOfSender);
+	ui.stackedWidget_2->setCurrentIndex(1);
+
+
+
+
+	// Здесь можно добавить реальную логику пересылки
+}
+
+void InterfaceChat::downloadChats(QString str)
+{
+	ui.listWidget->clear();
+	QString chatName, id;
+	while (!str.isEmpty())
+	{
+		chatName = str.left(str.indexOf('#'));
+		str = str.mid(str.indexOf('#') + 1);
+		QListWidgetItem* chatListItem = new QListWidgetItem(chatName);
+		chatListItem->setSizeHint(QSize(60, 50));
+		id = str.left(str.indexOf('#'));
+		if (str.indexOf('#') == -1)
+		{
+			chatListItem->setData(Qt::UserRole, id);
+			ui.listWidget->addItem(chatListItem);
+			break;
+		}
+		else {
+			str = str.mid(str.indexOf('#') + 1);
+			chatListItem->setData(Qt::UserRole, id);
+			ui.listWidget->addItem(chatListItem);
+		}
+	}
+}
+void InterfaceChat::selectChatForForward(QListWidgetItem* item) {
+	socket->sendToServer("FORWARD_MESSAGE " + idOfMessageToForward + "#" + item->data(Qt::UserRole).toString());
+	idOfMessageToForward = "";
+	ui.stackedWidget_2->setCurrentIndex(0);
+	QMessageBox::information(this, "Пересылка",
+		QString("Message reposted succesfully! (ID: %1)\n")
+		.arg(idOfMessageToForward));
+	
 }
 //
 //
